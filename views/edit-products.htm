@@ -1,0 +1,154 @@
+  <body>
+  <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                
+                    <div class="evs_head">
+                        <div class="logo">
+                            <img src="images/logo.png">
+                        </div>
+                        
+                        <?php include('templates/menu.php');?>
+                    </div><!-- ./evs_head -->
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+  
+     <section class="evs-main-body">
+    	<div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                
+                	<div class="custom-tabs">
+                        <div class="panel with-nav-tabs panel-default">
+                            
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="tab1default">
+                                    	<div class="business-details">
+               <form method="post" action="product-settings.php" enctype="multipart/form-data" id="form-product" name="form-product">
+               <input type="hidden" name="type" value="edit_product">
+                 <div class="row">
+               
+                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                         <div class="form-group">
+                             <label><span>*</span> Product name</label>
+                                <input type="text" class="form-control" name="product_name" id="product_name" value="<?php echo $rowPdt['name'];?>">
+                            </div>
+                            <div class="form-group">
+                             <label><span>*</span> Short name</label>
+                                <input type="text" class="form-control" name="short_name" id="short_name" value="<?php echo $rowPdt['shortname'];?>">
+                            </div>
+                            <div class="form-group">
+                             <label><span>*</span> Code</label>
+                                <input type="text" class="form-control" name="code" id="code" value="<?php echo $rowPdt['code'];?>">
+                            </div>
+                            <div class="form-group">
+                             <label><span></span> Description</label>
+                                <input type="text" class="form-control" name="description" id="description" value="<?php echo $rowPdt['description'];?>">
+                            </div>
+                            <div class="form-group">
+                             <label><span></span> Link URL</label>
+                                <input type="text" class="form-control" name="link_url" id="link_url" value="<?php echo $rowPdt['linkURL'];?>">
+                            </div>
+                           <!-- <div class="form-group">
+                             <label><span>*</span> RRP price Per Unit</label>
+                                <input type="text" class="form-control" name="rrp" id="rrp" value="<?php echo $rowPdt['rrpvalue'];?> ">
+                            </div>-->
+                            <div class="form-group">
+                             <label><span>*</span> Hours per install</label>
+                                <input type="text" class="form-control" name="hours" id="hours" value="<?php echo $rowPdt['hours'];?>">
+                            </div>
+                            <div class="form-group">
+                             <label><span>*</span> Unit name</label>
+                             <div class="time-slct">
+                             <select name="unit_name" id="unit_name" class="form-control">
+                             <option value="<?php echo $rowPdt['unitname'];?>" selected><?php echo $rowPdt['unitname'];?></option>
+                             <?php
+                              foreach($UnitArr as $valunit){
+                              if($valunit['unitName'] != $rowPdt['unitname']){
+                              echo '<option value="'.$valunit['unitName'].'">'.$valunit['unitName'].'</option>';
+                              }
+                              }
+                             ?>
+                             </select>
+                                <input type="text" class="form-control" name="unit_tag" id="unit_tag" value="<?php echo $rowPdt['unittag'];?>" readonly>
+                                </div>
+                            </div>
+                           
+                            <div class="form-group">
+                             <label><span>*</span> WS price per unit</label>
+                                <input type="text" class="form-control" name="ws_value" id="ws_value" value="<?php echo $rowPdt['wsvalue'];?>">
+                            </div>
+                            
+                            <!-- <div class="form-group">
+                             <label><span>*</span> Cost price per unit</label>
+                                <input type="text" class="form-control" name="cost_vlaue" id="cost_vlaue" value="<?php echo $rowPdt['costvalue'];?>">
+                            </div>-->
+                              <!--<div class="form-group">
+                             <label><span>*</span> Sizemode</label>
+                                <input type="text" class="form-control" name="sizemode" id="sizemode" value="<?php echo $rowPdt['sizemode'];?>">
+                            </div>
+                            <div class="form-group">
+                             <label><span>*</span> Sizevalue</label>
+                                <input type="text" class="form-control" name="sizevalue" id="sizevalue" value="<?php echo $rowPdt['sizevalue'];?>">
+                            </div>-->
+                             <div class="form-group">
+                             <label></label>
+                                <input type="hidden" name="productid" value="<?php echo $rowPdt['productid'];?>">
+                            </div>
+                            
+                            <div class="form-group">
+                             <label></label>
+                                <input type="button" class="btn-primary" id="btn_settings" name="btn_settings" value="UPDATE" >
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        
+                         <div class="prof-sett">
+                         <?php
+                          if(file_exists($gSupplierProdcutsDir.$rowPdt['imageid'].".png")){?>
+                           <div class="circle">
+                                   <img class="profile-pic" src="<?php echo $gSupplierProdcutsURL.$rowPdt['imageid'].'.png';?>">                                            
+                                </div>
+                                <?php
+                 }
+                     ?>    
+                         
+                        
+                               
+                               
+                                <div class="p-image">
+                                 <h5>(PNG: 400px x 400px)</h5>
+                                    <input type="file" name="productimage" accept="image/*"  class="file-upload upload-button" />
+                                </div>
+                            </div>
+                            
+                            
+                            
+                        </div>
+                        
+                        
+                    </div>
+                    </form>
+                </div><!-- ./business-details -->
+            </div><!-- #/tab1default -->
+            
+        
+        
+        
+    </div><!-- ./tab-content -->
+</div>
+</div>  
+</div>
+
+</div>
+</div>
+</div>
+</section>
+

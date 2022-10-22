@@ -1,0 +1,352 @@
+<body>
+ <style>
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+      font-size: 14px;
+    }
+
+    #calendar {
+      max-width: 1100px;
+      margin: 40px auto;
+    }
+    .tab {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    right: 156px;
+    z-index:
+}
+.outerdiv{
+  position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.saveclass{
+
+  background-color: #58ab46;
+  color: white; 
+  text-decoration:none;
+}
+
+.yellowDiv {
+  border: 2px outset gold;
+  background-color: gold;    
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  float: left;
+  margin-top: 3px;
+  
+}
+
+.orangeDiv {
+  border: 2px outset orangered;
+  background-color: orangered;    
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  float: left;
+  margin-top: 3px;
+  
+}
+
+.pinkdDiv {
+  border: 2px outset hotpink;
+  background-color: hotpink;    
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  float: left;
+  margin-top: 3px;
+}
+
+
+  </style>
+
+  
+  
+   <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="evs_head">
+                        <div class="logo">
+                            <img src="images/logo.png">
+                        </div>
+
+                        <?php include('templates/menu.php');?>
+
+                    </div><!-- ./evs_head -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      eventClick: function(info) {
+        var eventObj = info.event;
+
+        if (eventObj.url) {
+									
+									$('#calendar-modal').modal('show');
+									$('#popup-retro').html(eventObj.image);
+									//alert(eventObj.id);
+									
+								
+									
+							
+         /* alert(
+            'Clicked ' + eventObj.title + '.\n' +
+            'Will open ' + eventObj.url + ' in a new tab'
+          );
+
+          window.open(eventObj.url);*/
+								
+
+          info.jsEvent.preventDefault(); // prevents browser from following link in current tab.
+        } else {
+          //alert('Clicked ' + eventObj.title);
+										//alert(eventObj.id);
+										$('#calendar-modal').modal('show');
+										
+										$.ajax({
+            type: "POST",
+            url: "ajax/ajax_calendar_location.php",
+            data: {location:eventObj.id},
+            success: function (data) {
+							$('#popup-retro').html(data);
+												
+											
+            },
+        });
+									
+										
+									
+        }
+      },
+      //initialDate: '2020-06-15',
+						
+						events: <?php echo $result;?>
+						
+    
+    });
+
+    calendar.render();
+  });
+
+</script>
+
+<div class="outerdiv">
+
+  <div class="tab"><a class="plus-circle-blue btn btn-primary" href="javascript:void(0)" onclick="funchh()"><i class="fa fa-plus"></i></a></div>
+  <div id='calendar'></div>
+</div>
+
+ 
+  
+  
+ 
+  <div class="modal fade" id="calendar-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           <button type="button" class="close-clickable" data-dismiss="modal">&times;</button>
+          <div class="modal-body">
+            <div class="popup-retro" id="popup-retro">
+           
+            
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    
+      <div id="myModal" class="modal fade chking" role="dialog">
+      <div class="modal-dialog" id="search-modal">
+    
+        <!-- Modal content-->
+        
+    
+      </div>
+    </div>  
+    
+
+
+    
+ 
+    
+	
+		<div class="modal fade" id="calendar-modal-book" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document" style="width:300px">
+        <div class="modal-content">
+           <button type="button" class="close-clickable" data-dismiss="modal">&times;</button>
+         <!--<div class="modal-body">
+           <div class="popup-retro" id="popup-retro">
+
+             
+     <div class="retro-body">-->
+ 
+  
+	
+		 <div class="leavepick_popup" style="display:block; width: 298px; position: static;">
+
+     
+      <div class="form-group">
+        <input type="radio" name="typrad" class="typrad" value="book" checked="checked">Booking &nbsp;&nbsp;
+
+        <input type="radio" name="typrad" class="typrad" value="staff">Staff
+        
+        </div>
+        <span id="locspan">
+
+          <div class="form-group">
+       <select name="propertty" class="form-control" id="propertty">
+        <option value="">Select Location</option>
+        <?php foreach($postLocation as $valloc){
+
+          echo '<option value="'.$valloc['locationid'].'">'.$valloc['locationSearch'].'</option>';
+
+        }?>
+        
+        </select>
+        </div>
+        </span>
+
+        <span id="staffspan" style="display: none;">
+
+            <div class="form-group">
+            <select name="staff" class="form-control" id="staff">
+            <option value="">Select Staff</option>
+            <?php foreach($AllStaff as $valsatff){
+
+            echo '<option value="'.$valsatff['staff_id'].'">'.$valsatff['staff_name'].'</option>';
+
+            }?>
+
+            </select>
+            </div>
+      </span>
+        
+    
+    <div class="form-group">
+       StartDate:<input id="datetimepicker" type="text" class="form-control datetimepicker b_startdate">
+         </div>
+         <div class="form-group">
+       EndDate:<input id="datetimepicker1" type="text" class="form-control datetimepicker b_enddate">
+         </div>
+
+         <div class="notes-note">
+
+          <span id="book_span">
+
+            <div class="form-group">
+             <img src="images/Appointment_MeasureQuote.png" style="width:20px; height:20px; float:left;">
+             <label class="cust_checkbox2">Measure and Quote
+                   <input type="radio" name="book_type" value="Measure and Quote" checked="checked">
+                   <span class="checkmark alarm"></span>
+                 </label>
+             
+             </div>
+             <div class="form-group" name="book_type">
+             <img src="images/Appointment_Install.png" style="width:20px; height:20px; float:left;">
+              <label class="cust_checkbox2">Installation
+              	<input type="radio" name="book_type" value="Installation">
+                <span class="checkmark alarm"></span>
+              </label>
+         
+             </div>
+	            <div class="form-group">
+	            <img src="images/Appointment_Inspect.png" style="width:20px; height:20px; float:left;">
+	            <label class="cust_checkbox2">Inspect
+
+	                 <input type="radio" name="book_type" value="Inspect">
+	                 <span class="checkmark alarm"></span>
+	               </label>
+            
+             </div>
+            
+            
+            
+            </span>
+
+
+            <span id="leave_staff" style="display: none;">
+
+<div class="form-group">
+<div class="yellowDiv"></div>
+<label class="cust_checkbox2">Holiday Leave
+     <input type="radio" name="leave_type" value="HolidayLeave" checked="checked">
+     <span class="checkmark alarm"></span>
+   </label>
+
+</div>
+<div class="form-group" name="leave_type">
+  <div class="orangeDiv"></div>
+<label class="cust_checkbox2">Sick Leave
+  <input type="radio" name="leave_type" value="SickLeave">
+  <span class="checkmark alarm"></span>
+</label>
+
+</div>
+<div class="form-group">
+  <div class="pinkdDiv"></div>
+<label class="cust_checkbox2">Work Travel
+
+     <input type="radio" name="leave_type" value="WorkTravel">
+     <span class="checkmark alarm"></span>
+   </label>
+
+</div>
+
+
+
+</span>
+
+<div class="form-group">
+<label>Notes</label>
+<textarea class="form-control" rows="2" placeholder="" id="new_booking_notes"></textarea>
+</div>
+
+           
+         
+           
+         </div>
+         <div class="datepick_btns">
+						<a href="javascript:void(0)" id="addnewbook" class="saveclass"> save <i class="fa fa-clock-o"></i></a>
+					<!--<a href="#" id="done">Done <i class="fa fa-check"></i></a>
+						<a href="#" id="cancel">Remove</a>-->
+         </div>
+     </div>
+	 
+   
+ <!--</div>
+
+           
+            
+            </div>
+          </div>-->
+        </div>
+      </div>
+    </div>
+    
+    <script type="text/javascript">
+      function funchh(){
+
+        $('#calendar-modal-book').modal('show');
+
+      }
+
+     
+      </script>

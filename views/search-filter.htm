@@ -1,0 +1,85 @@
+ <div class="form-group">
+                        	<select class="form-control" name="location" id="location">
+                           <?php
+                            if(!empty($req_array['city'])){
+                            echo '<option value='.$req_array['city'].'">'.$req_array['city'].'</option>';}
+                            else { 
+                            	echo '<option value="select">Select Location</option>';
+																												}
+																											if(!empty($postloc[0]))
+																											{
+																												 foreach($postloc as $row_loc)
+																													{
+																														  echo '<option value="'.$row_loc['city'].'">'.$row_loc['city'].'</option>';
+																													}
+																												 
+																											}
+																												?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                        	<select class="form-control" name="quote_status" id="quote_status">
+                            <option value="All">All</option>
+                             <?php
+																											if(!empty($poststatus[0]))
+																											{
+																												
+																												 foreach($poststatus as $row_status )
+																													{
+																														  echo '<option value="'.$row_status['locationstatusid'].'">'.$row_status['status'].'</option>';
+																													}
+																												 
+																											}
+																												?>
+                            </select>
+                        </div>
+                        
+                        
+                        <div class="form-group" id="result-prop">
+                        	<select class="form-control" id="list-prop" name="list-prop">
+                         <?php if(!empty($req_array['property'])){ echo '<option value="'.$req_array['lcoationid'].'">'.$req_array['property'].'</option>';}else{
+                            	echo '<option>Select Property</option>';}
+                            
+																										   if(!empty($locprop[0]))
+																											{
+																												 foreach($locprop as $row_prop)
+																													{
+                                $loc=$row_prop['unitnum'].",".$row_prop['street'];
+																																						if(!empty($row_prop['suburb']))
+																																						{
+																																								$loc.=",".$row_prop['suburb'];
+																																						}
+																																						$loc.=",".$row_prop['city'];?>
+                                      <option value="<?php echo $row_prop['locationid'];?>" <?php if($row_prop['locationid'] == $req_array['lcoationid']){?> selected="selected" <?php } ?>><?php echo $loc;?></option>
+                                      <?php
+																														
+                              
+																														 
+																													}
+																												 
+																											}
+																												?>
+                            </select>
+                        </div>
+                        
+                        <!--<div class="form-group" id="result-prop">
+                        	<select class="form-control" id="list-prop" name="list-prop">
+                            	<option>Select Property</option>
+                             <?php
+																											if(!empty($locprop[0]))
+																											{
+																												 foreach($locprop as $row_prop)
+																													{
+																														  $loc=$row_prop['unitnum'].",".$row_prop['street'];
+																																	if(!empty($row_prop['suburb']))
+																																	{
+																																			$loc.=",".$row_prop['suburb'];
+																																	}
+																																	$loc.=",".$row_prop['city'];
+																														  echo '<option value="'.$row_prop['locationid'].'">'.$loc.'</option>';
+																													}
+																												 
+																											}
+																												?>
+                            </select>
+                        </div>-->

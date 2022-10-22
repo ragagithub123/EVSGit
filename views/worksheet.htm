@@ -1,0 +1,320 @@
+
+<section style="width: 900px; margin: auto;">
+  <div class="">
+      <div class="row">
+          <div class="col-lg-12">
+
+      <div class="evs_head">
+          <div class="logo">
+              <img src="images/logo.png">
+          </div>
+
+        <div class="header-select">
+
+            <select class="form-control" id="select_worksheet">
+              <option value="production">Production Sheet</option>
+              <option value="measure">Check Measure Sheet</option>
+               <option value="job">Job Sheet</option>
+				 <option value="task">Tools and Materials Sheet</option>
+            </select>
+            Date : <?php echo date('d-m-Y');
+            //include('templates/menu.php');?>
+          </div>
+
+      </div><!-- ./evs_head -->
+
+          </div>
+      </div>
+  </div>
+</section>
+<section class="evs-main-body" style="width: 900px; margin: auto;">
+      <div class="">
+        <div class="row">
+          <div class="col-lg-12">
+            <?php
+            $loc=$row_details['unitnum'].",".$row_details['street'];
+            if(!empty($row_details['suburb']))
+            {
+              $loc.=",".$row_details['suburb'];
+            }
+            ?>
+            <h3 class="title-h-one">Job: <span><?php echo $loc;?></span></h3>
+
+            <div class="house-details">
+              <div class="house-photo">
+                <?php
+                if($row_details['photoid'] !=0)
+                {
+                  ?>
+                <img src="<?php echo $gPhotoURL.$row_details['photoid'];?>.jpg" class="img-responsive">
+                <?php
+
+                }?>
+
+                <div class="house-info">
+                  <ul>
+
+                    <li><?php echo $row_details['city'];?></li>
+                    <li><?php echo $row_details['firstname']." ".$row_details['lastname'];?></li>
+                    <li><?php echo $row_details['phone'];?></li>
+                    <li><?php echo $row_details['email'];?></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="house-task">
+                <table border="1" class="table">
+                  <tbody>
+                    <tr>
+                      <th>Task</th>
+                      <th width="60" style="text-align: center;">Yes</th>
+                      <th style="text-align: center;">Date</th>
+                    </tr>
+                    <tr>
+                      <td>Quoted</td>
+                      <td><?php if($row_details['quoted_date']!='0000-00-00'){ ?> <input type="checkbox" id="quote_check" checked="checked" />
+                      <?php } else{ ?> <input type="checkbox" id="quote_check" <?php } ?>
+                      </td>
+                      <td style="text-align: center;" class="calendar-tble"><span id="td_quote"><?php if($row_details['quoted_date']!='0000-00-00')echo date('d-m-Y',strtotime($row_details['quoted_date'])); else echo $row_details['quoted_date'];?></span> <input type="date" class="task_date" id="task-td_quote-quoted_date-quote_check"></td>
+                    </tr>
+                    <tr>
+                      <td>Check Measured</td>
+                       <td><?php if($row_details['check_measured']!='0000-00-00'){ ?> <input type="checkbox" id="measured_check" checked="checked" />
+                      <?php } else{ ?> <input type="checkbox" id="measured_check" /> <?php } ?>
+                      </td>
+
+                      <td style="text-align: center;"  class="calendar-tble"><span id="td_measured"><?php if($row_details['check_measured']!='0000-00-00') echo date('d-m-Y',strtotime($row_details['check_measured'])); else echo $row_details['check_measured'];?></span> <input type="date" class="task_date" id="task-td_measured-check_measured-measured_check"></td>
+                    </tr>
+                    <tr>
+                      <td>Glass Ordered</td>
+                       <td><?php if($row_details['glass_ordered']!='0000-00-00'){ ?> <input type="checkbox" id="ordered_check" checked="checked" />
+                      <?php } else{ ?> <input type="checkbox" id="ordered_check" /> <?php } ?>
+                      </td>
+
+                      <td style="text-align: center;"  class="calendar-tble"><span id="td_ordered"><?php if($row_details['glass_ordered']!='0000-00-00') echo date('d-m-Y',strtotime($row_details['glass_ordered'])); else echo $row_details['glass_ordered'];?></span> <input type="date" class="task_date" id="task-td_ordered-glass_ordered-ordered_check"></td>
+                    </tr>
+                    <tr>
+                      <td>Glass Recieved</td>
+                       <td><?php if($row_details['glass_received']!='0000-00-00'){ ?> <input type="checkbox" id="received_check" checked="checked" />
+                      <?php } else{ ?> <input type="checkbox" id="received_check" /> <?php } ?>
+                      </td>
+
+                      <td style="text-align: center;"  class="calendar-tble"><span id="td_received"><?php  if($row_details['glass_received']!='0000-00-00') echo date('d-m-Y',strtotime($row_details['glass_received'])); else echo $row_details['glass_received'];?></span> <input type="date" class="task_date" id="task-td_received-glass_received-received_check"></td>
+                    </tr>
+                    <tr>
+                      <td>Job Finished</td>
+
+                      <td><?php if($row_details['job_finished']!='0000-00-00'){ ?> <input type="checkbox" id="finished_check" checked="checked" />
+                      <?php } else{ ?> <input type="checkbox" id="finished_check" /> <?php } ?>
+                      </td>
+
+                      <td style="text-align: center;" class="calendar-tble"><span id="td_finished" ><?php if($row_details['job_finished']!='0000-00-00') echo date('d-m-Y',strtotime($row_details['job_finished'])); else echo $row_details['job_finished'];?></span> <input type="date" class="task_date" id="task-td_finished-job_finished-finished_check"></td>
+                    </tr>
+                    <tr>
+                      <td>Job Checked</td>
+
+                       <td><?php if($row_details['job_checked']!='0000-00-00'){ ?> <input type="checkbox" id="job_check" checked="checked" />
+                      <?php } else{ ?> <input type="checkbox" id="job_check" /> <?php } ?>
+                      </td>
+
+                      <td style="text-align: center;"  class="calendar-tble"><span id="td_jobcheck"><?php if($row_details['job_checked']!='0000-00-00') echo date('d-m-Y',strtotime($row_details['job_checked'])); else echo $row_details['job_checked']; ?></span> <input type="date" class="task_date" id="task-td_jobcheck-job_checked-job_check"/></td>
+                    </tr>
+                    <tr>
+                      <td>Job Invoiced</td>
+
+
+                       <td><?php if($row_details['job_invoiced']!='0000-00-00'){ ?> <input type="checkbox" id="job_invoiced" checked="checked" />
+                      <?php } else{ ?> <input type="checkbox" id="job_invoiced" /> <?php } ?>
+                      </td>
+
+
+                      <td style="text-align: center;"  class="calendar-tble"><span id="td_invoiced"><?php if($row_details['job_invoiced']!='0000-00-00') echo date('d-m-Y',strtotime($row_details['job_invoiced'])); else echo $row_details['job_invoiced'];?></span> <input type="date" class="task_date" id="task-td_invoiced-job_invoiced-job_invoiced"></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td style="text-align: center;"></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Total Install Hours <?php echo $totalinstallhrs;?></td>
+                    </tr>
+                    <tr>
+                      <td>Total Extra's Hours &nbsp;<?php echo $total_extra_hrs;?></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+         <h2 style="margin-top: -42px; font-weight: bold;">PRODUCTION SHEET</h2>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped fontstyle center-inp">
+                <thead>
+                  <tr style="color:#fff; background:#565759;">
+                    <th colspan="3" width="170">Window</th>
+                    <th colspan="6" align="left" width="60%">Glass Sizes</th>
+                    <th colspan="6" align="left">Workflow</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ID</td>
+                    <td>Room</td>
+                    <td>Window[]</td>
+                    <td width="80">Style</td>
+                    <td width="80">Safety</td>
+                    <td width="80">Height</td>
+                    <td width="80">Width</td>
+                    <td width="80">Center</td>
+                    <td style="text-align: center;" width="120">Type</td>
+                    <td style="text-align: center;" width="70"><input type="checkbox" id="glass_btn" value=""/>Glass</td>
+                    <td style="text-align: center;" width="70"><input type="checkbox" id="kit_btn" value=""/>Kit</td>
+                    <td style="text-align: center;" width="70"><input type="checkbox" id="assemble_btn" value=""/>Assemble</td>
+                    <td style="text-align: center;" width="70"><input type="checkbox" id="prep_btn" value=""/>Prep</td>
+                    <td style="text-align: center;" width="70"><input type="checkbox" id="install_btn" value=""/>Install</td>
+                    <td style="text-align: center;" width="70"><input type="checkbox" id="seals_btn" value=""/>Seals</td>
+                  </tr>
+                   <?php
+
+
+          						foreach($postpanel as $row_window){?>
+
+
+                  <tr>
+                    <td colspan="3">
+                    <img src="<?php echo $gwindowURL.$row_window['windowtypeid'];?>.png" class="img-responsive" style="width: 170px;"></td>
+                    <td colspan="6">
+                      <div class="table-inner-details">
+                        <div class="innr-title">
+                          <h5>Notes</h5>
+                          <h5>Install Hours <?php echo $row_window['selected_hours'];?></h5>
+                        </div>
+                        <p><?php echo $row_window['notes'];?></p>
+                      </div>
+                    </td>
+                    <td colspan="6">
+                      <div class="table-inner-details">
+                        <div class="innr-title">
+                          <h5>Extras</h5>
+                          <h5>Extras Hours <?php echo $row_window['extra_hour'];?></h5>
+                        </div>
+                        <ul class="extra-list">
+                        <?php
+                        	foreach($row_window['extras'] as $row_extras)
+																									{
+
+                         ?>
+                          <li>
+                          <?php
+                            if(file_exists($gSupplierProdcutsDir.$row_extras['imageid'].".png")){
+                                         echo '<img src="'.$gSupplierProdcutsURL.$row_extras['imageid'].'.png'.'" style="width:20px">';
+                             }?>
+
+                            <span><?php echo $row_extras['quantity'];?> x <?php echo $row_extras['name'];?></span>
+                          </li>
+                         <?php } ?>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                 <?php
+                  foreach($row_window['panelarray'] as $row_panel){ ?>
+                  <tr>
+                    <td><?php echo $row_panel['ID'];?></td>
+                    <td><?php echo $row_window['room_name'];?></td>
+                    <td><?php echo $row_window['name']."[".$row_panel['panelnum']."]";?></td>
+                    <td><?php if($row_panel['styleid'] > 0 && file_exists($gPanelOptionsPhotoDir.$row_panel['styleid'].".png"))
+                    {
+                      echo "<img src=\"". $gPanelOptionsPhotoURL.$row_panel['styleid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\">";
+                    } ?></td>
+                    <td><?php echo $row_panel['safty_name'];?></td>
+
+                     <td <?php if($row_panel['measurement']=='estimate'){?> style="color:#F00"<?php }?>><?php echo $row_panel['GlassY'];?> </td>
+                      <td <?php if($row_panel['measurement']=='estimate'){?> style="color:#F00"<?php }?>><?php echo $row_panel['GlassX'];?> </td>
+                    <td <?php if($row_panel['measurement']=='estimate'){?> style="color:#F00"<?php }?>><?php echo $row_panel['center'];?> </td>
+                    <td style="text-align: center;"><?php echo $row_window['selected_product'];?></td>
+
+                    <td><input type="checkbox" name="check_glass" class="cls_glass" value="<?php echo $row_panel['panelid'];?>" id="check_glass<?php echo $row_panel['panelid'];?>" data-id ="<?php echo $row_window['roomid'];?>" onchange="workflow(this.id,'glass',<?php echo $row_window['roomid'];?>,<?php echo $row_panel['panelid'];?>)" <?php if($row_panel['workflow']['glass']==1){?> checked="checked" <?php } ?> ></td>
+                    <td><input type="checkbox" name="check_kit" class="cls_kit" value="<?php echo $row_panel['panelid'];?>" id="check_kit<?php echo $row_panel['panelid'];?>" data-id ="<?php echo $row_window['roomid'];?>" onchange="workflow(this.id,'kit',<?php echo $row_window['roomid'];?>,<?php echo $row_panel['panelid'];?>)" <?php if($row_panel['workflow']['kit']==1){?> checked="checked" <?php } ?> ></td>
+                    <td><input type="checkbox" name="check_assemble" class="cls_assemble" value="<?php echo $row_panel['panelid'];?>" id="check_assemble<?php echo $row_panel['panelid'];?>" data-id ="<?php echo $row_window['roomid'];?>" onchange="workflow(this.id,'assemble',<?php echo $row_window['roomid'];?>,<?php echo $row_panel['panelid'];?>)" <?php if($row_panel['workflow']['assemble']==1){?> checked="checked" <?php } ?>></td>
+                    <td><input type="checkbox" name="check_prep" class="cls_prep" value="<?php echo $row_panel['panelid'];?>" id="check_prep<?php echo $row_panel['panelid'];?>" data-id ="<?php echo $row_window['roomid'];?>" onchange="workflow(this.id,'prep',<?php echo $row_window['roomid'];?>,<?php echo $row_panel['panelid'];?>)" <?php if($row_panel['workflow']['prep']==1){?> checked="checked" <?php } ?>></td>
+                    <td><input type="checkbox" name="check_install" class="cls_install" value="<?php echo $row_panel['panelid'];?>" id="check_install<?php echo $row_panel['panelid'];?>" data-id ="<?php echo $row_window['roomid'];?>" onchange="workflow(this.id,'install',<?php echo $row_window['roomid'];?>,<?php echo $row_panel['panelid'];?>)" <?php if($row_panel['workflow']['install']==1){?> checked="checked" <?php } ?>></td>
+                    <td><input type="checkbox" name="check_seals" class="cls_seals" value="<?php echo $row_panel['panelid'];?>" id="check_seals<?php echo $row_panel['panelid'];?>" data-id ="<?php echo $row_window['roomid'];?>" onchange="workflow(this.id,'seals',<?php echo $row_window['roomid'];?>,<?php echo $row_panel['panelid'];?>)" <?php if($row_panel['workflow']['seals']==1){?> checked="checked" <?php } ?>></td>
+                  </tr>
+
+                  <?php } } ?>
+
+                </tbody>
+                <thead>
+                  <tr style="color:#fff; background:#565759;">
+                    <th colspan="8">
+                      <div style="display: flex; align-items: center; justify-content: space-between;">Report &nbsp;<?php echo $row_details['project_name']; echo '&nbsp;'.$row_details['project_date'];s?><button class="add-btn-table"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+                      </th>
+                    <th style="text-align: center; vertical-align: middle;">Week Ending Date</th>
+                    <th style="text-align: center; vertical-align: middle;">Glass</th>
+                    <th style="text-align: center; vertical-align: middle;">Kit</th>
+                    <th style="text-align: center; vertical-align: middle;">Assemble</th>
+                    <th style="text-align: center; vertical-align: middle;">Prep</th>
+                    <th style="text-align: center; vertical-align: middle;">Install</th>
+                    <th style="text-align: center; vertical-align: middle;">Seals</th>
+                  </tr>
+                </thead>
+                <tbody id="myTable">
+                <?php
+                $cnt=0;
+                foreach($weekely as $valweek){ $cnt++;
+
+
+                ?>
+
+                <tr>
+                    <td colspan="8"><div class="pull-right"><input type="checkbox" <?php if($valweek['dates']!='00-00-0000'){?> checked="checked"<?php } ?> class="checkA" data-id="<?php echo $cnt;?>" id="checkA<?php echo $cnt;?>"></div></td>
+                    <td class="calendar-tble calendar-pos"><span id="td_A<?php echo $cnt;?>"><?php echo $valweek['dates'];?></span> <input type="date" id="date_A<?php echo $cnt;?>" class="date_A" data-id="<?php echo $cnt;?>"/> </td>
+                    <td style="text-align: center;" id="glassA<?php echo $cnt;?>"><?php echo $valweek['glass'];?></td>
+                    <td style="text-align: center;" id="kitA<?php echo $cnt;?>"><?php echo $valweek['kit'];?></td>
+                    <td style="text-align: center;" id="assembleA<?php echo $cnt;?>"><?php echo $valweek['assemble'];?></td>
+                    <td style="text-align: center;" id="prepA<?php echo $cnt;?>"><?php echo $valweek['prep'];?></td>
+                    <td style="text-align: center;" id="installA<?php echo $cnt;?>"><?php echo $valweek['install'];?></td>
+                    <td style="text-align: center;" id="sealsA<?php echo $cnt;?>"><?php echo $valweek['seals'];?></td>
+                  </tr>
+
+                <?php
+                }
+
+                ?>
+
+
+                </tbody>
+                 <tfoot>
+                  <tr>
+                    <td colspan="9" style="text-align: right;">
+                      <span>Job <strong id="job_complete"><?php echo $jobpercent;?></strong> complete</span>
+                      <span style="margin-left: 25px;">Total</span>
+                    </td>
+                    <td style="text-align: center;" id="tot_glass"><?php echo $tot_glass;?></td>
+                    <td style="text-align: center;" id="tot_kit"><?php echo $tot_kit;?></td>
+                    <td style="text-align: center;" id="tot_assemble"><?php echo $tot_assemble;?></td>
+                    <td style="text-align: center;" id="tot_prep"><?php echo $tot_prep;?></td>
+                    <td style="text-align: center;" id="tot_install"><?php echo $tot_install;?></td>
+                    <td style="text-align: center;" id="tot_seals"><?php echo $tot_seals;?></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+        <input type="hidden" id="today_date" value="<?php echo date('d-m-Y',strtotime($date));?>" />
+        <input type="hidden" id="locationid" value="<?php echo $Locationid;?>" />
+         <input type="hidden" id="count" value="<?php echo $cnt;?>" />
+      </div>
+    </section>

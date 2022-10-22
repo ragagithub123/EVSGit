@@ -1,0 +1,266 @@
+
+  
+  <body>
+ <div class="move-loader" style="display:none">
+    <i class="fa fa-arrows"></i>
+    <h5 id="title_loader">Moving to Job Card</h5>
+    <h5 id="mov_load_loc">To Archive</h5>
+    <div class="loader-div">
+        <span></span>
+        <span></span>
+</div>
+</div>
+
+  
+  		<div class="loader3" style="display:none">
+        <span ></span>
+        <span></span>
+    </div>
+    
+    <!-- Full screen gallery. -->
+    <div class="fs-gal-view">
+        <h1></h1>
+        <img class="fs-gal-close" src="images/close.svg" alt="Close gallery" title="Close gallery" />
+        <img class="fs-gal-main" src="" alt="" />
+    </div>
+    <!--end gallery-->
+    
+    
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                
+                    <div class="evs_head">
+                        <div class="logo">
+                            <img src="images/logo.png">
+                        </div>
+                        
+                        <?php include('templates/menu.php');?>
+                        
+                    </div><!-- ./evs_head -->
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <section class="evs-main-body">
+    	<div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                <div class="drag-main">
+                <?php
+															
+																	foreach($post as $val_post)
+																	{
+                    if($val_post['jobstatus']=="Quote: Rejected")
+                    $val_post['jobstatus']="Quote: On Hold";
+																		?>
+                 <div class="drag-main-inner">
+                        	<div class="column-title"><?php echo $val_post['jobstatus'];?>
+                         <ul>
+                            <?php if($val_post['jobstatus'] =='Enquiry: New'){
+                               if($recycle_button == 0){?>
+                         								<li><span data-toggle="modal" data-target="#AddCard" class="addprop add-plus" data-id="<?php echo $val_post['jobstatusid'];?>"><i class="fa fa-plus"></i></span></li>
+                                 <?php }else{
+                                 echo '<a id="recycle-button" href="#"><img src="images/recy.png" style="width:20px; height:20px;" ></a>';
+                                 }} ?>
+                                	<li><img src="images/exclamation_small.png" style="width:15px; height:15px;"> <span id="total-panels<?php echo $val_post['jobstatusid'];?>"><?php echo $val_post['totals_panels'];?></span></li>
+                                	<li><img src="images/check_small.png" style="width:15px; height:15px;"> <span id="selected-panels<?php echo $val_post['jobstatusid'];?>"><?php echo $val_post['selected_panels'];?></span></li>
+                                	<li><span class="colm-count" id="card-count<?php echo $val_post['jobstatusid'];?>"><?php echo $val_post['total_cards'];?></span></li>
+                                </ul>
+                         
+                         </div>
+                          <div class="column-drag" id="sort<?php echo $val_post['jobstatusid'];?>" data-status-id="<?php echo $val_post['jobstatusid'];?>">
+                          <span id="ajax-span<?php echo $val_post['jobstatusid'];?>"></span>
+                          <?php
+																										
+
+																									foreach($val_post['cards'] as $val_vards)
+																									{
+																										 if($val_vards['jobstatusid']==$val_post['jobstatusid']){
+																										 $loc=$val_vards['unitnum'].",".$val_vards['street'];
+																										if(!empty($val_vards['suburb']))
+																										{
+																												$loc.=",".$val_vards['suburb'];
+																										}
+																										$loc.=",".$val_vards['city'];
+																										$customor=$val_vards['firstname'].$val_vards['lastname'].",".$loc;
+                           
+                          ?>
+                           <div class="portlet" data-task-id="<?php echo $val_vards['locationid']; ?>">
+                                    <div class="portlet-header">
+                                    			<a data-toggle="modal" data-target="#myModal" class="load-popup" data-id="<?php echo $val_vards['locationid'];?>" id="modal-list<?php echo $val_vards['locationid'];?>">
+                                         <div class="tile-inner">
+                                         <?php
+                                         if(!empty($val_vards['location_image'])){
+                                         	?><img src="<?php echo $val_vards['location_image'];?>"  id="backgroundImage<?php echo $val_vards['locationid'];?>" style="background-color:<?php echo $val_vards['background_color'];?>"><?php }?>
+
+                                             <div class="tile-inner-content">
+                                                 <h5><?php echo $customor;?></h5>
+                                                 <ul>
+                                                     <li><i class="fa fa-eye"></i></li>
+                                                     <li ><i class="fa fa-comment"></i><span id="cmmt_<?php echo $val_vards['locationid'];?>"><?php echo $val_vards['cmmt_cnt'];?></span></li>
+                                                     <li><i class="fa fa-paperclip"></i><span id="attach_<?php echo $val_vards['locationid'];?>"><?php echo $val_vards['total_cnt'];?></span> </li>
+                                                     
+                                                               <?php if(($val_vards['booking_date']!='' && $val_vards['booking_status']==1)){?>
+                                                   
+                                                    <li>
+																																																				<?php  if($val_vards['alarm_Type']=="Measure and Quote"){
+																																										echo '<img src="images/Appointment_MeasureQuote.png" style="width:15px; height:15px" />&nbsp;';
+																																									}else if($val_vards['alarm_Type']=="Installation"){
+																																										echo '<img src="images/Appointment_Install.png" style="width:15px; height:15px" />&nbsp;';
+																																									}else if($val_vards['alarm_Type']=="Inspect"){
+																																										echo '<img src="images/Appointment_Inspect.png" style="width:15px; height:15px" />&nbsp;';
+																																									}?> <h6 class="waiting"><?php echo $val_vards['book_time'];?> <span><?php echo $val_vards['book_date'];?></span> <i class="fa fa-clock-o"></i>
+                                                    </h6></li><?php }else if(($val_vards['book_date']!='' && $val_vards['booking_status']==0)){
+                                                      
+                                                    ?>
+                                                    <li>
+																																																				<?php  if($val_vards['alarm_Type']=="Measure and Quote"){
+                                             echo '<img src="images/Appointment_MeasureQuote.png" style="width:15px; height:15px" />&nbsp;';
+                                            }else if($val_vards['alarm_Type']=="Installation"){
+                                             echo '<img src="images/Appointment_Install.png" style="width:20px; height:15px" />&nbsp;';
+                                            }else if($val_vards['alarm_Type']=="Inspect"){
+                                             echo '<img src="images/Appointment_Inspect.png" style="width:15px; height:15px" />&nbsp;';
+																																									}?> <h6> <?php echo $val_vards['book_time'];?> <span><?php echo $val_vards['book_date'];?></span> <i class="fa fa-check-circle-o"></i>
+                                                    </h6></li>
+                                                    <?php
+                                                    } ?>
+                                                    <li><img src="images/exclamation_small.png" style="width:15px; height:15px;"><?php echo $val_vards['quotedpanel'];?></li>
+                                                     <li><img src="images/check_small.png" style="width:15px; height:15px;"><?php echo $val_vards['selectedpanel'];?></li>
+                                                 </ul>
+                                             </div>
+                                         </div>
+                                        </a>
+                                    </div>
+                                    <div class="portlet-content"></div>
+                                </div>
+                          <?php
+                          }
+																										}
+																										?>
+                          
+                          
+                          
+                          
+                          
+                        
+                               
+                                
+                               <!-- <div class="column-footer">
+                                 	<a href="#" data-toggle="modal" data-target="#AddCard" class="addprop" data-id="<?php echo $val_post['jobstatusid'];?>">Add Another Card</a>
+                                </div>-->
+                                <!-- ./column-footer -->
+                                
+                            </div>
+                            <!-- ./column-drag -->
+                        </div>
+																		 
+															
+                
+                
+                        <?php 
+																	}
+																	?>
+                        
+                        
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  </section>      
+    
+    
+    
+     <!----------------------------------------------------------->
+    <!----------------------- Modal Popup ----------------------->
+    <!----------------------------------------------------------->
+            <div id="myModal" class="modal fade chking" role="dialog">
+      <div class="modal-dialog" id="search-modal">
+    
+        <!-- Modal content-->
+        
+    
+      </div>
+    </div>  
+    
+    
+    
+    
+    <!--<div id="mySearchModal" class="modal fade chking" role="dialog">
+      <div class="modal-dialog" id="search-modal">
+   
+            
+
+        
+        
+    
+      </div>
+    </div>-->
+    
+    
+    
+     
+    
+    
+    <div id="AddCard" class="modal fade" role="dialog">
+                        
+                       <div class="modal-dialog-prop" style="width:600px; margin:30px auto; position:relative;">
+                     
+                         <!-- Modal content-->
+                         <div class="modal-content">
+                           <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal">&times;</button>
+                             <h4 class="modal-title">Add Property Details</h4>
+                           </div>
+                           <div class="modal-body-prop" style="position:relative; padding:15px;">
+                             <p>
+                             
+                             <form method="post" action="" enctype="multipart/form-data" id="form">
+                             <table class="table">
+                             <tr><th></th><td><input type="hidden" id="statusid"></td>
+                             <tr><th>Image</th><td><img  class="img-responsive" style="width:100px;height:100px" id="userimage"> <input type="file" name="locimage" id="locimage" onChange="readURL(this)" autocomplete="off"/></td></tr>
+                             <tr><th>Unitnum</th><td><input type="text" name="unitnum" id="unitnum" class="form-control" autocomplete="off"/></td></tr>
+                             <tr><th>Street</th><td><input type="text" name="street" id="street" class="form-control" autocomplete="off"/></td></tr>
+                             <tr><th>Suburb</th><td><input type="text" name="suburb" id="suburb" class="form-control" autocomplete="off"/></td></tr>
+                             <tr><th>City</th><td><input type="text" name="city" id="city" class="form-control" autocomplete="off" autocomplete="off"/></td></tr>
+                             <tr><th>Customer Firstname</th><td><input type="text" name="firstname" id="firstname" class="form-control" autocomplete="off"/></td></tr>
+                             <tr><th>Customer Lastname</th><td><input type="text" name="lastname" id="lastname" class="form-control" autocomplete="off"/></td></tr>
+                             <tr><th>Customer Phone</th><td><input type="text" name="phone" id="phone" class="form-control" autocomplete="off"/></td></tr>
+                             <tr><th>Customer Email</th><td><input type="text" name="email" id="email" class="form-control" autocomplete="off"/></td></tr>
+                              <tr><th>Notes</th><td><textarea name="notes" id="notes" class="form-control" rows="5" style="width:100%; resize:none;" autocomplete="off"></textarea></td></tr>
+                              <!--<tr><th>Quote Status</th><td>
+                              <?php
+                              foreach($locstatus as $val_status)
+                              {
+                              echo $val_status['status'].'<input type="radio" name="loc_status" value='.$val_status['locationstatusid'].' />&nbsp;&nbsp;';
+																														
+																														}
+																														?>
+                              <td>
+                              </tr>-->
+                            
+                             <tr><td colspan="2"><input type="button" value="ADD" class="btn btn-primary" style="margin-left:50px;"  id="add-prop"/></td></tr>
+                             </table>
+                             </form>
+                             </p>
+                           </div>
+                           <div class="modal-footer">
+                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                           </div>
+                         </div>
+                     
+                       </div>
+               </div>   
+		<img id="noimage" hidden="hidden">
+  
+  <script type="text/javascript">
+		setTimeout(function(){ //alert($('#search-text').val());
+		if($('#search-text').val()!='')
+		$( "#search" ).trigger( "click" )}, 1000);
+																							
+			</script>
+  

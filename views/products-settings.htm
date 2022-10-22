@@ -1,0 +1,88 @@
+  <body>
+  <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                
+                    <div class="evs_head">
+                        <div class="logo">
+                            <img src="images/logo.png">
+                        </div>
+                        
+                        <?php include('templates/menu.php');?>
+                    </div><!-- ./evs_head -->
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+  
+     <section class="evs-main-body">
+    	<div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                
+                	<div class="custom-tabs">
+                        <div class="panel with-nav-tabs panel-default">
+                            
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="tab1default">
+                                    	<div class="table-resp-hght">
+                                     <table class="table">
+                                       <tr class="active">
+                                         <th>Name</th>
+                                         <th>Image</th>
+                                         <th>Shortname</th>
+                                          <th>Code</th>
+                                         
+                                           <th>Hours</th>
+                                           <th>Unitname</th>
+                                           <th>Unittag</th>
+                                           <th>WS value</th>
+                                          
+                                           <th><a class="btn btn-primary" href="product-settings.php?id=add">Add</a></th>
+                                       </tr>
+                                      
+                                      <?php
+                                     
+                                        if(!empty($Prodcuts[0])){
+                                         foreach($Prodcuts as $valproduct){
+                                         echo '<tr>
+                                         <td>'.$valproduct['name'].'</td>';
+                                         if(file_exists($gSupplierProdcutsDir.$valproduct['imageid'].".png")){
+                                         echo '<td><img src="'.$gSupplierProdcutsURL.$valproduct['imageid'].'.png'.'" style="width:30px"></td>';
+                                         }else{
+                                          echo '<td></td>';
+                                         }
+                                               echo '<td>'.$valproduct['shortname'].'</td>
+                                               <td>'.$valproduct['code'].'</td>
+                                             
+                                               
+                                                  <td>'.$valproduct['hours'].'</td>
+                                                   <td>'.$valproduct['unitname'].'</td>
+                                                  <td>'.$valproduct['unittag'].'</td>
+                                                   <td>'.$valproduct['wsvalue'].'</td>
+                                                  
+                                                   <td><a href="product-settings.php?id='.base64_encode($valproduct['productid']).'">Edit</a></td></tr>';
+                                         }
+                                        }
+                                      ?>
+                                     </table>
+                                       
+                                        </div><!-- ./business-details -->
+                                    </div><!-- #/tab1default -->
+                                    
+        
+        
+        
+    </div><!-- ./tab-content -->
+</div>
+</div>  
+</div>
+
+</div>
+</div>
+</div>
+</section>
+

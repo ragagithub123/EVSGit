@@ -1,0 +1,334 @@
+<body>
+    <div class="loader3" style="display:none">
+        <span></span>
+        <span></span>
+    </div>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="evs_head">
+                        <div class="logo">
+                            <img src="images/logo.png">
+                        </div>
+
+                        <?php include('templates/menu.php');?>
+
+                    </div><!-- ./evs_head -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full screen gallery. -->
+    <div class="fs-gal-view">
+        <h1></h1>
+        <img class="fs-gal-close" src="images/close.svg" alt="Close gallery" title="Close gallery" />
+        <img class="fs-gal-main" src="" alt="" />
+    </div>
+    <!--end gallery-->
+
+    <section class="evs-main-body">
+        <div class="container">
+            <div class="row">
+                <form method="post" action="generatexml.php">
+                    <div class="col-lg-12">
+
+
+                        <div class="selecT-box space-btwn">
+
+                            <div class="form-group">
+                                <select class="form-control" name="list" id="list">
+                                    <option value="Full list(Room,Window[panel])">Full list(Room,Window[panel])</option>
+                                    <option value="Full list(style)">Full list(style)</option>
+                                    <option value="Full list(Measurements,X,Y)">Full list(Measurements,X,Y)</option>
+                                    <option value="Full list(Glass,X,Y)">Full list(Glass,X,Y)</option>
+                                    <option value="Glass list(Glass,X,Y)">Glass list(Glass,X,Y)</option>
+                                    <option value="Profile list(Profile,X,Y)">Profile list(Profile,X,Y)</option>
+                                </select>
+                            </div>
+                            <input type="hidden" name="location" value="" id="searchedlocation">
+                            <input type="hidden" name="cut_locationid" value="<?php echo $locid;?>" id="cut_locationid">
+                            <input type="button" value="DownloadData" id="downloaddata">
+                            <input type="button" value="DownloadXML" id="downloadxml">
+
+
+                        </div><!-- ./selecT-box -->
+
+                        <span id="ajax-report">
+                            <?php
+
+
+
+                        $i=0;
+                        if(!empty($postpanel[0]))
+                        { ?>
+                            <table class="table table-bordered table-striped fontstyle blue-border-table">
+                                <thead>
+                                    <tr style="color:#fff; background:#565759;">
+                                        <th>ID</th>
+                                        <th colspan="2">Cut List</th>
+                                        <th colspan="5">Measurements</th>
+                                        <th colspan="5">Glass</th>
+                                        <th colspan="3">Top</th>
+                                        <th colspan="3">Bottom</th>
+                                        <th colspan="3">Sides(Left)</th>
+                                        <th colspan="3">Sides(Right)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Room</th>
+                                        <th>Window[Panel]</th>
+                                        <th>Style</th>
+                                        <th>Safety</th>
+                                        <th>Height</th>
+                                        <th>Width</th>
+                                        <th>Center</th>
+                                        <th>(+w)</th>
+                                        <th>W</th>
+                                        <th>(+h)</th>
+                                        <th>H</th>
+                                        <th>m2</th>
+                                        <th>Profile</th>
+                                        <th>(+w)</th>
+                                        <th>(W)</th>
+                                        <th>Profile</th>
+                                        <th>(+w)</th>
+                                        <th>(W)</th>
+                                        <th>Profile</th>
+                                        <th>(+h)</th>
+                                        <th>(H)</th>
+                                        <th>Profile</th>
+                                        <th>(+h)</th>
+                                        <th>(H)</th>
+                                    </tr>
+
+                                    <?php
+
+
+
+																																				   foreach($postpanel as $row_panel){
+
+																																									 $i++;
+																																									?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $row_panel['ID'];?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row_panel['room_name'];?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row_panel['name']."[".$row_panel['panels']['panelnum']."]";?>
+                                        </td>
+                                        <td>
+                                            <?php if($row_panel['panels']['styleid'] > 0 && file_exists($gPanelOptionsPhotoDir.$row_panel['panels']['styleid'].".png"))
+																													{
+																																	echo "<img src=\"". $gPanelOptionsPhotoURL.$row_panel['panels']['styleid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\">";
+																													} ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $row_panel['panels']['safty_name'];?>
+                                        </td>
+
+                                        <td <?php if($row_panel['panels']['measurement']=='estimate' ){?>
+                                            style="color:#F00"
+                                            <?php }?>>
+                                            <?php echo $row_panel['panels']['height'];?>
+                                        </td>
+                                        <td <?php if($row_panel['panels']['measurement']=='estimate' ){?>
+                                            style="color:#F00"
+                                            <?php }?>>
+                                            <?php echo $row_panel['panels']['width'];?>
+                                        </td>
+                                        <td <?php if($row_panel['panels']['measurement']=='estimate' ){?>
+                                            style="color:#F00"
+                                            <?php }?>>
+                                            <?php echo $row_panel['panels']['center'];?>
+                                        </td>
+                                        <?php
+																																			if($row_panel['selected_product']=="EVSx3" || $row_panel['selected_product']=="EVSx2"){
+																																				$profiletop=$row_panel['panels']['evsProfileTop'];
+																																				$profilebottom=$row_panel['panels']['evsProfileBottom'];
+																																				$leftprofile=$row_panel['panels']['evsProfileLeft'];
+													                       $rightprofile=$row_panel['panels']['evsProfileRight'];
+																																				$glassX=$row_panel['panels']['evsGlassX'];
+																																				$glassY=$row_panel['panels']['evsGlassY'];
+																																				$profileX=$row_panel['panels']['evsProfileX'];
+																																				$profileY=$row_panel['panels']['evsProfileY'];
+
+																																				}
+																																				else{
+																																				$profiletop=$row_panel['panels']['retroProfileTop'];
+																																				$profilebottom=$row_panel['panels']['retroProfileBottom'];
+																																				$profilesides=$row_panel['panels']['retroProfileSides'];
+																																				$leftprofile=$row_panel['panels']['retroProfileLeft'];
+													                       $rightprofile=$row_panel['panels']['retroProfileRight'];
+																																				$glassX=$row_panel['panels']['retroGlassX'];
+																																				$glassY=$row_panel['panels']['retroGlassY'];
+																																				$profileX=$row_panel['panels']['retroProfileX'];
+																																				$profileY=$row_panel['panels']['retroProfileY'];
+
+																																				}
+																																				 if($glassX == NULL)$glassX=0;
+																																					if($glassY == NULL)$glassY=0;
+																																					if($profileX == NULL)$profileX=0;
+																																					if($profileY == NULL)$profileY=0;
+                                       if(($row_panel['panels']['center']) > ($row_panel['panels']['height'])){
+                                    // $glassSizey=($row_panel['panels']['center'])+($row_panel['panels']['height']);
+                                    // $profilesizey=($row_panel['panels']['center'])+($row_panel['panels']['height']);
+                                     $glassSizey=($row_panel['panels']['center'])+$glassY;
+                                     $profilesizey=($row_panel['panels']['center'])+$profileY;
+                                     $m2=round(((($row_panel['panels']['width'] + $glassX)*($row_panel['panels']['center']))*0.000001),2);
+                                     }
+                                     else{
+                                     if($row_panel['panels']['height']>0){
+                                     $glassSizey=($row_panel['panels']['height']) + ($glassY);
+                                     $profilesizey=($row_panel['panels']['height']) + ($profileY);
+                                     }else{
+                                       $glassSizey=0;
+                                       $profilesizey=0;
+                                     }
+
+                                     $m2=round(((($row_panel['panels']['width'] + $glassX)*($row_panel['panels']['height'] + $glassY))*0.000001),2);
+                                     }
+																																				?>
+                                        <td>
+                                            <?php echo $glassX;?>
+                                        </td>
+                                        <td>
+                                            <?php if($row_panel['panels']['width'] >0){echo ($row_panel['panels']['width'] + $glassX);}?>
+                                        </td>
+                                        <td>
+                                            <?php echo $glassY;?>
+                                        </td>
+                                        <td>
+                                            <?php echo $glassSizey;?>
+                                        </td>
+                                        <td>
+                                            <?php echo $m2;?>
+                                        </td>
+                                        <td>
+                                            <?php
+																																				if(file_exists($gProfilePhotoDir.$profiletop.".png"))
+																																				{
+																																					?>
+                                            <span><a class="fs-gal"
+                                                    data-url="<?php echo $gProfilePhotoURL.$profiletop;?>.png"
+                                                    style="color:blue;">
+                                                    <?php echo $profiletop;?>
+                                                </a></span>
+                                            <?php
+																																				}
+																																				else
+																																				{?><span>
+                                                <?php echo $profiletop;?>
+                                            </span>
+                                            <?php
+																																				}
+																																				?>
+                                        </td>
+                                        <td>
+                                            <?php echo $profileX;?>
+                                        </td>
+                                        <td>
+                                            <?php if($row_panel['panels']['width'] >0){echo ($row_panel['panels']['width'] + $profileX);}?>
+                                        </td>
+                                        <td>
+                                            <?php
+																																				if(file_exists($gProfilePhotoDir.$profilebottom.".png"))
+																																				{
+																																					?>
+                                            <span><a class="fs-gal"
+                                                    data-url="<?php echo $gProfilePhotoURL.$profilebottom;?>.png"
+                                                    style="color:blue;">
+                                                    <?php echo $profilebottom;?>
+                                                </a></span>
+                                            <?php
+																																				}
+																																				else
+																																				{?><span>
+                                                <?php echo $profilebottom;?>
+                                            </span>
+                                            <?php
+																																				}
+																																				?>
+                                        </td>
+                                        <td>
+                                            <?php echo $profileX;?>
+                                        </td>
+                                        <td>
+                                            <?php if($row_panel['panels']['width'] >0){echo ($row_panel['width'] + $profileX);}?>
+                                        </td>
+                                        <td>
+                                            <?php
+																					if(file_exists($gProfilePhotoDir.$leftprofile.".png"))
+																					{
+																						?>
+                                            <span><a class="fs-gal"
+                                                    data-url="<?php echo $gProfilePhotoURL.$leftprofile;?>.png"
+                                                    style="color:blue;">
+                                                    <?php echo $leftprofile;?>
+                                                </a></span>
+                                            <?php
+																					}
+																					else
+																					{?><span>
+                                                <?php echo $leftprofile;?>
+                                            </span>
+                                            <?php
+																					}
+																					?>
+                                        </td>
+                                        <td>
+                                            <?php echo $profileY;?>
+                                        </td>
+                                        <td>
+                                            <?php echo $profilesizey;?>
+                                        </td>
+                                        <td>
+                                            <?php
+																					if(file_exists($gProfilePhotoDir.$rightprofile.".png"))
+																					{
+																						?>
+                                            <span><a class="fs-gal"
+                                                    data-url="<?php echo $gProfilePhotoURL.$rightprofile;?>.png"
+                                                    style="color:blue;">
+                                                    <?php echo $rightprofile;?>
+                                                </a></span>
+                                            <?php
+																					}
+																					else
+																					{?><span>
+                                                <?php echo $rightprofile;?>
+                                            </span>
+                                            <?php
+																					}
+																					?>
+                                        </td>
+
+                                        <td>
+                                            <?php echo $profileY;?>
+                                        </td>
+                                        <td>
+                                            <?php echo $profilesizey;?>
+                                        </td>
+
+                                    </tr>
+                                    <?php
+																																								}//foreach
+                                        ?>
+
+
+                                </tbody>
+                            </table>
+                            <?php
+                         }//if
+																															?>
+                    </div>
+                </form>
+                </span>

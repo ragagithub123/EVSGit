@@ -1,0 +1,752 @@
+<body>
+  <div class="loader3" style="display:none">
+    <span></span>
+    <span></span>
+  </div>
+  <!-- Full screen gallery. -->
+  <div class="fs-gal-view">
+    <h1></h1>
+    <img class="fs-gal-close" src="images/close.svg" alt="Close gallery" title="Close gallery" />
+    <img class="fs-gal-main" src="" alt="" />
+  </div>
+  <!--end gallery-->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="evs_head">
+            <div class="logo">
+              <img src="images/logo.png">
+            </div>
+            <?php include('templates/menu.php');?>
+          </div>
+          <!-- ./evs_head -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--<span id="report-ajax">-->
+  <section class="evs-main-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="custom-tabs">
+            <div class="panel with-nav-tabs panel-default">
+              <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#tab2default" data-toggle="tab">Production</a></li>
+                  <li><a href="#tab3default" data-toggle="tab">Staff</a></li>
+                  <li><a href="#tab1default" data-toggle="tab">Pipeline</a></li>
+                  <li class="rad-report"><input type="radio" name="week" id="week" value="week" checked="checked">Weekly
+                  </li>
+                  <div class="">
+                  </div>
+                </ul>
+              </div>
+              <div class="panel-body">
+                <div class="tab-content">
+                  <div class="tab-pane fade" id="tab1default">
+                    <div class="owl-carousel" id="week-slider4">
+                      <div class="item report-dates">
+                        <div class="week-slider-single">
+                          <p>Pipeline <br>Value</p>
+                          <h3></h3>
+                          <h3>$
+                            <?php echo $Pipelinevalue;?>
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="item report-dates">
+                        <div class="week-slider-single">
+                          <p>Pipeline <br>%Complete</br></p>
+                          <h3></h3>
+                          <h3>
+                            <?php echo $Pipelinecomplete;?>%
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="item report-dates">
+                        <div class="week-slider-single">
+                          <p>Pipeline <br>Panels</p>
+                          <h3></h3>
+                          <h3>
+                            <?php echo $Pipelinepanels;?>
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="item report-dates">
+                        <div class="week-slider-single">
+                          <p>Tagret pipeline <br>Hours</p>
+                          <h3></h3>
+                          <h3>
+                            <?php echo $targetdquoteshrs;?>
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="item report-dates">
+                        <div class="week-slider-single">
+                          <p>Panel <br>Average </p>
+                          <h3></h3>
+                          <h3>$
+                            <?php echo $Pipeline_panelavg;?>
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="item report-dates">
+                        <div class="week-slider-single">
+                          <p>Average <br>Margin </p>
+                          <h3></h3>
+                          <h3>$
+                            <?php echo $Pipeline_avggmargin;?>
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="item report-dates">
+                        <div class="week-slider-single">
+                          <p>Target Quote<br> Productivity</p>
+                          <h3></h3>
+                          <h3>$
+                            <?php echo $Pipeline_targetProductivity;?>
+                          </h3>
+                        </div>
+                      </div>
+                      <!--<div class="item report-dates">
+                          <div class="week-slider-single">
+                           <p>Average Time<br> Productivity</p>
+                            <h3></h3>
+                            <h3>$<?php echo $Pipeline_actualProductivity;?></h3>
+                          </div>
+                        </div>
+                        <div class="item report-dates">
+                          <div class="week-slider-single">
+                           <p>Business<br> Performance</p>
+                            <h3></h3>
+                            <h3>$<?php echo $Pipelien_business;?></h3>
+                          </div>
+                        </div>-->
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="report-table">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th width="250">Customer</th>
+                                <th>Total Value</th>
+                                <th>% Complete</th>
+                                <th>Total Panels</th>
+                                <th>Panels Installed</th>
+                                <th>Panel Average $</th>
+                                <th>Margin $ Value</th>
+                                <th>Quotes Hours</th>
+                                <th>Timesheet Hours</th>
+                                <th>Target Productivity</th>
+                                <th>Actual Productivity</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <?php foreach($pdtloc as $loc){
+                             if($loc['timesheethrs'] == 0)
+                              $color="style=color:grey";
+                              else if($loc['targetprodcutivity'] > $loc['actualprodcutivity'])
+                              $color="style=color:#ff0000";
+                              else
+                              $color="style=color:dodgerblue";
+                               ?>
+                              <tr>
+                                <td>
+                                  <?php echo $loc['locationSearch'];?>,<b style="color: #09aced;">
+                                    <?php echo $loc['project_name'];?>
+                                  </b>
+                                </td>
+                                <td>$
+                                  <?php echo $loc['toatlcost'];?>
+                                </td>
+                                <td>
+                                  <?php echo ($loc['percentcomplete'])*100;?>%
+                                </td>
+                                <td>
+                                  <?php echo $loc['panelcnt'];?>
+                                </td>
+                                <td>
+                                  <?php echo $loc['install'];?>
+                                </td>
+                                <td>$
+                                  <?php echo $loc['panelavg'];?>
+                                </td>
+                                <td>$
+                                  <?php echo $loc['marginTotal'];?>
+                                </td>
+                                <td>
+                                  <?php echo $loc['quotedhrs'];?>
+                                </td>
+                                <td>
+                                  <?php echo $loc['timesheethrs'];?>
+                                </td>
+                                <td>$
+                                  <?php echo $loc['targetprodcutivity'];?>
+                                </td>
+                                <td>$
+                                  <?php echo $loc['actualprodcutivity'];?>
+                                </td>
+                                <td><a href="summary.php?id=<?php echo base64_encode($loc['locationid']);?>"
+                                    target="_blank"><i class="fa fa-play" aria-hidden="true" <?php echo
+                                      $color;?>></i></a></td>
+                              </tr>
+                              <?php }?>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade in active" id="tab2default">
+                    <div class="weeks-slider">
+                      <div class="week-slider-single no-style">
+                        <p>Week Ending Date</p>
+                        <h3 style="font-size: 14px; text-align: left; margin-top: 17px; margin-bottom: 21px;">Average
+                          Unit Price</h3>
+                        <h3 style="font-size: 14px; text-align: left;">Production Total</h3>
+                      </div>
+                      <div class="owl-carousel" id="week-slider">
+                        <?php foreach($enddates as $valdates){
+                        if($valdates['active'] == 1) $class ='active';
+                        else $class ='';
+                      ?>
+                        <div class="item report-dates" data-startdate="<?php echo $valdates['startdate'];?>"
+                          data-enddate="<?php echo $valdates['enddates'];?>">
+                          <div class="week-slider-single <?php echo $class;?>"
+                            id="disp<?php echo $valdates['enddates'];?>">
+                            <p>
+                              <?php echo $valdates['dates'];?>
+                            </p>
+                            <h3>$
+                              <?php echo $valdates['avg'];?>
+                            </h3>
+                            <h3>$
+                              <?php echo $valdates['production'];?>
+                            </h3>
+                          </div>
+                        </div>
+                        <?php } ?>
+                      </div>
+                    </div>
+                    <span id="report-ajax">
+                      <div class="col-lg-12">
+                        <div class="report-table">
+                          <div class="table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th width="250">Customer</th>
+                                  <th width="120">Total Value</th>
+                                  <th>% Complete</th>
+                                  <th>Total Panels</th>
+                                  <th>Glass Received</th>
+                                  <th>Kits Made</th>
+                                  <th>Panels Assembled</th>
+                                  <th>Panels Prepped</th>
+                                  <th>Panels Installed</th>
+                                  <th>Seals Installed</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <?php
+                               $i=0;
+                               foreach($postData as $valpost){ if($valpost['locationid']!=''){ $i++;?>
+                                <tr>
+                                  <td>
+                                    <?php echo $valpost['locationSearch'];?>,<b style="color: #09aced;">
+                                      <?php echo $valpost['project_name'];?>
+                                    </b>
+                                  </td>
+                                  <td>$
+                                    <?php echo $valpost['jobsum'];?>
+                                  </td>
+                                  <td>
+                                    <?php echo ($valpost['percentcomplete']*100);?>%
+                                  </td>
+                                  <td>
+                                    <?php echo $valpost['panelcount'];?>
+                                  </td>
+                                  <td>
+                                    <?php echo $valpost['glass'];?>
+                                  </td>
+                                  <td>
+                                    <?php echo $valpost['kit'];?>
+                                  </td>
+                                  <td>
+                                    <?php echo $valpost['assemble'];?>
+                                  </td>
+                                  <td>
+                                    <?php echo $valpost['prep'];?>
+                                  </td>
+                                  <td>
+                                    <?php echo $valpost['install'];?>
+                                  </td>
+                                  <td>
+                                    <?php echo $valpost['seals'];?>
+                                  </td>
+                                </tr>
+                                <?php
+                               }
+                               }
+                               ?>
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <td>Total $</td>
+                                  <td>$
+                                    <?php echo $totalcost;?>
+                                  </td>
+                                  <td>
+                                    <?php echo ($total_job_complete*100);?>%
+                                  </td>
+                                  <td>
+                                    <?php echo $totalpanels;?>
+                                  </td>
+                                  <td>
+                                    <?php echo $totalglasscount;?>
+                                  </td>
+                                  <td>
+                                    <?php echo $totalkitcount;?>
+                                  </td>
+                                  <td>
+                                    <?php echo $totalassemblecount;?>
+                                  </td>
+                                  <td>
+                                    <?php echo $totalprepcount;?>
+                                  </td>
+                                  <td>
+                                    <?php echo $totalinstallcount;?>
+                                  </td>
+                                  <td>
+                                    <?php echo $totalsealscount;?>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="4">Ave $</td>
+                                  <td class="bg-clr">
+                                    <?php echo $glasspercent;?>%
+                                  </td>
+                                  <td class="bg-clr">
+                                    <?php echo $kitpercent;?>%
+                                  </td>
+                                  <td class="bg-clr">
+                                    <?php echo $assemblepercent;?>%
+                                  </td>
+                                  <td class="bg-clr">
+                                    <?php echo $preppercent;?>%
+                                  </td>
+                                  <td class="bg-clr">
+                                    <?php echo $installpercent;?>%
+                                  </td>
+                                  <td class="bg-clr">
+                                    <?php echo $sealspercent;?>%
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2">Production Value</td>
+                                  <td>$
+                                    <?php echo $totalproduction;?>
+                                  </td>
+                                  <td>$
+                                    <?php echo $totalpanelavg;?>
+                                  </td>
+                                  <td>$
+                                    <?php echo $weekglass;?>
+                                  </td>
+                                  <td>$
+                                    <?php echo $weekkit;?>
+                                  </td>
+                                  <td>$
+                                    <?php echo $weekassemble;?>
+                                  </td>
+                                  <td>$
+                                    <?php echo $weekprep;?>
+                                  </td>
+                                  <td>$
+                                    <?php echo $weekinstall;?>
+                                  </td>
+                                  <td>$
+                                    <?php echo $weekseals;?>
+                                  </td>
+                                </tr>
+                              </tfoot>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                  <div class="tab-pane fade" id="tab3default">
+                    <div class="weeks-slider">
+                      <div class="week-slider-single no-style">
+                        <p>Week Ending Date</p>
+                        <h3 style="font-size: 14px; text-align: left; margin-top: 17px; margin-bottom: 21px;">Weekly
+                          Bonus Hours</h3>
+                        <h3 style="font-size: 14px; text-align: left;">Weekly Bonus</h3>
+                      </div>
+                      <div class="owl-carousel" id="week-slider2">
+                        <?php foreach($enddates_week as $valdatesstaff){
+                        if($valdatesstaff['active'] == 1) $class ='active';
+                        else $class ='';
+                      ?>
+                        <div class="item staff-dates" data-staffstartdate="<?php echo $valdatesstaff['startdate'];?>"
+                          data-staffenddate="<?php echo $valdatesstaff['enddates'];?>">
+                          <div class="week-slider-single  <?php echo $class;?>"
+                            id="dispstaff<?php echo $valdatesstaff['enddates'];?>">
+                            <p>
+                              <?php echo $valdatesstaff['dates'];?>
+                            </p>
+                            <h3 id="bonus<?php echo $valdatesstaff['enddates'];?>">
+                              <?php echo $valdatesstaff['bonusTotal'];?>h
+                            </h3>
+                            <h3 id="hourly<?php echo $valdatesstaff['enddates'];?>">$
+                              <?php echo $valdatesstaff['Hourrly_bonus'];?>
+                            </h3>
+                          </div>
+                        </div>
+                        <?php } ?>
+                      </div>
+                    </div><!-- ./weeks-slider -->
+                    <br>
+                    <span id="staff-ajax">
+                      <div class="table-responsive">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr style="color: #fff; background: #b3b3b3;">
+                              <th>
+                                <div class="staff-name heading"><span>Staff</span> <a href="javascript:void(0)"
+                                    class="staff-add"><i class="fa fa-plus"></i></a></div>
+                              </th>
+                              <th width="100" style="text-align: center;">Bonus Hours</th>
+                              <th width="100" style="text-align: center;">Non-Bonus Hours</th>
+                              <th width="90" style="text-align: center;">Mon</th>
+                              <th width="90" style="text-align: center;">Tue</th>
+                              <th width="90" style="text-align: center;">Wed</th>
+                              <th width="90" style="text-align: center;">Thu</th>
+                              <th width="90" style="text-align: center;">Fri</th>
+                              <th width="90" style="text-align: center;">Sat</th>
+                              <th width="90" style="text-align: center;">Sun</th>
+                              <th>Comments</th>
+                            </tr>
+                          </thead>
+                          <tbody id="staff-table">
+                            <?php
+                        $filed_cont =0;
+                         if(!empty($staffreport)){
+                          foreach($staffreport as $valreport){
+                          $filed_cont =$valreport['fieldcount'];
+                          ?>
+                            <tr id="tr<?php echo $valreport['fieldcount'];?>">
+                              <td>
+                                <div class="staff-name"><input type="text" class="form-control staff-text"
+                                    value="<?php echo $valreport['staff_name'];?>" data-filedname="staff_name"
+                                    id="staffname<?php echo $valreport['fieldcount'];?>"
+                                    data-count="<?php echo $valreport['fieldcount'];?>"
+                                    data-staff="<?php echo $valreport['staff_id'];?>"> <a href="javascript:void(0)"
+                                    class="remove-bonus" data-staff="<?php echo $valreport['staff_id'];?>"
+                                    data-filedcnt="<?php echo $valreport['fieldcount'];?>"
+                                    id="anchor<?php echo $valreport['fieldcount'];?>"><i class="fa fa-times"></i></a>
+                                </div>
+                              </td>
+                              <td><input type="text" class="form-control bonus_hrs"
+                                  value="<?php echo $valreport['bonus_hrs'];?>" data-filedname="bonus_hrs"
+                                  id="bonus_hrs<?php echo $valreport['fieldcount'];?>"
+                                  data-count="<?php echo $valreport['fieldcount'];?>" readonly
+                                  data-staff="<?php echo $valreport['staff_id'];?>"></td>
+                              <td><input type="text" class="form-control non_bonus_hrs"
+                                  value="<?php echo $valreport['non_bonus_hrs'];?>" data-filedname="non_bonus_hrs"
+                                  id="non_bonus_hrs<?php echo $valreport['fieldcount'];?>"
+                                  data-count="<?php echo $valreport['fieldcount'];?>"
+                                  data-staff="<?php echo $valreport['staff_id'];?>"></td>
+                              <td class="hours-select"><input type="text" class="form-control mon"
+                                  value="<?php echo $valreport['mon'];?>" data-filedname="mon"
+                                  id="mon<?php echo $valreport['fieldcount'];?>"
+                                  data-count="<?php echo $valreport['fieldcount'];?>"
+                                  data-staff="<?php echo $valreport['staff_id'];?>" <?php
+                                  if($valreport['bluemon']==$valreport['fieldcount']){?>
+                                style="background-color:#96faf8"
+                                <?php }?>><i class="fa fa-caret-down track" data-toggle="modal"
+                                  data-target="#weekly-popup" data-trackcount="<?php echo $valreport['fieldcount'];?>"
+                                  data-trackstaff="<?php echo $valreport['staff_id'];?>" data-trackfiledname="mon"
+                                  data-staffreportid="<?php echo $valreport['staff_report_id'];?>"></i>
+                              </td>
+                              <td class="hours-select"><input type="text" class="form-control tue"
+                                  value="<?php echo $valreport['tue'];?>" data-filedname="tue"
+                                  id="tue<?php echo $valreport['fieldcount'];?>"
+                                  data-count="<?php echo $valreport['fieldcount'];?>"
+                                  data-staff="<?php echo $valreport['staff_id'];?>" <?php
+                                  if($valreport['bluetue']==$valreport['fieldcount']){?>
+                                style="background-color:#96faf8"
+                                <?php }?>><i class="fa fa-caret-down track" data-toggle="modal"
+                                  data-target="#weekly-popup" data-trackcount="<?php echo $valreport['fieldcount'];?>"
+                                  data-trackstaff="<?php echo $valreport['staff_id'];?>" data-trackfiledname="tue"
+                                  data-staffreportid="<?php echo $valreport['staff_report_id'];?>"></i>
+                              </td>
+                              <td class="hours-select"><input type="text" class="form-control wed"
+                                  value="<?php echo $valreport['wed'];?>" data-filedname="wed"
+                                  id="wed<?php echo $valreport['fieldcount'];?>"
+                                  data-count="<?php echo $valreport['fieldcount'];?>"
+                                  data-staff="<?php echo $valreport['staff_id'];?>" <?php
+                                  if($valreport['bluewed']==$valreport['fieldcount']){?>
+                                style="background-color:#96faf8"
+                                <?php }?>><i class="fa fa-caret-down track" data-toggle="modal"
+                                  data-target="#weekly-popup" data-trackcount="<?php echo $valreport['fieldcount'];?>"
+                                  data-trackstaff="<?php echo $valreport['staff_id'];?>" data-trackfiledname="wed"
+                                  data-staffreportid="<?php echo $valreport['staff_report_id'];?>"></i>
+                              </td>
+                              <td class="hours-select"><input type="text" class="form-control thu"
+                                  value="<?php echo $valreport['thu'];?>" data-filedname="thu"
+                                  id="thu<?php echo $valreport['fieldcount'];?>"
+                                  data-count="<?php echo $valreport['fieldcount'];?>"
+                                  data-staff="<?php echo $valreport['staff_id'];?>" <?php
+                                  if($valreport['bluethu']==$valreport['fieldcount']){?>
+                                style="background-color:#96faf8"
+                                <?php }?>><i class="fa fa-caret-down track" data-toggle="modal"
+                                  data-target="#weekly-popup" data-trackcount="<?php echo $valreport['fieldcount'];?>"
+                                  data-trackstaff="<?php echo $valreport['staff_id'];?>" data-trackfiledname="thu"
+                                  data-staffreportid="<?php echo $valreport['staff_report_id'];?>"></i>
+                              </td>
+                              <td class="hours-select"><input type="text" class="form-control fri"
+                                  value="<?php echo $valreport['fri'];?>" data-filedname="fri"
+                                  id="fri<?php echo $valreport['fieldcount'];?>"
+                                  data-count="<?php echo $valreport['fieldcount'];?>"
+                                  data-staff="<?php echo $valreport['staff_id'];?>" <?php
+                                  if($valreport['bluefri']==$valreport['fieldcount']){?>
+                                style="background-color:#96faf8"
+                                <?php }?>><i class="fa fa-caret-down track" data-toggle="modal"
+                                  data-target="#weekly-popup" data-trackcount="<?php echo $valreport['fieldcount'];?>"
+                                  data-trackstaff="<?php echo $valreport['staff_id'];?>" data-trackfiledname="fri"
+                                  data-staffreportid="<?php echo $valreport['staff_report_id'];?>"></i>
+                              </td>
+                              <td class="hours-select"><input type="text" class="form-control sat"
+                                  value="<?php echo $valreport['sat'];?>" data-filedname="sat"
+                                  id="sat<?php echo $valreport['fieldcount'];?>"
+                                  data-count="<?php echo $valreport['fieldcount'];?>"
+                                  data-staff="<?php echo $valreport['staff_id'];?>" <?php
+                                  if($valreport['bluesat']==$valreport['fieldcount']){?>
+                                style="background-color:#96faf8"
+                                <?php }?>><i class="fa fa-caret-down track" data-toggle="modal"
+                                  data-target="#weekly-popup" data-trackcount="<?php echo $valreport['fieldcount'];?>"
+                                  data-trackstaff="<?php echo $valreport['staff_id'];?>" data-trackfiledname="sat"
+                                  data-staffreportid="<?php echo $valreport['staff_report_id'];?>"></i>
+                              </td>
+                              <td class="hours-select"><input type="text" class="form-control sun"
+                                  value="<?php echo $valreport['sun'];?>" data-filedname="sun"
+                                  id="sun<?php echo $valreport['fieldcount'];?>"
+                                  data-count="<?php echo $valreport['fieldcount'];?>"
+                                  data-staff="<?php echo $valreport['staff_id'];?>" <?php
+                                  if($valreport['bluesun']==$valreport['fieldcount']){?>
+                                style="background-color:#96faf8"
+                                <?php }?>><i class="fa fa-caret-down track" data-toggle="modal"
+                                  data-target="#weekly-popup" data-trackcount="<?php echo $valreport['fieldcount'];?>"
+                                  data-trackstaff="<?php echo $valreport['staff_id'];?>" data-trackfiledname="sun"
+                                  data-staffreportid="<?php echo $valreport['staff_report_id'];?>"></i>
+                              </td>
+                              <td><input type="text" class="form-control staff-comment"
+                                  value="<?php echo $valreport['comments'];?>" data-filedname="comments"
+                                  id="comments<?php echo $valreport['fieldcount'];?>"
+                                  data-count="<?php echo $valreport['fieldcount'];?>"></td>
+                            </tr>
+                            <?php
+                          }
+                         }
+                        ?>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td style="border-left-color: #fff; border-bottom-color: #fff;"></td>
+                              <td style="text-align: center; background: #e6e6e6;" id="bonous_total">
+                                <?php echo $total_bonus;?>
+                              </td>
+                              <td style="text-align: center; background: #e6e6e6;" id="non_bonous_total">
+                                <?php echo $totalnonbonus;?>
+                              </td>
+                              <td colspan="8" style="border-right-color: #fff; border-bottom-color: #fff;"></td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                      <br><br>
+                      <div class="table-responsive">
+                        <table class="table table-spacing">
+                          <tbody>
+                            <tr>
+                              <td width="100">Task</td>
+                              <th width="100" style="text-align: center; background: #b3b3b3;">Kits Made</th>
+                              <th width="100" style="text-align: center; background: #b3b3b3;">Panels Assembled</th>
+                              <th width="100" style="text-align: center; background: #b3b3b3;">Panels Prepped</th>
+                              <th width="100" style="text-align: center; background: #b3b3b3;">Panles Installed</th>
+                              <th width="100" style="text-align: center; background: #b3b3b3;">Seals Installed</th>
+                            </tr>
+                            <tr>
+                              <td>Task Bonus Rates</td>
+                              <td style="text-align: center;">$2.50</td>
+                              <td style="text-align: center;">$2.50</td>
+                              <td style="text-align: center;">$2.50</td>
+                              <td style="text-align: center;">$10.00</td>
+                              <td style="text-align: center;">$2.50</td>
+                            </tr>
+                            <tr>
+                              <td>Completed Tasks</td>
+                              <td style="text-align: center;">
+                                <?php echo $kitsum;?>
+                              </td>
+                              <td style="text-align: center;">
+                                <?php echo $assemblesum;?>
+                              </td>
+                              <td style="text-align: center;">
+                                <?php echo $prepsum;?>
+                              </td>
+                              <td style="text-align: center;">
+                                <?php echo $installsum;?>
+                              </td>
+                              <td style="text-align: center;">
+                                <?php echo $sealssum;?>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Task Bonus Totals</td>
+                              <td style="text-align: center;">
+                                <?php echo $kitsbonus;?>
+                              </td>
+                              <td style="text-align: center;">$
+                                <?php echo $assemblebonus;?>
+                              </td>
+                              <td style="text-align: center;">$
+                                <?php echo $prepbonus;?>
+                              </td>
+                              <td style="text-align: center;">$
+                                <?php echo $installbonus;?>
+                              </td>
+                              <td style="text-align: center;">$
+                                <?php echo $sealsbonus;?>
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td>Bonus Total</td>
+                              <td style="text-align: center;">$
+                                <?php echo $totalbonustask;?>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Hourly Bonus Rate</td>
+                              <td style="text-align: center; font-weight:bold" id="hourly_bonus">$
+                                <?php echo $hourlybonus;?>
+                              </td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                        <input type="hidden" id="field_count" value="<?php echo $filed_cont;?>">
+                      </div>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input type="hidden" id="week-end-date" value="<?php echo $week_staff_end;?>">
+  </section>
+  <!--</span>-->
+  <!-- Modal -->
+  <div class="modal fade" id="weekly-popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Select Hours Per Job &nbsp;&nbsp;<span id="dispday"
+              style="margin-left:200px;"></span></h4>
+          <p>
+          <div class="search_head" style="display:flex;">
+            <input id="agent-location" name="agentlocation" class="form-control" autocomplete="off"
+              placeholder="Search Your Location" list="listlocation" style="width:200px;">
+            <button><i class="glyphicon glyphicon-search"></i></button>
+            <i class="fa fa-plus plusbtn" id="sheetaddlo" style="margin-left:20px;"></i>
+            <datalist id="listlocation">
+              <?php
+                   foreach($postLocation as $valuepost){
+                    echo ' <option value="'.$valuepost['locationSearch'].'">';
+                   }?>
+            </datalist>
+          </div>
+          </p>
+        </div>
+        <div class="modal-body">
+          <div class="weekly-popup">
+            <h4>Workshop</h4>
+            <input type="text" class="form-control form-box" id="workshophr" readonly>
+          </div>
+          <div class="hours-list">
+            <ul>
+              <?php $cnt=0; ?>
+              <?php foreach($postData as $valloc){ ?>
+              <li>
+                <span>
+                  <?php echo $valloc['locationSearch'];?>
+                  <?php if(!empty($valloc['project_name'])){?><b style="color: #09aced;">
+                    <?php echo $valloc['project_name'];?>
+                  </b>
+                  <?php }?>
+                </span>
+                <!-- <input type="text" class="form-control form-box workshop" name="trackhour[]" id="trackhr<?php //echo $valloc['locationid'];?>" value="0">-->
+                <div class="form-group">
+                  <?php if($cnt == 0){?>
+                  <label>Prep</label>
+                  <?php } ?>
+                  <input type="text" class="form-control form-box workshop_prephr spendhr" name="prephr[]"
+                    id="prep<?php echo $valloc['locationid'];?>" value="0">
+                </div>
+                <div class="form-group">
+                  <?php if($cnt == 0){?>
+                  <label>Make</label>
+                  <?php } ?>
+                  <input type="text" class="form-control form-box workshop_make spendhr" name="makehr[]"
+                    id="make<?php echo $valloc['locationid'];?>" value="0">
+                </div>
+                <div class="form-group">
+                  <?php if($cnt == 0){?>
+                  <label>Install</label>
+                  <?php } ?>
+                  <input type="text" class="form-control form-box workshop_install spendhr" name="installhr[]"
+                    id="install<?php echo $valloc['locationid'];?>" value="0">
+                </div>
+                <div class="form-group">
+                  <?php if($cnt == 0){?>
+                  <label>Extra</label>
+                  <?php } ?>
+                  <input type="text" class="form-control form-box workshop_extra spendhr" name="extrahr[]"
+                    id="extra<?php echo $valloc['locationid'];?>" value="0">
+                </div>
+                <input type="hidden" name="locationtrackid[]" value="<?php echo $valloc['locationid'];?>"
+                  class="locidclas" />
+              </li>
+              <?php $cnt++;} ?>
+              <li id="totalli">
+                <span style="border:0">Total</span>
+                <input type="text" class="form-control form-box" name="worktotal" id="worktotal" value="0" readonly>
+              </li>
+            </ul>
+            <input type="hidden" id="trackday" />
+            <input type="hidden" id="filedtrackcnt" />
+            <input type="hidden" id="trackstaffid" />
+            <input type="hidden" id="weekenddate" value="<?php echo $week_staff_end;?>" />
+            <input type="hidden" id="staffreportid" />
+            <input type="hidden" id="workshopexisthr" />
+            <input type="hidden" id="agentid" value="<?php echo $_SESSION['agentid'];?>" />
+          </div>
+          <span id="btnspn"></span>
+          <?php if(count($post)>0){?><input type="hidden" id="checkval" value="1" />
+          <input type="hidden" id="disp_status" value="1" />
+          <button class="btn btn-primary" id="trackupdate">Update</button>
+          <?php } else?><input type="hidden" id="checkval" value="0" />
+        </div>
+      </div>
+    </div>
+  </div>

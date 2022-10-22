@@ -1,0 +1,1488 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="evs_head">
+          <div class="logo">
+            <img src="images/logo.png">
+          </div>
+          <?php include('templates/menu.php');?>
+        </div><!-- ./evs_head -->
+      </div>
+    </div>
+  </div>
+</section>
+<section class="evs-main-body">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="property_dtls_two">
+          <div class="main-title-full">
+            <div class="title-inner-left">
+              <h4>Property Details
+                <!--<a href="#" class="btn-info cust-edit-btn">EDIT</a>-->
+              </h4>
+            </div>
+            <div class="title-inner-right">
+              <!--	<a href="#" class="btn-info cust-edit-btn"id="preview-quote">Preview Quote</a>-->
+              <!-- <a href="#" class="btn-info cust-edit-btn active" id="ledger">Ledger</a>
+                                <a href="#" class="btn-info cust-edit-btn" id="ws-account">WS Account</a>
+                                <a href="#" class="btn-info cust-edit-btn" id="customer-account">Customer Account</a>-->
+            </div>
+          </div>
+          <div class="property_dtls_details_two">
+            <div class="pro_inner_one_details">
+              <div class="pro_inner_one_pic">
+                <?php
+																																				if($row_details['photoid'] !=0)
+																																				{
+																																					?>
+                <img src="<?php echo $DPhotoURL.$row_details['photoid'];?>.jpg" class="img-responsive">
+                <?php
+																																				}?>
+              </div>
+              <div class="pro_inner_one_list">
+                <ul>
+                  <li>Property Address</li>
+                  <?php 	$loc=$row_details['unitnum'].",".$row_details['street'];
+                                             if(!empty($row_details['suburb']))
+                                             {
+                                               $loc.=",".$row_details['suburb'];
+                                             }
+                                         ?>
+                  <li>
+                    <?php echo $loc;?>
+                  </li>
+                  <li>
+                    <?php echo $row_details['city'];?>
+                  </li>
+                  <li>
+                    <?php echo $row_details['firstname']." ".$array_location['lastname'];?>
+                  </li>
+                  <li>
+                    <?php echo $row_details['phone'];?>
+                  </li>
+                  <li>
+                    <?php echo $row_details['email'];?>
+                  </li>
+                </ul>
+              </div>
+            </div><!-- ./pro_inner_one_details -->
+            <div class="pro_inner_one_details_right">
+              <ul>
+                <li>
+                  <span>Rooms</span>
+                  <span>
+                    <?php echo $RoomCount['roomcnt'];?>
+                  </span>
+                </li>
+                <li>
+                  <span>Windows</span>
+                  <span>
+                    <?php echo $WindowCount['windowcnt'];?>
+                  </span>
+                </li>
+                <li>
+                  <span>Panels</span>
+                  <span>
+                    <?php echo $PanelCount['panelcount'];?>
+                  </span>
+                </li>
+                <li>
+                  <span>Manufacture Hours</span>
+                  <span>
+                    <?php echo round(array_sum($totalmanufacture),2);?>
+                  </span>
+                </li>
+                <li>
+                  <span>Install Hours</span>
+                  <span>
+                    <?php echo $total_install_hours;?>
+                  </span>
+                </li>
+                <li>
+                  <span>Total Hours</span>
+                  <span>
+                    <?php echo $ttoal_man_insatll_hrs;?>
+                  </span>
+                </li>
+                <!-- <li>
+                                    	<span>Quoted</span>
+                                        <span>$<?php //echo $totalcost;?></span>
+                                    </li>
+                                    <li>
+                                    	<span>Extras</span>
+                                        <span>$<?php //echo $extra;?></span>
+                                    </li>
+                                    <li>
+                                     <span>Travel</span>
+                                     <span>$<?php //echo array_sum($total_travel_cost);?></span>
+                                    </li> -->
+                <br>
+                <li>
+                  <span>GST</span>
+                  <span>$
+                    <?php echo $gst;?>
+                  </span>
+                </li>
+                <li>
+                  <span>Total inc GST</span>
+                  <span>$
+                    <?php echo $ttoal_price;?>
+                  </span>
+                </li>
+                <br>
+                <li>
+                  <span>Hourly Return Rate</span>
+                  <span>$
+                    <?php echo $hourlyreturn;?>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div><!-- ./property_dtls_details_two -->
+        </div><!-- ./property_dtls_two -->
+      </div><!-- ./col-lg-12 -->
+      <div class="col-lg-12">
+        <!-- ./table-responsive -->
+        <div class="table-responsive">
+          <table class="table summary-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <!-- <th width="100">Item Code</th>-->
+                <th>Description</th>
+                <th>Category</th>
+                <th></th>
+                <th>Rate(ws value)</th>
+                <th>Size</th>
+                <th>Unit</th>
+                <th>Margin%</th>
+                <th>Discount</th>
+                <th>wsCost</th>
+                <th>rPrice</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Glass </td>
+                <!-- <td></td>-->
+                <td class="blue-txt"><i class="fa fa-plus add-plus" style="padding: 3px;" data-toggle="modal"
+                    data-target="#myModal"></i></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php foreach($post as $valglass){?>
+              <tr>
+                <td>
+                  <?php echo $valglass['glassname'];?>
+                </td>
+                <!--<td></td>-->
+                <td>
+                  <?php echo $valglass['name'];?>
+                </td>
+                <td>
+                  <?php echo $valglass['selected_product'];?>
+                </td>
+                <td></td>
+                <td>$
+                  <?php echo $valglass['glassrate'];?>
+                </td>
+                <td>
+                  <?php echo $valglass['size'];?>
+                </td>
+                <td>m2</td>
+                <td>
+                  <?php echo $valglass['margin'];?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $valglass['glasswsvalue'];?>
+                </td>
+                <td>$
+                  <?php echo $valglass['glassrprice'];?>
+                </td>
+              </tr>
+              <?php  }
+                                  if(!empty($postinvoices)){
+                                    foreach($postinvoices as $valinvoice){
+                                      echo '<tr>
+                                         <td style="color:#0096ef">'.date('d-m-Y',strtotime($valinvoice['date'])).' <i class="fa fa-play" aria-hidden="true" data-toggle="modal" data-target="#glassinvoice'.$valinvoice['supplinvoiceid'].'"></i></td>
+                                         <td style="color:#0096ef">'.$valinvoice['supplier'].'</td>
+                                         <td style="color:#0096ef">'.$valinvoice['descrption'].'</td>
+                                         <td></td>
+                                         <td style="color:#0096ef">'.$valinvoice['invoice'].'</td>
+                                         <td style="color:#0096ef">'.$valinvoice['units'].'</td>
+                                         <td></td>
+                                         <td></td>
+                                         <td></td>
+                                         <td></td>
+                                         <td></td>';
+                                         if($valinvoice['total']!=0.00)
+                                         echo '<td style="color:#0096ef">$'.$valinvoice['total'].'</td>';
+                                         else
+                                         echo '<td></td>
+                                       </tr>';
+                                       ?>
+              <!-- Modal -->
+              <div class="modal fade" id="glassinvoice<?= $valinvoice['supplinvoiceid'];?>" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Edit Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><strong>Glass</strong>&nbsp;&nbsp;Update Invoice Amount</h4>
+                    </div>
+                    <form method="post"
+                      action="summary.php?id=<?php echo base64_encode($Locationid);?>&invoiceid=<?= $valinvoice['supplinvoiceid'];?>"
+                      id="editinvoice<?= $valinvoice['supplinvoiceid'];?>">
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="Supplier">Supplier</label>
+                          <input type="text" class="form-control"
+                            id="supplier-glass<?= $valinvoice['supplinvoiceid'];?>" value="<?= $valinvoice[supplier];?>"
+                            name="supplier">
+                        </div>
+                        <div class="form-group">
+                          <label for="Description">Description</label>
+                          <textarea class="form-control" id="description-glass<?= $valinvoice['supplinvoiceid'];?>"
+                            style="resize: none;" name="description"><?= $valinvoice['descrption'];?></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="Date">Date</label>
+                          <input type="date" class="form-control" id="date-glass<?= $valinvoice['supplinvoiceid'];?>"
+                            value="<?= $valinvoice['date'];?>" name="dateglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Invoice">Invoice</label>
+                          <input type="text" class="form-control" id="invoice-glass<?= $valinvoice['supplinvoiceid'];?>"
+                            value="<?= $valinvoice[invoice];?>" name="invoiceglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Units">Units</label>
+                          <input type="text" class="form-control" id="invoice-glass<?= $valinvoice['supplinvoiceid'];?>"
+                            value="<?= $valinvoice[units];?>" name="units">
+                        </div>
+                        <div class="form-group">
+                          <label for="Total">Total</label>
+                          <input type="text" class="form-control" id="total-glass<?= $valinvoice['supplinvoiceid'];?>"
+                            value="<?= $valinvoice[total];?>" name="total">
+                        </div>
+                        <button type="button" class="btn btn-primary"
+                          onclick="updateglass('<?php echo $valinvoice[supplinvoiceid];?>')">Update</button>
+                      </div>
+                    </form>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php
+                                    }
+                                  }
+                                  if(!empty(postinvoices)){
+                                  if(array_sum($totalamout) >= $totalWSValueGlass)
+                                  $color  = "#F00";
+                                  else
+                                  $color  = "#0096ef";
+                                ?>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color:<?= $color;?>; color: #e8e8e8; width:114px">Margin &nbsp;
+                  <?php if (array_sum($totalamout) != 0) { echo round(($totalRpriceGlass/array_sum($totalamout)),2); } else { echo 0; }?>
+                </td>
+                <td style="background-color: <?= $color;?>; color: #e8e8e8; width:114px;">Total &nbsp;$
+                  <?php echo array_sum($totalamout);?>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php  } ?>
+            </tbody>
+            <tbody>
+              <tr>
+                <td>Profiles</td>
+                <!--  <td></td>-->
+                <td class="blue-txt"> <i class="fa fa-plus add-plus" style="padding: 3px;"
+                    onclick="ShowProfilepopup('Profiles')"></i></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php 
+																	foreach($post_profile as $valprofile){?>
+              <tr>
+                <td>
+                  <?php echo $valprofile['profilename'];?>
+                </td>
+                <!-- <td></td>-->
+                <td>
+                  <?php echo $valprofile['Prfoiledesc'];?>
+                </td>
+                <td>
+                  <?php echo $valprofile['selected_product'];?>
+                </td>
+                <td></td>
+                <td>$
+                  <?php echo $valprofile['pricelm'];?>
+                </td>
+                <td>
+                  <?php echo $valprofile['profileSize'];?>
+                </td>
+                <td>lm</td>
+                <td>
+                  <?php echo $valprofile['margin'];?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $valprofile['wsvalue_profile'];?>
+                </td>
+                <td>$
+                  <?php echo $valprofile['rprice_profile'];?>
+                </td>
+              </tr>
+              <?php
+                              }
+                                  if(!empty($postinvoicesProfiles)){
+                                    foreach($postinvoicesProfiles as $invoiceProfile){
+                                      echo '<tr>
+                                         <td style="color:#0096ef">'.date('d-m-Y',strtotime($invoiceProfile['date'])).' <i class="fa fa-play" aria-hidden="true" data-toggle="modal" data-target="#glassinvoice'.$invoiceProfile['supplinvoiceid'].'"></i></td>
+                                         <td style="color:#0096ef">'.$invoiceProfile['supplier'].'</td>
+                                         <td style="color:#0096ef">'.$invoiceProfile['descrption'].'</td>
+                                         <td></td>
+                                         <td style="color:#0096ef">'.$invoiceProfile['invoice'].'</td>
+                                         <td style="color:#0096ef">'.$invoiceProfile['units'].'</td>
+                                         <td></td>
+                                         <td></td>
+                                         <td></td>
+                                         <td></td>
+                                         <td></td>';
+                                         if($invoiceProfile['total']!='0.00')
+                                         echo '<td style="color:#0096ef">$'.$invoiceProfile['total'].'</td>';
+                                         else
+                                         echo '<td style="color:#0096ef"></td>
+                                       </tr>';
+                                       ?>
+              <!-- Modal -->
+              <div class="modal fade" id="glassinvoice<?= $invoiceProfile['supplinvoiceid'];?>" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Edit Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><strong>Profiles</strong>&nbsp;&nbsp;Update Invoice Amount</h4>
+                    </div>
+                    <form method="post"
+                      action="summary.php?id=<?php echo base64_encode($Locationid);?>&invoiceid=<?= $invoiceProfile['supplinvoiceid'];?>"
+                      id="editinvoice<?= $invoiceProfile['supplinvoiceid'];?>">
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="Supplier">Supplier</label>
+                          <input type="text" class="form-control"
+                            id="supplier-glass<?= $invoiceProfile['supplinvoiceid'];?>"
+                            value="<?= $invoiceProfile[supplier];?>" name="supplier">
+                        </div>
+                        <div class="form-group">
+                          <label for="Description">Description</label>
+                          <textarea class="form-control" id="description-glass<?= $invoiceProfile['supplinvoiceid'];?>"
+                            style="resize: none;" name="description"><?= $invoiceProfile['descrption'];?></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="Date">Date</label>
+                          <input type="date" class="form-control"
+                            id="date-glass<?= $invoiceProfile['supplinvoiceid'];?>"
+                            value="<?= $invoiceProfile['date'];?>" name="dateglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Invoice">Invoice</label>
+                          <input type="text" class="form-control"
+                            id="invoice-glass<?= $invoiceProfile['supplinvoiceid'];?>"
+                            value="<?= $invoiceProfile[invoice];?>" name="invoiceglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Units">Units</label>
+                          <input type="text" class="form-control"
+                            id="invoice-glass<?= $invoiceProfile['supplinvoiceid'];?>"
+                            value="<?= $invoiceProfile[units];?>" name="units">
+                        </div>
+                        <div class="form-group">
+                          <label for="Total">Total</label>
+                          <input type="text" class="form-control"
+                            id="total-glass<?= $invoiceProfile['supplinvoiceid'];?>"
+                            value="<?= $invoiceProfile[total];?>" name="total">
+                        </div>
+                        <button type="button" class="btn btn-primary"
+                          onclick="updateglass('<?php echo $invoiceProfile[supplinvoiceid];?>')">Update</button>
+                      </div>
+                    </form>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php 
+}
+						} 
+            if(!empty($postinvoicesProfiles)){
+            if(array_sum($totalamoutProfiles) >= array_sum($array_profile_wsvalue))
+            $color  = "#F00";
+            else
+            $color  = "#0096ef";
+																?>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color: <?= $color;?>; color: #e8e8e8;width:114px;">Margin &nbsp;
+                  <?php echo round((array_sum($array_rprice_profile)/array_sum($totalamoutProfiles)),2);?>
+                </td>
+                <td style="background-color:  <?= $color;?>; color: #e8e8e8; width:114px;">Total &nbsp;$
+                  <?php echo array_sum($totalamoutProfiles);?>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+            <tbody>
+              <tr>
+                <td>Time</td>
+                <td><i class="fa fa-plus add-plus" style="padding: 3px;" onclick="ShowProfilepopup('Time')"></i></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php 
+                                  foreach($postTime as $valTime){
+                                        ?>
+              <tr>
+                <!--<td></td>-->
+                <td></td>
+                <td>Installation</td>
+                <td>
+                  <?php echo $valTime['selected_product'];?>
+                </td>
+                <td></td>
+                <td>$
+                  <?php echo $rowagnt['wagerate'];?>
+                </td>
+                <td>
+                  <?php echo $valTime['installationsize'];?>
+                </td>
+                <td>h</td>
+                <td>
+                  <?php echo $valTime['timemargin'];?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $valTime['wsvalue_install'];?>
+                </td>
+                <td>$
+                  <?php echo $valTime['rprice_install'];?>
+                </td>
+              </tr>
+              <?php
+                                        }
+                                        if(!empty($postinvoicesTime)){
+                                          foreach($postinvoicesTime as $invoiceTime){
+                                            echo '<tr>
+                                               <td style="color:#0096ef">'.date('d-m-Y',strtotime($invoiceTime['date'])).' <i class="fa fa-play" aria-hidden="true" data-toggle="modal" data-target="#glassinvoice'.$invoiceTime['supplinvoiceid'].'"></i></td>
+                                               <td style="color:#0096ef">'.$invoiceTime['supplier'].'</td>
+                                               <td style="color:#0096ef">'.$invoiceTime['descrption'].'</td>
+                                               <td></td>
+                                               <td style="color:#0096ef">'.$invoiceTime['invoice'].'</td>
+                                               <td style="color:#0096ef">'.$invoiceTime['units'].'</td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>
+                                               <td></td>';
+                                               if($invoiceTime['total']!='0.00')
+                                               echo '<td style="color:#0096ef">$'.$invoiceTime['total'].'</td>';
+                                              else
+                                              echo '<td style="color:#0096ef"></td>
+                                             </tr>';
+                                             ?>
+              <!-- Modal -->
+              <div class="modal fade" id="glassinvoice<?= $invoiceTime['supplinvoiceid'];?>" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Edit Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><strong>Time</strong>&nbsp;&nbsp;Update Invoice Amount</h4>
+                    </div>
+                    <form method="post"
+                      action="summary.php?id=<?php echo base64_encode($Locationid);?>&invoiceid=<?= $invoiceTime['supplinvoiceid'];?>"
+                      id="editinvoice<?= $invoiceTime['supplinvoiceid'];?>">
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="Supplier">Supplier</label>
+                          <input type="text" class="form-control"
+                            id="supplier-glass<?= $invoiceTime['supplinvoiceid'];?>"
+                            value="<?= $invoiceTime[supplier];?>" name="supplier">
+                        </div>
+                        <div class="form-group">
+                          <label for="Description">Description</label>
+                          <textarea class="form-control" id="description-glass<?= $invoiceTime['supplinvoiceid'];?>"
+                            style="resize: none;" name="description"><?= $invoiceTime['descrption'];?></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="Date">Date</label>
+                          <input type="date" class="form-control" id="date-glass<?= $invoiceTime['supplinvoiceid'];?>"
+                            value="<?= $invoiceTime['date'];?>" name="dateglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Invoice">Invoice</label>
+                          <input type="text" class="form-control"
+                            id="invoice-glass<?= $invoiceTime['supplinvoiceid'];?>" value="<?= $invoiceTime[invoice];?>"
+                            name="invoiceglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Units">Units</label>
+                          <input type="text" class="form-control"
+                            id="invoice-glass<?= $invoiceTime['supplinvoiceid'];?>" value="<?= $invoiceTime[units];?>"
+                            name="units">
+                        </div>
+                        <div class="form-group">
+                          <label for="Total">Total</label>
+                          <input type="text" class="form-control" id="total-glass<?= $invoiceTime['supplinvoiceid'];?>"
+                            value="<?= $invoiceTime[total];?>" name="total">
+                        </div>
+                        <button type="button" class="btn btn-primary"
+                          onclick="updateglass('<?php echo $invoiceTime[supplinvoiceid];?>')">Update</button>
+                      </div>
+                    </form>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php 
+      }
+                  }
+                  if(!empty($postinvoicesTime)){
+                  if(array_sum($totalamoutTime) >= array_sum($array_profile_wsvalue))
+                  $color  = "#F00";
+                  else
+                  $color  = "#0096ef";
+                                      ?>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color: <?= $color;?>; color: #e8e8e8;width:114px;">Margin &nbsp;
+                  <?php echo round((array_sum($array_time_rprice_install)/array_sum($totalamoutTime)),2);?>
+                </td>
+                <td style="background-color: <?= $color;?>; color: #e8e8e8; width:114px;">Total &nbsp;$
+                  <?php echo array_sum($totalamoutTime);?>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php } ?>
+              <tr style="background-color:<?php echo $post1['colourbk'];?>">
+                <td>Install(Staff Hours) <a
+                    href='timesheet-report.php?locationid=<?php echo $Locationid;?>&type=install' target="_blank"><i
+                      class="fa fa-play" aria-hidden="true"></i></a></td>
+                <td></td>
+                <td>
+                  <?php echo $post1['insallpdt'];?>
+                </td>
+                <td></td>
+                <td>$
+                  <?php echo $rowagnt['wagerate'];?>
+                </td>
+                <td>
+                  <?php echo $post1['installtimes'];?>
+                </td>
+                <td>h</td>
+                <td>
+                  <?php echo $post1['timemargin'];?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $post1['pdt_wsvalue_install'];?>
+                </td>
+                <td>$
+                  <?php echo $post1['pdt_rprice_install'];?>
+                </td>
+              </tr>
+              <?php
+																															foreach($postTime as $valmanuTime){
+																																?>
+              <tr>
+                <!--<td></td>-->
+                <td></td>
+                <td>Manufacture</td>
+                <td>
+                  <?php echo $valmanuTime['selected_product'];?>
+                </td>
+                <td></td>
+                <td>$
+                  <?php echo $rowagnt['wagerate'];?>
+                </td>
+                <td>
+                  <?php echo $valmanuTime['manufacturesize'];?>
+                </td>
+                <td>h</td>
+                <td>
+                  <?php echo $valmanuTime['timemargin'];?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $valmanuTime['wsvalue_manufacture'];?>
+                </td>
+                <td>$
+                  <?php echo $valmanuTime['rprice_manufature'];?>
+                </td>
+              </tr>
+              <?php } ?>
+              <tr style="background-color:<?php echo $post1['colourbk_manu'];?>">
+                <td>Make(Staff Hours) <a href='timesheet-report.php?locationid=<?php echo $Locationid;?>&type=make'
+                    target="_blank"><i class="fa fa-play" aria-hidden="true"></i></a></td>
+                <td></td>
+                <td>
+                  <?php echo $post1['manufacturepdt'];?>
+                </td>
+                <td></td>
+                <td>$
+                  <?php echo $rowagnt['wagerate'];?>
+                </td>
+                <td>
+                  <?php echo $post1['manufacturetimes'];?>
+                </td>
+                <td>h</td>
+                <td>
+                  <?php echo $post1['timemargin'];?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $post1['pdt_wsvalue_manufacture'];?>
+                </td>
+                <td>$
+                  <?php echo $post1['pdt_rprice_manufacture'];?>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <td>Extras</td>
+                <!-- <td></td>-->
+                <td class="blue-txt"><i class="fa fa-plus add-plus" style="padding: 3px;" data-toggle="modal"
+                    data-target="#myModalExtra"></i></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php
+																foreach($postextras as $valextra){
+                                ?>
+              <tr>
+                <td>
+              <tr>
+                <td class="line-rs">
+                  <?php echo $valextra['name'];?>
+                </td>
+                <!-- <td></td>-->
+                <td class="line-rs">
+                  <?php echo $valextra['description'];?>
+                </td>
+                <td class="line-rs">Extra</td>
+                <td>Time</td>
+                <td>$
+                  <?php echo $rowagnt['wagerate'];?>
+                </td>
+                <td>
+                  <?php echo $valextra['hours'];?>
+                </td>
+                <td>h</td>
+                <td>
+                  <?php echo $valextra['extramargin'];?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $valextra['wsvalue_extras'];?>
+                </td>
+                <td>$
+                  <?php echo $valextra['rprice_extras'];?>
+                </td>
+              </tr>
+              <tr>
+                <td class="line-rs"></td>
+                <td></td>
+                <td class="line-rs"></td>
+                <td>Item</td>
+                <td>
+                  <?php echo $valextra['wsvalue'];?>
+                </td>
+                <td>
+                  <?php echo $valextra['quantity'];?>
+                </td>
+                <td>
+                  <?php echo $valextra['unittag'];?>
+                </td>
+                <td>
+                  <?php echo $costmargin;?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $valextra['wsvalue_costextras'];?>
+                </td>
+                <td>$
+                  <?php echo $valextra['rprice_costextras'];?>
+                </td>
+              </tr>
+              </td>
+              </tr>
+              <?php } 
+                                if(!empty($postextras)){?>
+              <tr style="background-color: lightgray;">
+                <td>Extras Total</td>
+                <td></td>
+                <td></td>
+                <td colspan="2">Total Time Hours:</td>
+                <td>
+                  <?php echo array_sum($totaltimeExtras);?>
+                </td>
+                <td colspan="2">Total Time:</td>
+                <td>
+                  <?php echo array_sum($totalRpriceExtras);?>
+                </td>
+                <td colspan="2">Total Item:</td>
+                <td>
+                  <?php echo array_sum($array_cost_rprice_extras);?>
+                </td>
+              </tr>
+              <?php
+                                }
+                                if(!empty($post_extras)){?>
+              <tr style="background-color:<?php echo $post_extras['colourbk_extra'];?>">
+                <td>Extras(Staff Hours) <a href='timesheet-report.php?locationid=<?php echo $Locationid;?>&type=extra'
+                    target="_blank"><i class="fa fa-play" aria-hidden="true"></i></a></td>
+                <!-- <td></td>-->
+                <td class="blue-txt"></td>
+                <td>
+                  <?php echo $post_extras['extrapdt'];?>
+                </td>
+                <td></td>
+                <td>$
+                  <?php echo $rowagnt['wagerate'];?>
+                </td>
+                <td>
+                  <?php echo $post_extras['extratimes'];?>
+                </td>
+                <td>h</td>
+                <td>
+                  <?php echo $post_extras['extra_margin'];?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $post_extras['pdt_wsvalue_extras'];?>
+                </td>
+                <td>$
+                  <?php echo $post_extras['pdt_rprice_extras'];?>
+                </td>
+                <td></td>
+              </tr>
+              <?php } 
+                                if(!empty($postinvoicesExtra)){
+                                  foreach($postinvoicesExtra as $valextrasinv){
+                                    echo '<tr>
+                                       <td style="color:#0096ef">'.date('d-m-Y',strtotime($valextrasinv['date'])).'  <i class="fa fa-play" aria-hidden="true" data-toggle="modal" data-target="#glassinvoice'.$valextrasinv['supplinvoiceid'].'"></i></td>
+                                       <td style="color:#0096ef">'.$valextrasinv['supplier'].'</td>
+                                       <td style="color:#0096ef">'.$valextrasinv['descrption'].'</td>
+                                       <td></td>
+                                       <td style="color:#0096ef">'.$valextrasinv['invoice'].'</td>
+                                       <td style="color:#0096ef">'.$valextrasinv['units'].'</td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>';
+                                       if($valextrasinv['total'])
+                                       echo  '<td style="color:#0096ef">$'.$valextrasinv['total'].'</td>';
+                                       else
+                                       echo '<td></td>
+                                    </tr>';
+                                    ?>
+              <!-- Modal -->
+              <div class="modal fade" id="glassinvoice<?= $valextrasinv['supplinvoiceid'];?>" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Edit Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><strong>Glass</strong>&nbsp;&nbsp;Update Invoice Amount</h4>
+                    </div>
+                    <form method="post"
+                      action="summary.php?id=<?php echo base64_encode($Locationid);?>&invoiceid=<?= $valextrasinv['supplinvoiceid'];?>"
+                      id="editinvoice<?= $valextrasinv['supplinvoiceid'];?>">
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="Supplier">Supplier</label>
+                          <input type="text" class="form-control"
+                            id="supplier-glass<?= $valextrasinv['supplinvoiceid'];?>"
+                            value="<?= $valextrasinv[supplier];?>" name="supplier">
+                        </div>
+                        <div class="form-group">
+                          <label for="Description">Description</label>
+                          <textarea class="form-control" id="description-glass<?= $valextrasinv['supplinvoiceid'];?>"
+                            style="resize: none;" name="description"><?= $valinvoice['descrption'];?></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="Date">Date</label>
+                          <input type="date" class="form-control" id="date-glass<?= $valextrasinv['supplinvoiceid'];?>"
+                            value="<?= $valextrasinv['date'];?>" name="dateglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Invoice">Invoice</label>
+                          <input type="text" class="form-control"
+                            id="invoice-glass<?= $valextrasinv['supplinvoiceid'];?>"
+                            value="<?= $valextrasinv[invoice];?>" name="invoiceglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Units">Units</label>
+                          <input type="text" class="form-control"
+                            id="invoice-glass<?= $valextrasinv['supplinvoiceid'];?>" value="<?= $valextrasinv[units];?>"
+                            name="units">
+                        </div>
+                        <div class="form-group">
+                          <label for="Total">Total</label>
+                          <input type="text" class="form-control" id="total-glass<?= $valextrasinv['supplinvoiceid'];?>"
+                            value="<?= $valextrasinv[total];?>" name="total">
+                        </div>
+                        <button type="button" class="btn btn-primary"
+                          onclick="updateglass('<?php echo $valextrasinv[supplinvoiceid];?>')">Update</button>
+                      </div>
+                    </form>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php
+                                  }
+                                }
+                                if(!empty($postinvoicesExtra)){
+                                if(array_sum($totalamoutExtra)>= $wsvalueExtrasSum)
+                                $color  = "#F00";
+                                else
+                                $color  = "#0096ef";
+                              ?>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color:<?= $color;?>; color: #e8e8e8;width:114px;">Margin &nbsp;&nbsp;
+                  <?php echo round(($ttoalRpriceExtrs/array_sum($totalamoutExtra)),2);?>
+                </td>
+                <td style="background-color: <?= $color;?>; color: #e8e8e8; width:114px;">Total &nbsp;&nbsp;$
+                  <?php echo array_sum($totalamoutExtra);?>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+            <tbody>
+              <tr>
+                <td>Travel</td>
+                <td><i class="fa fa-plus add-plus" style="padding: 3px;" onclick="ShowProfilepopup('Travel')"></i></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <!--<td></td>-->
+                <td></td>
+                <td>Travel Distance</td>
+                <td>Travel</td>
+                <td></td>
+                <td>
+                  <?php echo $travelrate;?>
+                </td>
+                <td>
+                  <?php echo round(($row_travel['travel_rPrice']/$travelrate),2);?>
+                  <!-- $row_travel['return_trip'];-->
+                </td>
+                <td>km</td>
+                <td>
+                  <?php echo $costmargin;?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $row_travel['travel_wscost'];?>
+                </td>
+                <td>$
+                  <?php echo $row_travel['travel_rPrice'];?>
+                </td>
+              </tr>
+              <tr>
+                <!--<td></td>-->
+                <td></td>
+                <td>Travel Time</td>
+                <td>Time</td>
+                <td></td>
+                <td>$
+                  <?php echo $rowagnt['wagerate'];?>
+                </td>
+                <td>
+                  <?php echo round(($row_travel['time_rPrice']/$labourrate),2);?>
+                </td>
+                <td>h</td>
+                <td>
+                  <?php echo $row_travel['timemargin'];?>
+                </td>
+                <td>0.0%</td>
+                <td>
+                  <?php echo round(($row_travel['time_rPrice']/$timemargin),2);?>
+                </td>
+                <td>$
+                  <?php echo $row_travel['time_rPrice'];?>
+                </td>
+              </tr>
+              <?php
+                                if(!empty($postinvoicestravel)){
+                                  foreach($postinvoicestravel as $invoiceTravel){
+                                    echo '<tr>
+                                       <td style="color:#0096ef">'.date('d-m-Y',strtotime($invoiceTravel['date'])).' <i class="fa fa-play" aria-hidden="true" data-toggle="modal" data-target="#glassinvoice'.$invoiceTravel['supplinvoiceid'].'"></i></td>
+                                       <td style="color:#0096ef">'.$invoiceTravel['supplier'].'</td>
+                                       <td style="color:#0096ef">'.$invoiceTravel['descrption'].'</td>
+                                       <td></td>
+                                       <td style="color:#0096ef">'.$invoiceTravel['invoice'].'</td>
+                                       <td style="color:#0096ef">'.$invoiceTravel['units'].'</td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>';
+                                       if($invoiceTravel['total']!='0.0')
+                                       echo '<td style="color:#0096ef">$'.$invoiceTravel['total'].'</td>';
+                                       else
+                                       echo '<td style="color:#0096ef"></td>
+                                     </tr>';
+                                     ?>
+              <!-- Modal -->
+              <div class="modal fade" id="glassinvoice<?= $invoiceTravel['supplinvoiceid'];?>" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Edit Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><strong>Travel</strong>&nbsp;&nbsp;Update Invoice Amount</h4>
+                    </div>
+                    <form method="post"
+                      action="summary.php?id=<?php echo base64_encode($Locationid);?>&invoiceid=<?= $invoiceTravel['supplinvoiceid'];?>"
+                      id="editinvoice<?= $invoiceTravel['supplinvoiceid'];?>">
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="Supplier">Supplier</label>
+                          <input type="text" class="form-control"
+                            id="supplier-glass<?= $invoiceTravel['supplinvoiceid'];?>"
+                            value="<?= $invoiceTravel[supplier];?>" name="supplier">
+                        </div>
+                        <div class="form-group">
+                          <label for="Description">Description</label>
+                          <textarea class="form-control" id="description-glass<?= $invoiceTravel['supplinvoiceid'];?>"
+                            style="resize: none;" name="description"><?= $invoiceTravel['descrption'];?></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="Date">Date</label>
+                          <input type="date" class="form-control" id="date-glass<?= $invoiceTravel['supplinvoiceid'];?>"
+                            value="<?= $invoiceTravel['date'];?>" name="dateglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Invoice">Invoice</label>
+                          <input type="text" class="form-control"
+                            id="invoice-glass<?= $invoiceTravel['supplinvoiceid'];?>"
+                            value="<?= $invoiceTravel[invoice];?>" name="invoiceglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Units">Units</label>
+                          <input type="text" class="form-control"
+                            id="invoice-glass<?= $invoiceTravel['supplinvoiceid'];?>"
+                            value="<?= $invoiceTravel[units];?>" name="units">
+                        </div>
+                        <div class="form-group">
+                          <label for="Total">Total</label>
+                          <input type="text" class="form-control"
+                            id="total-glass<?= $invoiceTravel['supplinvoiceid'];?>" value="<?= $invoiceTravel[total];?>"
+                            name="total">
+                        </div>
+                        <button type="button" class="btn btn-primary"
+                          onclick="updateglass('<?php echo $invoiceTravel[supplinvoiceid];?>')">Update</button>
+                      </div>
+                    </form>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php 
+}
+          } 
+          if(!empty($postinvoicestravel)){
+          if(array_sum($totalamouttravel) >= round(($row_travel['travel_wscost']+$row_travel['time_wscost']),2))
+          $color  = "#F00";
+          else
+          $color  = "#0096ef";
+                              ?>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color: <?= $color;?>; color: #e8e8e8; width:114px;">Margin &nbsp;
+                  <?php echo round((($row_travel['time_rPrice']+$row_travel['travel_rPrice'])/array_sum($totalamouttravel)),2);?>
+                </td>
+                <td style="background-color: <?= $color;?>; color: #e8e8e8; width:114px;">Total &nbsp;$
+                  <?php echo array_sum($totalamouttravel);?>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+            <tbody>
+              <tr>
+                <td>Paint</td>
+                <td><i class="fa fa-plus add-plus" style="padding: 3px;" onclick="ShowProfilepopup('Paint')"></i></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr style="background-color:<?php echo $colourbk_prep;?>">
+                <td>Paint and Preparation</td>
+                <td></td>
+                <td>
+                  <?php echo $paintprepdt;?>
+                </td>
+                <td></td>
+                <td>$
+                  <?php echo $rowagnt['wagerate'];?>
+                </td>
+                <td>
+                  <?php echo $prepTotal;?>
+                </td>
+                <td>h</td>
+                <td>
+                  <?php echo $paint_timemargin;?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $pdt_wsvalue_prep;?>
+                </td>
+                <td>$
+                  <?php echo $pdt_rprice_prep;?>
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <!--<td></td>-->
+                <td></td>
+                <td>Time</td>
+                <td>Time</td>
+                <td></td>
+                <td>$
+                  <?php echo $rowagnt['wagerate'];?>
+                </td>
+                <td>
+                  <?php echo $total_timecount;?>
+                </td>
+                <td>h</td>
+                <td>
+                  <?php echo $paint_timemargin;?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $paint_time_wscost;?>
+                </td>
+                <td>$
+                  <?php echo $paint_time_rPrice;?>
+                </td>
+              </tr>
+              <tr>
+                <!--<td></td>-->
+                <td></td>
+                <td>Materials</td>
+                <td>materials</td>
+                <td></td>
+                <td>
+                  <?php echo $rateWsval;?>
+                </td>
+                <td>
+                  <?php echo $total_panelcount;?>
+                </td>
+                <td>u</td>
+                <td>
+                  <?php echo $costmargin;?>
+                </td>
+                <td>0.0%</td>
+                <td>$
+                  <?php echo $material_wsCost;?>
+                </td>
+                <td>$
+                  <?php echo $total_costcount;?>
+                </td>
+              </tr>
+              <?php
+                                if(!empty($postinvoicespaint)){
+                                  foreach($postinvoicespaint as $invoicepaint){
+                                    echo '<tr>
+                                       <td style="color:#0096ef">'.date('d-m-Y',strtotime($invoicepaint['date'])).' <i class="fa fa-play" aria-hidden="true" data-toggle="modal" data-target="#glassinvoice'.$invoicepaint['supplinvoiceid'].'"></i></td>
+                                       <td style="color:#0096ef">'.$invoicepaint['supplier'].'</td>
+                                       <td style="color:#0096ef">'.$invoicepaint['descrption'].'</td>
+                                       <td></td>
+                                       <td style="color:#0096ef">'.$invoicepaint['invoice'].'</td>
+                                       <td style="color:#0096ef">'.$invoicepaint['units'].'</td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>
+                                       <td></td>';
+                                       if($invoicepaint['total']!='0.0')
+                                       echo '<td style="color:#0096ef">$'.$invoicepaint['total'].'</td>';
+                                       else
+                                       echo '<td style="color:#0096ef"></td>
+                                     </tr>';
+                                     ?>
+              <!-- Modal -->
+              <div class="modal fade" id="glassinvoice<?= $invoicepaint['supplinvoiceid'];?>" role="dialog">
+                <div class="modal-dialog">
+                  <!-- Edit Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title"><strong>Paint</strong>&nbsp;&nbsp;Update Invoice Amount</h4>
+                    </div>
+                    <form method="post"
+                      action="summary.php?id=<?php echo base64_encode($Locationid);?>&invoiceid=<?= $invoicepaint['supplinvoiceid'];?>"
+                      id="editinvoice<?= $invoicepaint['supplinvoiceid'];?>">
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label for="Supplier">Supplier</label>
+                          <input type="text" class="form-control"
+                            id="supplier-glass<?= $invoicepaint['supplinvoiceid'];?>"
+                            value="<?= $invoicepaint[supplier];?>" name="supplier">
+                        </div>
+                        <div class="form-group">
+                          <label for="Description">Description</label>
+                          <textarea class="form-control" id="description-glass<?= $invoicepaint['supplinvoiceid'];?>"
+                            style="resize: none;" name="description"><?= $invoicepaint['descrption'];?></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="Date">Date</label>
+                          <input type="date" class="form-control" id="date-glass<?= $invoicepaint['supplinvoiceid'];?>"
+                            value="<?= $invoicepaint['date'];?>" name="dateglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Invoice">Invoice</label>
+                          <input type="text" class="form-control"
+                            id="invoice-glass<?= $invoicepaint['supplinvoiceid'];?>"
+                            value="<?= $invoicepaint[invoice];?>" name="invoiceglass">
+                        </div>
+                        <div class="form-group">
+                          <label for="Units">Units</label>
+                          <input type="text" class="form-control"
+                            id="invoice-glass<?= $invoicepaint['supplinvoiceid'];?>" value="<?= $invoicepaint[units];?>"
+                            name="units">
+                        </div>
+                        <div class="form-group">
+                          <label for="Total">Total</label>
+                          <input type="text" class="form-control" id="total-glass<?= $invoicepaint['supplinvoiceid'];?>"
+                            value="<?= $invoicepaint[total];?>" name="total">
+                        </div>
+                        <button type="button" class="btn btn-primary"
+                          onclick="updateglass('<?php echo $invoicepaint[supplinvoiceid];?>')">Update</button>
+                      </div>
+                    </form>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <?php 
+}
+          } 
+          if(!empty($postinvoicespaint)){
+          if(array_sum($totalamoutpaint) >= $material_wsCost)
+          $color  = "#F00";
+          else
+          $color  = "#0096ef";
+                              ?>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td style="background-color: <?= $color;?>; color: #e8e8e8; width:114px;">Margin &nbsp;
+                  <?php echo round((($paint_time_rPrice+$total_costcount)/array_sum($totalamoutpaint)),2);?>
+                </td>
+                <td style="background-color:<?= $color;?>; color: #e8e8e8; width:114px;">Total &nbsp;$
+                  <?php echo array_sum($totalamoutpaint);?>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+            <tbody>
+              <tr>
+                <td>Total</td>
+                <td></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt"></td>
+                <td class="blue-txt" style="color:#000"><b>Margin</b></td>
+                <td></td>
+                <td><b>WsPrice</b></td>
+                <td><b>rPrice</b></td>
+                <td></td>
+              </tr>
+              <tr>
+                <!--<td></td>-->
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>$<b>
+                    <?php echo $totalmargin;?>
+                  </b></td>
+                <td><b>0.0</b></td>
+                <td><b>$
+                    <?php echo $totalwscost;?>
+                  </b></td>
+                <td><b>$
+                    <?php echo $ttoalRprice;?>
+                  </b></td>
+              </tr>
+            </tbody>
+          </table>
+        </div><!-- ./table-responsive -->
+      </div><!-- ./col-12 -->
+    </div>
+  </div>
+</section>
+<style>
+  .summary-table thead tr th {
+    vertical-align: top;
+  }
+  .summary-table tbody tr:first-child {
+    background: #e8e8e8;
+  }
+  .blue-txt {
+    color: #0096ef;
+  }
+  .no-line {
+    border-bottom: 1px solid #fff;
+  }
+  .line-rs {
+    border-bottom: 1px solid #fff;
+  }
+  .invocetable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .inputcls {
+    width: 65%;
+  }
+</style>
+<?php include('templates/footer.php');?>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><strong id="headTitle">Glass</strong>&nbsp;&nbsp;Add Invoice Amount</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+        <form method="POST" action="summary.php?id=<?php echo base64_encode($Locationid);?>" id="invoiceform">
+          <table width="100%" class="invocetable">
+            <tr>
+              <th>Supplier</th>
+              <td><input type="text" class="inputcls" id="supplier-glass" name="supplierglass"></td>
+            </tr>
+            <tr>
+              <th>Description</th>
+              <td><textarea rows="3" cols="25" style="resize: none;" class="inputcls" id="description-glass"
+                  name="descriptionglass"></textarea></td>
+            </tr>
+            <tr>
+              <th>Date</th>
+              <td><input type="date" class="inputcls" value="<?= date('Y-m-d');?>" id="date-glass" name="dateglass">
+              </td>
+            </tr>
+            <tr>
+              <th>Invoice</th>
+              <td><input type="text" class="inputcls" id="invoice-glass" name="invoiceglass"></td>
+            </tr>
+            <tr>
+              <th>Units</th>
+              <td><input type="text" class="inputcls" id="units-glass" name="unitsglass"></td>
+            </tr>
+            <tr>
+              <th>Total</th>
+              <td><input type="text" class="inputcls" id="total-glass" name="totalglass"
+                  onkeypress="return isNumberKey(event)" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><input type="hidden" name="invicetype" value="glass" class="inputcls" id="invicetype"></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><input type="button" value="ADD" class="btn-primary" onclick="validglass()"></td>
+            </tr>
+          </table>
+        </form>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModalExtra" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><strong>Extras</strong>&nbsp;&nbsp;Add Invoice Amount</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+        <form method="POST" action="summary.php?id=<?php echo base64_encode($Locationid);?>" id="invoiceformextra">
+          <table width="100%" class="invocetable">
+            <tr>
+              <th>Supplier</th>
+              <td><input type="text" class="inputcls" id="supplier-extra" name="supplierextra"></td>
+            </tr>
+            <tr>
+              <th>Description</th>
+              <td><textarea rows="3" cols="25" style="resize: none;" class="inputcls" id="description-extra"
+                  name="descriptionextra"></textarea></td>
+            </tr>
+            <tr>
+              <th>Date</th>
+              <td><input type="date" class="inputcls" value="<?= date('Y-m-d');?>" id="date-extra" name="dateextra">
+              </td>
+            </tr>
+            <tr>
+              <th>Invoice</th>
+              <td><input type="text" class="inputcls" id="invoice-extra" name="invoiceextra"></td>
+            </tr>
+            <tr>
+              <th>Units</th>
+              <td><input type="text" class="inputcls" id="units-extra" name="unitsextra"></td>
+            </tr>
+            <tr>
+              <th>Total</th>
+              <td><input type="text" class="inputcls" id="total-extra" name="totalextra"
+                  onkeypress="return isNumberKey(event)" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><input type="hidden" name="invicetype" value="extras" class="inputcls"></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><input type="button" value="ADD" class="btn-primary" onclick="validextra()"></td>
+            </tr>
+          </table>
+        </form>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

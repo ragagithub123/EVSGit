@@ -1,0 +1,255 @@
+
+<section style="width: 900px; margin: auto;">
+  <div class="">
+      <div class="row">
+          <div class="col-lg-12">
+
+      <div class="evs_head">
+          <div class="logo">
+              <img src="images/logo.png">
+          </div>
+          <div class="header-select">
+
+            <select class="form-control" id="select_worksheet">
+               <option value="job">Job Sheet</option>
+                <option value="measure">Check Measure Sheet</option>
+
+                <option value="production">Production Sheet</option>
+				 <option value="task">Tools and Materials Sheet</option>
+            </select>
+            Date : <?php echo date('d-m-Y');
+            //include('templates/menu.php');?>
+          </div>
+
+
+
+      </div><!-- ./evs_head -->
+
+          </div>
+      </div>
+  </div>
+</section>
+<section class="evs-main-body" style="width: 900px; margin: auto;">
+      <div class="">
+        <div class="row">
+          <div class="col-lg-12">
+            <?php
+            $loc=$row_details['unitnum'].",".$row_details['street'];
+            if(!empty($row_details['suburb']))
+            {
+              $loc.=",".$row_details['suburb'];
+            }
+            ?>
+            <h3 class="title-h-one">Job: <span><?php echo $loc;?>,<?php echo $row_details['project_name'];?> <?php echo $row_details['project_date'];?></span></h3>
+
+            <div class="house-details">
+              <div class="house-photo">
+                <?php
+                if($row_details['photoid'] !=0)
+                {
+                  ?>
+                <img src="<?php echo $gPhotoURL.$row_details['photoid'];?>.jpg" class="img-responsive">
+                <?php
+
+                }?>
+
+                <div class="house-info">
+                  <ul>
+
+                    <li><?php echo $row_details['city'];?></li>
+                    <li><?php echo $row_details['firstname']." ".$row_details['lastname'];?></li>
+                    <li><?php echo $row_details['phone'];?></li>
+                    <li><?php echo $row_details['email'];?></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="house-task new-house-task">
+                <table border="1" class="table borderless">
+                  <tbody>
+                    <tr>
+                      <th>Colours</th>
+                      <th><input type="text" class="form-control job_head"  id="colours" value="<?php echo $row_details['colours'];?>"></th>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="height: 30px;"></td>
+                    </tr>
+                    <tr>
+                      <th>Hazards</th>
+                      <th><input type="text" class="form-control job_head"  id="hazards" value="<?php echo $row_details['hazards'];?>"></th>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="height: 30px;"></td>
+                    </tr>
+                    <tr>
+                      <th>Access</th>
+                      <th><input type="text" class="form-control job_head"  id="access" value="<?php echo $row_details['access'];?>"></th>
+                    </tr>
+                    <tr>
+                      <td colspan="2" style="height: 50px;"></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Total Install Hours <?php echo $totalinstallhrs;?></td>
+                    </tr>
+                    <tr>
+                      <td>Total Extra's Hours &nbsp;<?php echo $total_extra_hrs;?></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <h2 style="margin-top: -42px; font-weight: bold;">JOB SHEET</h2>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped fontstyle center-inp">
+                <thead>
+                  <tr style="color:#fff; background:#565759;">
+                    <th colspan="3" width="170">Window</th>
+                    <th colspan="6" align="left" width="60%">Profile Sizes</th>
+                    <th align="left" width="250">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>ID</td>
+                    <td>Room</td>
+                    <td>Window[]</td>
+                    <td>Style</td>
+                    <td>Safety</td>
+                    <td>Height</td>
+                    <td>Width</td>
+                    <td>Center</td>
+                    <td style="text-align: center;">Type</td>
+                    <td>
+                      <div class="seals-job">
+                        <input type="checkbox" id="seals_btn_job" value=""/>Seals
+                      </div>
+                    </td>
+                  </tr>
+                   <?php
+
+
+          						foreach($postpanel as $row_window){?>
+
+
+                  <tr>
+                    <td colspan="3">
+                    <img src="<?php echo $gwindowURL.$row_window['windowtypeid'];?>.png" class="img-responsive" style="width: 170px;"></td>
+                    <td colspan="6">
+                      <div class="table-inner-details">
+                        <div class="innr-title">
+                          <h5>Notes</h5>
+                          <h5>Install Hours <?php echo $row_window['selected_hours'];?></h5>
+                        </div>
+                        <p><?php echo $row_window['notes'];?></p>
+                      </div>
+                    </td>
+                    <td >
+                      <div class="table-inner-details">
+                        <div class="innr-title">
+                          <h5>Extras</h5>
+                          <h5>Extras Hours <?php echo $row_window['extra_hour'];?></h5>
+                        </div>
+                        <ul class="extra-list">
+                        <?php
+                        	foreach($row_window['extras'] as $row_extras)
+																									{
+
+                         ?>
+                          <li>
+                          <?php
+                            if(file_exists($gSupplierProdcutsDir.$row_extras['imageid'].".png")){
+                                         echo '<img src="'.$gSupplierProdcutsURL.$row_extras['imageid'].'.png'.'" style="width:20px">';
+                             }?>
+
+                            <span><?php echo $row_extras['quantity'];?> x <?php echo $row_extras['name'];?></span>
+                          </li>
+                         <?php } ?>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                 <?php
+                  foreach($row_window['panelarray'] as $row_panel){ ?>
+                  <tr>
+                    <td><?php echo $row_panel['ID'];?></td>
+                    <td><?php echo $row_window['room_name'];?></td>
+                    <td><?php echo $row_window['name']."[".$row_panel['panelnum']."]";?></td>
+                    <td><?php if($row_panel['styleid'] > 0 && file_exists($gPanelOptionsPhotoDir.$row_panel['styleid'].".png"))
+                    {
+                      echo "<img src=\"". $gPanelOptionsPhotoURL.$row_panel['styleid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\">";
+                    } ?></td>
+                    <td><?php echo $row_panel['safty_name'];?></td>
+
+                     <td <?php if($row_panel['measurement']=='estimate'){?> style="color:#F00"<?php }?>><?php echo $row_panel['ProfileY'];?> </td>
+                      <td <?php if($row_panel['measurement']=='estimate'){?> style="color:#F00"<?php }?>><?php echo $row_panel['ProfileX'];?> </td>
+                    <td <?php if($row_panel['measurement']=='estimate'){?> style="color:#F00"<?php }?>><?php echo $row_panel['center'];?> </td>
+                    <td style="text-align: center;"><?php echo $row_window['selected_product'];?></td>
+                    <td>
+                      <div class="seals-job">
+                        <input type="checkbox" name="check_seals" class="cls_seals" value="<?php echo $row_panel['panelid'];?>" id="check_seals<?php echo $row_panel['panelid'];?>" data-id ="<?php echo $row_window['roomid'];?>" onchange="workflow_worksheet(this.id,'jobsheet',<?php echo $row_window['roomid'];?>,<?php echo $row_panel['panelid'];?>)" <?php if($row_panel['workflow']['seals']==1){?> checked="checked" <?php } ?>>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <?php } } ?>
+
+                </tbody>
+                <!--<thead>
+                  <tr style="color:#fff; background:#565759;">
+                    <th colspan="8">
+                      <div style="display: flex; align-items: center; justify-content: space-between;">Report <button class="add-btn-table jobsheetbtn"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+                      </th>
+                    <th style="text-align: center; vertical-align: middle;">Week Ending Date</th>
+                    <th style="text-align: center; vertical-align: middle;">Seals</th>
+                  </tr>
+                </thead>-->
+                <!--<tbody id="myTablejob">
+                <?php
+                $cnt=0;
+                foreach($weekely as $valweek){ $cnt++;
+
+
+                ?>
+
+                <tr>
+                    <td colspan="8"><div class="pull-right"><input type="checkbox" <?php if($valweek['dates']!='00-00-0000'){?> checked="checked"<?php } ?> class="sealsDate" data-id="<?php echo $cnt;?>" id="checkA<?php echo $cnt;?>"></div></td>
+                    <td class="calendar-tble calendar-pos"><span id="td_A<?php echo $cnt;?>"><?php echo $valweek['dates'];?></span> <input type="date" id="date_A<?php echo $cnt;?>" class="seals_Date" data-id="<?php echo $cnt;?>"/> </td>
+                    <td style="text-align: center;" id="sealsA<?php echo $cnt;?>"><?php echo $valweek['seals'];?></td>
+                  </tr>
+
+                <?php
+                }
+
+                ?>
+
+
+                </tbody>-->
+                 <!--<tfoot>
+                  <tr>
+                    <td colspan="9" style="text-align: right;">
+                      <span style="margin-left: 25px;">Total</span>
+                    </td>
+                    <td style="text-align: center;" id="tot_seals"><?php echo $tot_seals;?></td>
+                  </tr>
+                </tfoot>-->
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+        <input type="hidden" id="today_date" value="<?php echo date('d-m-Y',strtotime($date));?>" />
+        <input type="hidden" id="locationid" value="<?php echo $Locationid;?>" />
+         <input type="hidden" id="jcount" value="<?php echo $cnt;?>" />
+          <input type="hidden" id="worksheet_type" value="jobsheet" />
+      </div>
+    </section>

@@ -1,0 +1,86 @@
+  <body>
+  <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                
+                    <div class="evs_head">
+                        <div class="logo">
+                            <img src="images/logo.png">
+                        </div>
+                        
+                        <?php include('templates/menu.php');?>
+                    </div><!-- ./evs_head -->
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+  
+     <section class="evs-main-body">
+    	<div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                
+                	<div class="custom-tabs">
+                        <div class="panel with-nav-tabs panel-default">
+                            <div class="panel-heading">
+                                
+                            </div>
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="tab1default">
+                                    	<div class="custom-table-add-pge">
+                                     <form method="post" action="product-settings.php" >
+                                     <table>
+                                      <tr>
+                                       <th>
+                                       <div class="form-group">
+                                        <select name="supplierlist" id="supplierlist" class="form-control">
+                                        <option value="select">Choose From Supplier List</option>
+                                         <?php
+                                          foreach($supplierlist as $valist){
+                                           echo '<option value='.$valist['supplierid'].'>'.$valist['supplier_name'].'</option>';
+                                          }
+                                         ?>
+                                        </select>
+                                        </div>
+                                       </th>
+                                      </tr>
+                                      <tr>
+                                      <th>
+                                      	<div class="form-group">
+                                        <span id="list_produt" style="display:none">
+                                         <select name="select_produt" id="select_produt" title="Select your Products" class="selectpicker form-control" >
+                              
+                                       </select>
+                                        </span>
+                                        </div>
+                                     </th>
+                                      </tr>
+                                     
+                                      <tr>
+                                      
+                                       <td><input type="submit" value="ADD" class="btn-primary" style="display:none" id="btn_add" name="btn_add"></td>
+                                       
+                                      </tr>
+                                     
+                                     </table>
+                                    </form>
+                                       
+                                        </div><!-- ./business-details -->
+                                    </div><!-- #/tab1default -->
+                                    
+        
+        
+        
+    </div><!-- ./tab-content -->
+</div>
+</div>  
+</div>
+
+</div>
+</div>
+</div>
+</section>
+

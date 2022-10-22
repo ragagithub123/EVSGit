@@ -1,0 +1,132 @@
+
+  <body>
+    
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                
+                    <div class="evs_head">
+                        <div class="logo">
+                            <img src="images/logo.png">
+                        </div>
+                        <?php include('templates/menu.php');?>
+                        
+                    </div><!-- ./evs_head -->
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <section class="evs-main-body">
+    	<div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                
+                	<div class="g-map">
+                    	<div class="left-g">
+                        	<div class="location">
+                            	<div class="location-t">
+                                	<h5><?php echo $row_location['locationSearch'];?></h5>
+                                </div>
+                                <div class="overall-details">
+                                	<h5>Total Hours = <?php echo $overall_total;?> h</h5>
+                                    <h5>Travel Time = <?php echo $Total_travel_time;?> h</h5>
+                                </div>
+                            </div>
+                            
+                            <div class="table-responsive">
+                            	<table class="table map-table">
+                                	<thead>
+                                    	<tr>
+                                        	<td></td>
+                                        	<td>Name</td>
+                                            <td>Staff</td>
+                                            <td>Workshop</td>
+                                            <td>Travel</td>
+                                            <td>Location</td>
+                                            <td>Total</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                  
+                                    <?php
+                                    foreach($tracked_dates as $valdate){?>
+                                  <tbody>
+                                    	<tr class="dark-bg">
+                                        	<td><?php echo date('D d/M/Y', strtotime($valdate));?></td>
+                                            <td colspan="6"></td>
+                                           <td><!--<a href="#" class="edit-tble-btn">Edit</a>--></td>
+                                        </tr>
+                                        <?php
+                                         foreach($activity as $valacitvity){
+                                         if($valdate == $valacitvity['tracked_date']){
+                                         if($valacitvity['total_time']!='00:00:00')
+                                         $total=$valacitvity['staffcount']*(strtotime($valacitvity['total_time']));
+                                         ?>
+                                         <tr>
+                                        	<td></td>
+                                        	<td><span class="user-clr" style="background:<?php echo $valacitvity['color'];?>;"></span> <?php echo $valacitvity['staffname'];?></td>
+                                            <td><?php echo $valacitvity['staffcount'];?></td>
+                                            <td><?php echo $valacitvity['workshop_time'];?></td>
+                                            <td><?php echo $valacitvity['travel_time'];?></td>
+                                            <td><?php echo $valacitvity['client_location_time'];?></td>
+                                            <td><?php echo date('H:i:s',$total);?></td>
+                                            <td></td>
+                                        </tr>
+                                         <?php
+                                        }
+                                         }
+                                        ?>
+                                       
+                                         
+                                        <tr><td colspan="8"><h5 ><strong>Joblogs</strong></h5></td></tr>
+                                        <?php foreach($post as $valpost){
+                                         if($valdate == $valpost['created_at']){
+                                          ?>
+                                            <tr class="light-dark-bg">
+                                        	   <td></td>
+                                        	   <td> <?php echo $valpost['staffname'];?></td>
+                                            <td><?php echo $valpost['room_name'];?></td>
+                                            <td><?php echo $valpost['windowname'];?></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                           <?php
+                                           }
+                                        }
+                                        ?>
+                                        
+                                         
+                                        
+                                    </tbody><?php
+                                    }
+                                    ?>
+                                    
+                                   
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!--<div class="right-g">
+                        	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d33241.706896005904!2d-74.02316220832328!3d40.711967642611356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1574856036384!5m2!1sen!2sin" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                        </div>-->
+                    </div>
+                                        
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    
+
+    
+    
+
+    

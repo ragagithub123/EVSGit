@@ -1,0 +1,629 @@
+<body>
+  <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="evs_head">
+                        <div class="logo">
+                            <img src="images/logo.png">
+                        </div>
+
+                        <?php include('templates/menu.php');?>
+                    </div><!-- ./evs_head -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <section class="evs-main-body">
+    	<div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+
+      	    <div class="custom-tabs">
+              <div class="panel with-nav-tabs panel-default">
+              <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#tab1default" data-toggle="tab">Business details</a></li>
+                  <li><a href="#tab2default" data-toggle="tab">Rates</a></li>
+                  <li><a href="#tab3default" data-toggle="tab">Quote</a></li>
+                  <li><a href="#tab4default" data-toggle="tab">Team</a></li>
+                  <li><a href="#tabDatadefault" data-toggle="tab">Data management</a></li>
+                  <li style="display: none;"><a href="#tab5default" data-toggle="tab" id="edit-team-member">Add/Edit</a></li>
+                </ul>
+              </div>
+           
+              <div class="panel-body">
+              <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab1default">
+        	<div class="business-details">
+           <form method="post" action="agent-settings.php" enctype="multipart/form-data" id="form-settings" name="form-settings">
+           <input type="hidden" name="type" value="1">
+            	<div class="row">
+
+                	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    	<div class="form-group">
+                        	<label><span>*</span> Business name</label>
+                            <input type="text" class="form-control" name="business_name" id="business_name" value="<?php echo $rowagent['businessname'];?>">
+                        </div>
+                        <div class="form-group">
+                        	<label><span>*</span> First name</label>
+                            <input type="text" class="form-control" name="first_name" id="first_name" value="<?php echo $rowagent['firstname'];?>">
+                        </div>
+                        <div class="form-group">
+                        	<label><span>*</span> Last name</label>
+                            <input type="text" class="form-control" name="last_name" id="last_name" value="<?php echo $rowagent['lastname'];?>">
+                        </div>
+                        <div class="form-group">
+                        	<label><span>*</span> Email</label>
+                            <input type="text" class="form-control" name="email" id="email" value="<?php echo $rowagent['email'];?>">
+                        </div>
+                        <div class="form-group">
+                        	<label><span>*</span> Unit number</label>
+                            <input type="text" class="form-control" name="unit_number" id="unit_number" value="<?php echo $rowagent['unitnum'];?>">
+                        </div>
+                        <div class="form-group">
+                        	<label><span>*</span> Street</label>
+                            <input type="text" class="form-control" name="street" id="street" value="<?php echo $rowagent['street'];?> ">
+                        </div>
+                        <div class="form-group">
+                        	<label><span>*</span> Suburb</label>
+                            <input type="text" class="form-control" name="suburb" id="suburb" value="<?php echo $rowagent['suburb'];?>">
+                        </div>
+                        <div class="form-group">
+                        	<label><span>*</span> City</label>
+                            <input type="text" class="form-control" name="city" id="city" value="<?php echo $rowagent['city'];?>">
+                        </div>
+                        <div class="form-group">
+                        	<label><span>*</span> Post code</label>
+                            <input type="text" class="form-control" name="postcode" id="postcode" value="<?php echo $rowagent['postcode'];?>">
+                        </div>
+                        <div class="form-group">
+                        	<label><span>*</span> Phone</label>
+                            <input type="text" class="form-control" name="phone" id="phone" value="<?php echo $rowagent['phone'];?>">
+                        </div>
+                        <div class="form-group">
+                        	<label></label>
+                            <input type="button" class="btn-primary" id="update_settings" name="update_settings" value="UPDATE" >
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+                    	<div class="prof-sett">
+                     <?php if(!empty($rowagent['brand_image'])){?>
+                            <div class="circle">
+                               <img class="profile-pic" src="<?php echo $rowagent['brand_image'];?>">
+                            </div>
+                            <?php } ?>
+                            <div class="p-image">
+                            	<h5>(PNG: 400px x 400px)</h5>
+                                <input type="file" name="brandimage" accept="image/*"  class="file-upload upload-button" />
+                            </div>
+                        </div>
+
+                        <div class="prof-sett">
+                        <?php if(!empty($rowagent['signature'])){?>
+                            <div class="circle">
+                               <img class="profile-pic2" src="<?php echo $rowagent['signature'];?>">
+                            </div>
+                            <?php } ?>
+                            <div class="p-image">
+                            	<h5>(PNG: 400px x 400px)</h5>
+                                <input class="file-upload2 upload-button2" type="file" accept="image/*" name="signatureimage"/>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                </form>
+            </div><!-- ./business-details -->
+        </div><!-- #/tab1default -->
+
+        <div class="tab-pane fade" id="tab2default">
+          <div class="agent-table">
+            <form method="post" action="agent-settings.php" enctype="multipart/form-data" id="form-rates">
+            <input type="hidden" name="type" value="2">
+              <div class="col-12">
+                <div class="row gap-border">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group align-straight">
+                      <label>Hourly rate &nbsp;&nbsp;&nbsp; $</label>
+                      <input type="text" class="form-control" name="labourrate" id="labourrate" value="<?php echo $rowagent['labourrate'];?>">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group align-straight">
+                      <label>Product Margin</label>
+                      <input type="text" class="form-control" name="productmargin" id="productmargin" value="<?php echo $rowagent['productmargin'];?>">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group align-straight">
+                      <label>EVS Margin</label>
+                      <input type="text" class="form-control" name="evsmargin" id="evsmargin" value="<?php echo $rowagent['evsmargin'];?>">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group align-straight">
+                      <label>Travel Rate p/km &nbsp;&nbsp;&nbsp; $</label>
+                      <input type="text" class="form-control" name="agenttravelrate" id="agenttravelrate" value="<?php echo $rowagent['agenttravelrate'];?>">
+                    </div>
+                  </div>
+                  
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group align-straight">
+                      <label>Wage Rate &nbsp;&nbsp;&nbsp; $</label>
+                      <input type="text" class="form-control" name="wagerate" id="wagerate" value="<?php echo $rowagent['wagerate'];?>">
+                    </div>
+                  </div>
+                  
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group align-straight">
+                      <label>IGU Margin</label>
+                      <input type="text" class="form-control" name="igumargin" id="igumargin" value="<?php echo $rowagent['igumargin'];?>">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row gap-border">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group align-straight">
+                      <label>SGU Name</label>
+                      <input type="text" class="form-control" name="sgu_name" id="sgu_name" value="<?php echo $rowagent['SGUname'];?>">
+                    </div>
+                    <div class="form-group align-straight">
+                      <label>SGU Glass Rate &nbsp;&nbsp;&nbsp; $</label>
+                      <input type="text" class="form-control" name="SGUrate" id="SGUrate" value="<?php echo $rowagent['SGUrate'];?>">
+                    </div>
+                    <div class="form-group align-straight">
+                      <label>SGUurl</label>
+                      <input type="text" class="form-control" name="SGUurl" id="SGUurl" value="<?php echo $rowagent['SGUurl'];?>">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="prof-sett">
+                     <?php if(!empty($rowagent['SGUimage'])){?>
+                       <div class="circle">
+                          <img  src="<?php echo $rowagent['SGUimage'];?>" >
+                       </div>
+                       <?php } ?>
+                     <div class="p-image">
+                         <h5>(PNG: 700px x 200px)</h5>
+                         <input class="file-upload3 upload-button3" type="file" accept="image/*" name="sguimage" />
+                     </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row gap-border">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group align-straight">
+                      <label>IGUx2 Name</label>
+                      <input type="text" class="form-control" name="igux2_name" id="igux2_name" value="<?php echo $rowagent['IGUx2name'];?>">
+                    </div>
+                    <div class="form-group align-straight">
+                      <label>IGUx2 Glass Rate &nbsp;&nbsp;&nbsp; $</label>
+                      <input type="text" class="form-control" name="IGUx2rate" id="IGUx2rate" value="<?php echo $rowagent['IGUx2rate'];?>">
+                    </div>
+                    <div class="form-group align-straight">
+                      <label>IGUx2url</label>
+                      <input type="text" class="form-control" name="IGUx2url" id="IGUx2url" value="<?php echo $rowagent['IGUx2url'];?>">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="prof-sett">
+                      <?php if(!empty($rowagent['IGUx2image'])){?>
+                      <div class="circle">
+                        <img  src="<?php echo $rowagent['IGUx2image'];?>">
+                      </div>
+                      <?php } ?>
+                      <div class="p-image">
+                        <h5>(PNG: 700px x 200px)</h5>
+                        <input class="file-upload5 upload-button5" type="file" accept="image/*" name="igux2image" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row gap-border">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group align-straight">
+                      <label>IGUx3 Name</label>
+                      <input type="text" class="form-control" name="igux3_name" id="igux3_name" value="<?php echo $rowagent['IGUx3name'];?>">
+                    </div>
+                    <div class="form-group align-straight">
+                      <label>IGUx3 Glass Rate &nbsp;&nbsp;&nbsp; $</label>
+                      <input type="text" class="form-control" name="IGUx3rate" id="IGUx3rate" value="<?php echo $rowagent['IGUx3rate'];?>">
+                    </div>
+                    <div class="form-group align-straight">
+                      <label>IGUx3url</label>
+                      <input type="text" class="form-control" name="IGUx3url" id="IGUx3url" value="<?php echo $rowagent['IGUx3url'];?>">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="prof-sett">
+                      <?php if(!empty($rowagent['IGUx3image'])){?>
+                      <div class="circle">
+                         <img  src="<?php echo $rowagent['IGUx3image'];?>" >
+                      </div>
+                      <?php } ?>
+                      <div class="p-image">
+                          <h5>(PNG: 700px x 200px)</h5>
+                          <input class="file-upload5 upload-button5" type="file" accept="image/*" name="igux3image" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row gap-border">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group align-straight">
+                      <label>EVSx2 Name</label>
+                      <input type="text" class="form-control" name="EVSx2_name" id="EVSx2_name" value="<?php echo $rowagent['EVSx2name'];?>">
+                    </div>
+                    <div class="form-group align-straight">
+                      <label>EvSx2 Glass Rate &nbsp;&nbsp;&nbsp; $</label>
+                      <input type="text" class="form-control" name="EvsX2rate" id="EvsX2rate" value="<?php echo $rowagent['EVSx2rate'];?>">
+                    </div>
+                    <div class="form-group align-straight">
+                      <label>EvSx2url</label>
+                      <input type="text" class="form-control" name="EvSx2url" id="EvSx2url" value="<?php echo $rowagent['EvsX2url'];?>">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="prof-sett">
+                      <?php if(!empty($rowagent['EVSx2image'])){?>
+                      <div class="circle">
+                         <img  src="<?php echo  $rowagent['EVSx2image'];?>" >
+                      </div>
+                      <?php } ?>
+                      <div class="p-image">
+                          <h5>(PNG: 700px x 200px)</h5>
+                          <input class="file-upload4 upload-button4" type="file" accept="image/*" name="evsx2image" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row gap-border">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group align-straight">
+                      <label>EVSx3 Name</label>
+                      <input type="text" class="form-control" name="EVSx3_name" id="EVSx3_name" value="<?php echo $rowagent['EVSx3name'];?>">
+                    </div>
+                    <div class="form-group align-straight">
+                      <label>Evsx3 Glass Rate &nbsp;&nbsp;&nbsp; $</label>
+                      <input type="text" class="form-control" name="EvsX3rate" id="EvsX3rate" value="<?php echo $rowagent['EVSx3rate'];?>">
+                    </div>
+                    <div class="form-group align-straight">
+                      <label>EvSx3url</label>
+                      <input type="text" class="form-control" name="EvSx3url" id="EvSx3url" value="<?php echo $rowagent['EVSx3url'];?>">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="prof-sett">
+                      <?php if(!empty($rowagent['EVSx3image'])){?>
+                      <div class="circle">
+                         <img  src="<?php echo $rowagent['EVSx3image'];?>" >
+                      </div>
+                      <?php } ?>
+                      <div class="p-image">
+                        <h5>(PNG: 700px x 200px)</h5>
+                        <input class="file-upload5 upload-button5" type="file" accept="image/*" name="evsx3image" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <input type="button" class="btn-primary" id="update-products" name="update_products" value="UPDATE">
+                  </div>
+                </div>
+              </div><!-- ./col-12 -->
+            </form>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tab3default">
+        <form method="post" action="agent-settings.php" id="form-quotes" enctype="multipart/form-data">
+        <input type="hidden" name="type" value="3">
+         <div class="quote">
+          
+          <div class="quote-inner">
+                 <h4>Quote Update</h4>
+                   <input type="date" name="quote_date" id="quote_date" <?php if($rowagent['quotedate']!='0000-00-00'){?> value="<?php echo $rowagent['quotedate'];?>" <?php }?>"> 
+                </div><!-- ./quote-inner -->
+         
+             <div class="quote-inner">
+                 <h4>Quote Greeting</h4>
+                    <textarea class="form-control" rows="7" name="quotegreeting" id="quotegreeting"><?php echo $rowagent['quotegreeting'];?></textarea>
+                </div><!-- ./quote-inner -->
+
+                <div class="quote-inner">
+                 <h4>Quote Details</h4>
+                    <textarea class="form-control" rows="15" name="quotedetails" id="quotedetails"><?php echo $rowagent['quotedetails'];?></textarea>
+                </div><!-- ./quote-inner -->
+                
+                 <div class="quote-inner">
+                <h4><input type="checkbox" name="paintlock" value="1" <?php if($rowagent['paintlock']==1){?> checked="checked"<?php }?>> &nbsp;Prep and Painting Details</h4>
+                    <textarea class="form-control" rows="15" name="paintdetails" id="paintdetails"><?php echo $rowagent['paintdetails'];?></textarea>
+                </div><!-- ./quote-inner -->
+                
+                <div class="quote-inner">
+               <h4> <input type="checkbox" name="stepslock" value="1" <?php if($rowagent['steplock']==1){?> checked="checked"<?php }?>> &nbsp;Steps</h4>
+                    <textarea class="form-control" rows="15" name="steps" id="steps"><?php echo $rowagent['stepdetails'];?></textarea>
+                </div><!-- ./quote-inner -->
+
+                <div class="quote-inner">
+                
+                <span class="addprop add-plus moreimages" data-url="<?php echo $quoteurl;?>noimage.png"><i class="fa fa-plus"></i></span>
+                  <div class="quote-pages">
+
+                 <?php
+                    $i=0;
+                     foreach($images as $valimage){
+                     
+                     $i++;
+
+                        echo '<div class="quote-single-page">
+                            <h5>'.$valimage['pages'].'</h5>';
+                            if(!empty($valimage['images'])){
+
+                                echo '<img src="'.$quoteurl.$valimage['images'].'">';
+
+                            }
+                            else{
+                                  $url =$quoteurl."noimage.png";
+                                echo '<img src="'.$url.'">';
+                            }
+                            echo '<input type="file" name="userfile'.$i.'">';?>
+
+                            <?php
+
+                          echo '</div>';
+
+                      }
+                      ?>
+
+                  </div>
+                </div>
+
+                <div class="quote-inner">
+                 <h4><input type="hidden" name="imagecount" id="imagecount" value="<?php echo $imagecnt;?>"></h4>
+                   <input type="button" value="UPDATE" name="quote-update" class="btn-primary" id="quote-update">
+                </div>
+            </div>
+            </form>
+        </div>
+
+        <div class="tab-pane fade" id="tab4default">
+          <div class="table-responsive">
+            <table class="table team-table" width="100%">
+              <thead>
+                <tr class="active">
+                 <th>Photo</th>
+                 <th>Name</th>
+                 <th>User Name</th>
+                 <th>Role</th>
+                 <th>Acess</th>
+                 <th>Status</th>
+                 <th>Phone</th>
+                 <th>Email</th>
+                 <th>
+                   <div style="display: flex; align-items: center;">
+                     <span style="margin-right: 10px;">Add</span>
+                     <a class="click-tab">
+                       <span class="addprop add-plus"><i class="fa fa-plus"></i></span>
+                     </a>
+                  </div>
+                 </th>
+                </tr>
+              </thead>
+              <tbody>
+              <?php
+               foreach($Teams as $valteam){?>
+               
+               <tr>
+                  <td><img src="<?php echo $gTeamPhotoURL.$valteam['profile_pic'];?>" width="50"></td>
+                  <td><?php echo $valteam['first_name'];?>&nbsp; <?php echo $valteam['last_name'];?></td>
+                  <td><?php echo $valteam['username'];?></td>
+                  <td><?php echo $valteam['roleid'];?></td>
+                  <td><?php echo $valteam['acess'];?></td>
+                  <td><?php echo $valteam['status'];?></td>
+                  <td><?php echo $valteam['phone'];?></td>
+                  <td><?php echo $valteam['email'];?></td>
+                  <td>
+                    <a class="btn click-tab edit-team" data-id="<?php echo $valteam['team_id'];?>">Edit</a>
+                  </td>
+                </tr>
+               
+               <?php
+               }
+               
+              ?>
+                
+               
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tabDatadefault">
+          <div class="table-responsive">
+            <!--<div id="piechart"></div>-->
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tab5default">
+        <form method="post" action="agent-settings.php" id="team-form" enctype="multipart/form-data">
+        	<div class="edit-member edit-member-btn" style="position:absolute;top:-28px;right:15px;">
+          <input class="btn-primary" type="button" value="Submit" id="team_btn">
+          </div>
+         <input type="hidden" name="type" value="4">
+          <input type="hidden" name="team_id" id="team_id" value="0">
+          <div class="row">
+
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+              <div class="edit-member">
+                <span>First Name</span>
+                <input type="text" class="form-control" name="team_first_name" id="team_first_name">
+              </div>
+              <div class="edit-member">
+                <span>Last Name</span>
+                <input type="text" class="form-control" name="team_last_name" id="team_last_name">
+              </div>
+              <div class="edit-member">
+                <span>User Name</span>
+                <input type="text" class="form-control" name="team_user_name" id="team_user_name">
+              </div>
+              <div class="edit-member">
+                <span>Password</span>
+                <input type="password" class="form-control" name="team_user_pass" id="team_user_pass">
+              </div>
+              <div class="edit-member">
+                <span>Phone</span>
+                <input type="text" class="form-control" name="team_user_phone" id="team_user_phone">
+              </div>
+              <div class="edit-member">
+                <span>Email</span>
+                <input type="text" class="form-control" name="team_user_email" id="team_user_email">
+              </div>
+              <div class="edit-member">
+                <span>Address 1</span>
+                <input type="text" class="form-control" name="team_user_addres1" id="team_user_addres1">
+              </div>
+              <div class="edit-member">
+                <span>Address 2</span>
+                <input type="text" class="form-control" name="team_user_addres2" id="team_user_addres2">
+              </div>
+              <div class="edit-member">
+                <span>IRD Number</span>
+                <input type="text" class="form-control" name="team_user_ird" id="team_user_ird">
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+              <div class="edit-member">
+                <span>Induction <input type="checkbox" name="check_induction" value="induction" id="check_induction"></span>
+                <input type="date" class="form-control" name="team_user_induction" id="team_user_induction">
+              </div>
+              <div class="edit-member">
+                <span>Tools <input type="checkbox" name="check_tools" value="tools" id="check_tools"></span>
+                <input type="date" class="form-control" name="team_user_tools" id="team_user_tools">
+              </div>
+              <div class="edit-member">
+                <span>Uniform <input type="checkbox" name="check_uniform"  id="check_uniform" value="uniform"></span>
+                <input type="date" class="form-control" name="team_user_uniform" id="team_user_uniform">
+              </div>
+               <div class="edit-member">
+                <span>PPE <input type="checkbox" name="check_ppe" id="check_ppe" value="ppe"></span>
+                <input type="date" class="form-control" name="team_user_ppe" id="team_user_ppe">
+              </div>
+              <div class="edit-member-area">
+                <span>Notes</span>
+                <textarea class="form-control" rows="10" name="team_user_notes" id="team_user_notes"></textarea>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+              <div class="edit-member id_100">
+                <span>Roll</span>
+                <select class="form-control" name="team_user_role" id="team_user_role">
+               <?php
+                 foreach($roles as $valrole){
+                 
+                  echo '<option value='.$valrole['roleid'].'>'.$valrole['role'].'</option>';
+                 
+                 }
+                ?>
+                 
+                </select>
+              </div>
+              <div class="edit-member">
+                <span>Access</span>
+                <select class="form-control" name="team_user_access" id="team_user_access">
+                 <option value='1'>1</option>
+                </select>
+              </div>
+              <div class="edit-member">
+                <span>Status</span>
+                <select class="form-control" name="team_user_status" id="team_user_status">
+                  <option>On</option>
+                  <option>Off</option>
+                </select>
+              </div>
+              <div class="profile-edit-member">
+               <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png">
+                <input type="file" name="team_profile_pic" id="team_profile_pic">
+              </div>
+              <div class="edit-member">
+                <span>Drivers License</span><span id="spn-drv"></span>
+                <input type="file" name="team_driving_license" id="team_driving_license">
+              </div>
+              <div class="edit-member">
+                <span>CV</span><span id="spn-cv"></span>
+                <input type="file" name="team_cv" id="team_cv">
+              </div>
+              <div class="edit-member">
+                <span>Other</span><span id="spn-other"></span>
+                <input type="file" name="team_other" id="team_other">
+              </div>
+            </div>
+						<div class="col-lg-12">
+						
+						</div>
+          </div>
+          </form>
+        </div>
+
+    </div><!-- ./tab-content -->
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+<?php
+ 
+$dataPoints = array( 
+	array("label"=>"Free Space", "y"=>$freespace,"z"=>10),
+	array("label"=>"Used Space", "y"=>$usedSpace,"z"=>$used_space),
+
+)
+ 
+?>
+<script>
+  window.onload = function() {
+   
+   
+  var chart = new CanvasJS.Chart("chartContainer", {
+    animationEnabled: true,
+    title: {
+      text: "Tracking Data"
+    },
+    subtitles: [{
+      text: ""
+    }],
+    data: [{
+      type: "pie",
+      //yValueFormatString: "#,##0.00\"%\"",
+      indexLabel: "{label} {z} (GB)",
+      dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+    }]
+  });
+  chart.render();
+   
+  }
+  </script>

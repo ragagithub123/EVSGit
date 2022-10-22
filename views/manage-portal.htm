@@ -1,0 +1,1332 @@
+ <body>
+  
+  <div class="loader3" style="display:none">
+    <span></span>
+    <span></span>
+  </div>
+  <!-- Full screen gallery. -->
+  <div class="fs-gal-view">
+    <h1></h1>
+    <img class="fs-gal-close" src="images/close.svg" alt="Close gallery" title="Close gallery" />
+    <img class="fs-gal-main" src="" alt="" />
+  </div>
+  <!--end gallery-->
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="evs_head">
+            <div class="logo">
+              <img src="images/logo.png">
+            </div>
+            <?php include('templates/menu.php');?>
+          </div>
+          <!-- ./evs_head -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="evs-main-body">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="selecT-box">
+            <?php //include('search-filters.php');
+              ?>
+          </div>
+          <!-- ./selecT-box -->
+          <span id="res_prop_detail">
+          <?php
+         
+            if(!empty($array_location)){
+            ?>
+          <div class="property_dtls">
+            <div class="pro_inner_one">
+              <h4 class="main_title">Property Details  &nbsp; <?php echo $array_location['project_name'];?> <?php echo $array_location['project_date'];?> <a data-toggle="modal" data-target="#myModalprop" href="#"  class="btn-info cust-edit-btn" >EDIT</a></h4>
+              <span id="ajax-property"></span>
+              <div class="pro_inner_one_details" id="curnt-details">
+                <div class="pro_inner_one_pic">
+                  <?php
+                    if($array_location['photoid'] !=0)
+                    {
+                    	?>
+                  <img src="<?php echo $gPhotoURL.$array_location['photoid'];?>.jpg" class="img-responsive">
+                  <?php
+                    }?>
+                </div>
+                <div class="pro_inner_one_list">
+                  <ul>
+                    <li>Property Address</li>
+                    <?php 	$loc=$array_location['unitnum'].",".$array_location['street'];
+                      if(!empty($array_location['suburb']))
+                      {
+                        $loc.=",".$array_location['suburb'];
+                      }
+                      $quoteId = $array_location['locationid']."-".hash('sha256', $array_location['locationid'].$gQuoteHashSecret);
+                      $quoteURL = $gWebsite. "quote/$quoteId";
+
+                      ?>
+                    <li><?php echo $loc;?></li>
+                    <li><?php echo $array_location['city'];?></li>
+                    <li><?php echo $array_location['firstname']." ".$array_location['lastname'];?></li>
+                    <li><?php echo $array_location['phone'];?></li>
+                    <li><?php echo $array_location['email'];?></li>
+                  </ul>
+                  <b><a  href="<?php echo $quoteURL;?>" style="font-size:18px;" target="_blank">Preview Quote</a></b><br>
+                  <b><a  href="edit-quote.php?Id=<?php echo base64_encode($array_location['locationid']);?>" style="font-size:18px;" target="_blank">Edit Quote</a></b>
+                </div>
+              </div>
+              <!-- ./pro_inner_one_details -->
+            </div>
+            <!-- ./pro_inner_one -->
+            <!-- Modal property-->
+            <div id="myModalprop" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Property Details</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                    <form method="post" action="" enctype="multipart/form-data">
+                      <table class="table">
+                        <tr>
+                          <th>Image</th>
+                          <td><?php
+                            if($array_location['photoid'] !=0)
+                            {
+                            	?>
+                            <img src="<?php echo $gPhotoURL.$array_location['photoid'];?>.jpg" class="img-responsive" style="width:100px;height:100px" id="userimage">
+                            <?php
+                              }else {?> <img  class="img-responsive" style="width:100px;height:100px" id="userimage"> <?php }?><input type="file" name="locimage" id="locimage" onChange="readURL(this)"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Unitnum</th>
+                          <td><input type="text" name="unitnum" id="unitnum" class="form-control" value="<?php echo $array_location['unitnum'];?>"/></td>
+                        </tr>
+                        <tr>
+                          <th>Street</th>
+                          <td><input type="text" name="street" id="street" class="form-control" value="<?php echo $array_location['street'];?>"/></td>
+                        </tr>
+                        <tr>
+                          <th>Suburb</th>
+                          <td><input type="text" name="suburb" id="suburb" class="form-control" value="<?php echo $array_location['suburb'];?>"/></td>
+                        </tr>
+                        <tr>
+                          <th>City</th>
+                          <td><input type="text" name="city" id="city" class="form-control" value="<?php echo $array_location['city'];?>"/></td>
+                        </tr>
+                        <tr>
+                          <th>Customer Firstname</th>
+                          <td><input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo $array_location['firstname'];?>"/></td>
+                        </tr>
+                        <tr>
+                          <th>Customer Lastname</th>
+                          <td><input type="text" name="lastname" id="lastname" class="form-control" value="<?php echo $array_location['lastname'];?>"/></td>
+                        </tr>
+                        <tr>
+                          <th>Customer Phone</th>
+                          <td><input type="text" name="phone" id="phone" class="form-control" value="<?php echo $array_location['phone'];?>"/></td>
+                        </tr>
+                        <tr>
+                          <th>Customer Email</th>
+                          <td><input type="text" name="email" id="email" class="form-control" value="<?php echo $array_location['email'];?>"/></td>
+                        </tr>
+                        <tr>
+                          <th>Quote Status</th>
+                          <td>
+                            <?php
+                              if(!empty($array_status)){
+
+                                   foreach($array_status as $val_status){
+                                     if($val_status['locationstatusid']==$array_location['locationstatusid']){
+                                     echo $val_status['status'].'<input type="radio" name="loc_status" value='.$val_status['locationstatusid'].' checked="checked"/>&nbsp;&nbsp;';
+                                     }else{
+                                       echo $val_status['status'].'<input type="radio" name="loc_status" value='.$val_status['locationstatusid'].' />&nbsp;&nbsp;';
+                                     }
+                                   }
+                              }
+
+
+                              ?>
+                          <td>
+                        </tr>
+                        <tr>
+                          <td colspan="2"><input type="button" value="UPDATE" class="btn btn-primary" style="margin-left:50px;" onClick="updateproperty(<?php echo $array_location['locationid'];?>,<?php echo $array_location['customerid'];?> )"/></td>
+                        </tr>
+                      </table>
+                    </form>
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Modal property-->
+            <div class="pro_inner_two">
+              <div class="pro_inner_two_details">
+                <h4 class="main_title"><span>Job Status</span> Time Date</h4>
+                <ul>
+                  <?php
+                    $i=0;
+                                    if(!empty($array_jostatus)){
+                                     foreach($array_jostatus as $valstatus){
+
+                                      $y=$i+1;
+
+                    $status='status'.$y;
+
+                    if($array_location[$status]!='0000-00-00 00:00:00'){
+                                         $time_date=explode(' ',$array_location[$status]);
+                                       $date=date('d-m-Y',strtotime($time_date[0]));
+                                       $time=date("H:i",strtotime($time_date[1]));
+                    }
+                    else{
+
+                     $date="00-00-000";
+                     $time="00-00";
+                    }
+
+                                       ?>
+                  <li>
+                    <label class="cust_checkbox" style="font-weight:bold"><b <?php if($date!='00-00-000'){?> style=" color:#000;"<?php }?> id="p_status<?php echo $i;?>"><?php echo $valstatus['jobstatus'];?></b><span class="sep" id="hr_time<?php echo $i;?>" <?php if($date!='00-00-000'){?> style=" color:#000;"<?php }?>><?php echo $time;?> <?php echo $date;?></span>
+                    <input type="radio" name="chk_stat" id="chk_stat<?php echo $i;?>" onChange="generatetime(<?php echo $i;?>,<?php echo $array_location['locationid'];?>,'<?php echo $status;?>')" <?php if($date!='00-00-000'){?> checked="checked"<?php }?> value="<?php echo $valstatus['jobstatusid'];?>">
+                    <span class="checkmark"></span>
+                    </label>
+                  </li>
+                  <?php
+                    $i++;
+
+
+
+
+                                   }
+                                  }
+
+                    														?>
+                </ul>
+              </div>
+            </div>
+            <!-- ./pro_inner_two -->
+          </div>
+          <!-- ./property_dtls -->
+        </div>
+        <!-- ./col-lg-12 -->
+        <div class="col-lg-12">
+          <div class="health">
+            <h4 class="main_title">Health and Safety</h4>
+            <ul>
+              <li>Overhead Power : <?php echo $array_location['hs_overheadpower'];?></li>
+              <li>Site Access : <?php echo $array_location['hs_siteaccess_notes'];?></li>
+              <li>Vegitation : <?php echo $array_location['hs_vegetation_notes'];?></li>
+              <li class="list_more">
+                <span>Height Access : <?php echo $array_location['hs_heightaccess_notes'];?></span>
+                <span></span>
+                <span><?php if($array_location['hs_heightaccess_photoid']!=0){?><span><img src="http://evsapp.nz/photos/<?php echo $array_location['hs_heightaccess_photoid'];?>.jpg" class="img-responsive center-block"></span><?php } ?>
+              </li>
+              <li>Childern/Animals/Pests : <?php echo $array_location['hs_childrenanimals_notes'];?></li>
+              <li>Traffic/Pedestraints : <?php echo $array_location['hs_traffic_notes'];?></li>
+              <li>Dangerous Materials: </li>
+              <li>Weather Exposure: <?php echo $array_location['hs_weather_notes'];?></li>
+              <li>Worksite: <?php echo $array_location['hs_worksite_notes'];?></li>
+            </ul>
+          </div>
+          <!-- ./health -->
+        </div>
+        <div class="col-lg-12">
+          <div class="measurev table_custom">
+            <div class="table-responsive" id="div_window">
+              <div class="loader3" style="display:none">
+                <span></span>
+                <span></span>
+              </div>
+              <table class="table cust-table cust-two-table">
+                <thead>
+                  <tr>
+                    <th colspan="3">
+                      <div style="display:flex; justify-content:space-between;">
+                        <h4 class="main_title">Window Sets</h4>
+                        <h4 class="main_title"><img src="images/exclamation_small.png" style="width:25px; height:25px;">&nbsp<?php echo $array_location['total_panels'];?> panels quoted</h4>
+                      </div>
+                    </th>
+                    <th width="38%">
+                      <h4 class="main_title" id="spn-panels">&nbsp;Product Selected <img src="images/check_small.png" style="width:25px; height:25px;"> &nbsp;<?php echo $array_location['pdt_count'];?> panels selected</h4>
+                    </th>
+                    <th width="125">
+                      <h4 class="main_title">Quoted Price</h4>
+                    </th>
+                    <th width="90">
+                      <h4 class="main_title">Travel</h4>
+                    </th>
+                    <th width="90">
+                      <h4 class="main_title">Extra</h4>
+                    </th>
+                    <th width="80">
+                      <h4 class="main_title">Hours</h4>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="spn-pdt-status">
+                    <td width="150" style="color:#03F">Quote ON/OFF</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                      <div class="wid65"></div>
+                      <div class="wid65"><input type="checkbox" id="quotesdg" <?php if($array_location['quotesdg'] == 1){?> checked="checked" <?php } ?> onChange="quotestatus(<?php echo $array_location['locationid'];?>,'quotesdg' )"
+                        ></div>
+                      <div class="wid65"><input type="checkbox" id="quotemaxe" <?php if($array_location['quotemaxe'] == 1){?> checked="checked" <?php }  ?> onChange="quotestatus(<?php echo $array_location['locationid'];?>,'quotemaxe' )"></div>
+                      <div class="wid65"><input type="checkbox" id="quotexcle" <?php if($array_location['quotexcle'] == 1){?> checked="checked" <?php }  ?> onChange="quotestatus(<?php echo $array_location['locationid'];?>,'quotexcle' )"></div>
+                      <div class="wid65"><input type="checkbox" id="quoteevsx2" <?php if($array_location['quoteevsx2'] == 1){?> checked="checked" <?php }  ?> onChange="quotestatus(<?php echo $array_location['locationid'];?>,'quoteevsx2' )"></div>
+                      <div class="wid65"><input type="checkbox" id="quoteevsx3"  <?php if($array_location['quoteevsx3'] == 1){?> checked="checked" <?php }  ?> onChange="quotestatus(<?php echo $array_location['locationid'];?>,'quoteevsx3' )"></div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <?php
+                    if(!empty($array_windows[0]))
+                    {
+                    $i=0;
+                    $k =64;
+                    foreach($array_windows as $row_window)
+                    {
+                    $i++;
+                    $k=$k+1;
+                    //$total_price[]=$row_window['selected_price'];
+                    //$total_hrs[]=$row_window['selected_hours'];
+                    $total_extra[]=$row_window['extravalue'];
+                    ?>
+                  <tr>
+                    <td>
+                      <div class="winSet-fl"><?php echo chr($k);?> <input type="checkbox" <?php if($row_window['quote_status']==1){?> checked="checked" <?php  } ?>  value="<?php echo $row_window['windowid'];?>" class="quote-check" name="quotecheck[]" data-id="<?php echo $row_window['windowid'];?>"> <a href="javascript:void(0)" onclick='editroom("<?php echo $row_window[roomid];?>","<?php echo $row_window[room_name];?>")'><?php echo $row_window['room_name'];?><a> </div>
+                    </td>
+                    <td><?php
+                      if($row_window['windowtypeid']!=0)
+                      {
+                      	?>
+                      <img src="http://evsapp.nz/assets/app/windowtypes/<?php echo $row_window['windowtypeid'];?>.png" class="img-responsive" width="50" height="50">
+                      <?php
+                        }?>
+                    </td>
+                    <td><a href="javascript:void(0)" data-toggle="modal" onclick="moveWindow('<?php echo $row_window['windowid'];?>')"><?php echo $row_window['name'];?></a></td>
+                    <td>
+                      <button type="button" class="btn" id="btn_HOLD<?php echo $i;?>" onClick="gethourlabour(0,<?php echo $i;?>,0,'HOLD',<?php echo $row_window['windowid'];?>,0,<?php echo $row_window['panelid'];?>,<?php echo $row_window['roomid'];?>)" <?php if($row_window['selected_product']=="HOLD"){?>style="background-color:#17a2b8;" <?php }?> >HOLD</button>
+                      <button type="button" class="btn" id="btn_SGU<?php echo $i;?>" onClick="gethourlabour(<?php echo $row_window['costsdg'];?>,<?php echo $i;?>,<?php echo $row_window['igulabour'];?>,'SGU',<?php echo $row_window['windowid'];?>,<?php echo $row_window['travelSGU'];?>,<?php echo $row_window['panelid'];?>,<?php echo $row_window['roomid'];?>)" <?php if($row_window['selected_product']=="SGU" || $row_window['selected_product']=="SDG"){?>style="background-color:#17a2b8;" <?php }?>>SGU</button>
+                      <button type="button" class="btn" id="btn_IGUX2<?php echo $i;?>" onClick="gethourlabour(<?php echo $row_window['costmaxe'];?>,<?php echo $i;?>,<?php echo $row_window['igulabour'];?>,'IGUX2',<?php echo $row_window['windowid'];?>,<?php echo $row_window['travelIGUX2'];?>,<?php echo $row_window['panelid'];?>,<?php echo $row_window['roomid'];?>)" <?php if($row_window['selected_product']=="IGUX2" || $row_window['selected_product']=="MAXe"){?>style="background-color:#17a2b8;" <?php }?>>IGUX2</button>
+                      <button type="button" class="btn" id="btn_IGUX3<?php echo $i;?>" onClick="gethourlabour(<?php echo $row_window['costxcle'];?>,<?php echo $i;?>,<?php echo $row_window['igulabour'];?>,'IGUX3',<?php echo $row_window['windowid'];?>,<?php echo $row_window['travelIGUX3'];?>,<?php echo $row_window['panelid'];?>,<?php echo $row_window['roomid'];?>)" <?php if($row_window['selected_product']=="IGUX3" || $row_window['selected_product']=="XCLe"){?>style="background-color:#17a2b8;" <?php }?>>IGUX3</button>
+                      <button type="button" class="btn" id="btn_EVSx2<?php echo $i;?>" onClick="gethourlabour(<?php echo $row_window['costevsx2'];?>,<?php echo $i;?>,<?php echo $row_window['evslabour'];?>,'EVSx2',<?php echo $row_window['windowid'];?>,<?php echo $row_window['travelEVSX2'];?>,<?php echo $row_window['panelid'];?>,<?php echo $row_window['roomid'];?>)" <?php if($row_window['selected_product']=="EVSx2"){?>style="background-color:#17a2b8;" <?php }?>>EVSx2</button>
+                      <button type="button" class="btn" id="btn_EVSx3<?php echo $i;?>" onClick="gethourlabour(<?php echo $row_window['costevsx3'];?>,<?php echo $i;?>,<?php echo $row_window['evslabour'];?>,'EVSx3',<?php echo $row_window['windowid'];?>,<?php echo $row_window['travelEVSX3'];?>,<?php echo $row_window['panelid'];?>,<?php echo $row_window['roomid'];?>)" <?php if($row_window['selected_product']=="EVSx3"){?>style="background-color:#17a2b8;" <?php }?>>EVSx3</button>
+                    </td>
+                    <?php
+                      if($row_window['selected_product']=="SGU" || $row_window['selected_product']=="SDG"){
+                          $travel_value= $row_window['travelSGU'];
+                          $travel_amt[]=$travel_value;
+                          $selected_price=$row_window['costsdg'];
+                          $total_price[]= $selected_price;
+                          $neval=$row_window['costsdg']."@".$row_window['igulabour']."@".'SGU'."@".$row_window['windowid']."@".$row_window['panelid']."@".$row_window['roomid'];
+                          $selected_hr=$row_window['igulabour'];
+                          $total_hrs[]=$selected_hr;
+                      }
+
+                      else if($row_window['selected_product']=="IGUX2" || $row_window['selected_product']=="MAXe"){
+                          $travel_value= $row_window['travelIGUX2'];
+                          $travel_amt[]=$travel_value;
+                          $selected_price=$row_window['costmaxe'];
+                          $total_price[]= $selected_price;
+                          $neval=$row_window['costmaxe']."@".$row_window['igulabour']."@".'IGUX2'."@".$row_window['windowid']."@".$row_window['panelid']."@".$row_window['roomid'];
+                          $selected_hr=$row_window['igulabour'];
+                          $total_hrs[]=$selected_hr;
+                      }
+                        else if($row_window['selected_product']=="IGUX3" || $row_window['selected_product']=="XCLe"){
+                          $travel_value= $row_window['travelIGUX3'];
+                            $travel_amt[]=$travel_value;
+                          $selected_price=$row_window['costxcle'];
+                            $total_price[]= $selected_price;
+                            $neval=$row_window['costxcle']."@".$row_window['igulabour']."@".'IGUX3'."@".$row_window['windowid']."@".$row_window['panelid']."@".$row_window['roomid'];
+                            $selected_hr=$row_window['igulabour'];
+                            $total_hrs[]=$selected_hr;
+                        }
+                        else if($row_window['selected_product']=="EVSx2"){
+                          $travel_value= $row_window['travelEVSX2'];
+                            $travel_amt[]=$travel_value;
+                          $selected_price=$row_window['costevsx2'];
+                          $total_price[]= $selected_price;
+
+                          $neval=$row_window['costevsx2']."@".$row_window['evslabour']."@".'EVSx2'."@".$row_window['windowid']."@".$row_window['panelid']."@".$row_window['roomid'];
+                          $selected_hr=$row_window['evslabour'];
+                          $total_hrs[]=$selected_hr;
+                        }
+                        else if($row_window['selected_product']=="EVSx3"){
+                          $travel_value = $row_window['travelEVSX3'];
+                            $travel_amt[]=$travel_value;
+                          $selected_price=$row_window['costevsx3'];
+                          $total_price[]= $selected_price; $neval=$row_window['costevsx3']."@".$row_window['evslabour']."@".'EVSx3'."@".$row_window['windowid']."@".$row_window['panelid']."@".$row_window['roomid'];
+                          $selected_hr=$row_window['evslabour'];
+                          $total_hrs[]=$selected_hr;
+                        }
+                      else{
+                        $selected_price=0;
+                        $travel_value=0;
+                        $selected_hr=0;
+                      }
+                        if($selected_price==0 || $selected_price == 0.00){
+                          $selected_price=0;
+                          $travel_value=0;
+                          $selected_hr=0;
+                        }
+                      		?>
+                    <td>$<span id='cost_val<?php echo $i;?>'><?php echo $selected_price;?></td>
+                    <td>$<span id='travel_val<?php echo $i;?>'><?php echo $travel_value;?> </span></td>
+                    <td>
+                      $
+                      <span id='extra_val<?php echo $i;?>'>
+                        <?php echo $row_window['extravalue'];?>
+                    </td>
+                    <td><span id='hour_val<?php echo $i;?>'><?php echo $selected_hr;?></span></td>
+                    <td><input type="hidden" name="update_arry[]" id="new_val<?php echo $i;?>" value="<?php echo $neval; ?>"/></td>
+                  </tr>
+                  <?php
+                    $neval="";
+                    }
+                    }
+
+                    if(count($total_extra)==0)
+                    $total_extra=0;
+                    else
+                    $total_extra=array_sum($total_extra);
+
+                    if(count($total_price)==0)
+                    $total_amt=0;
+                    else
+                    $total_amt=array_sum($total_price);
+                    if(count($total_hrs)==0)
+                    $total_hrs=0;
+                    else
+                    $total_hrs=array_sum($total_hrs);
+
+                    if(count($travel_amt)==0)
+                    $travel_amt=0;
+                    else
+                    $travel_amt=array_sum($travel_amt);
+
+                    ?>
+                  <tr class="table-total">
+                    <td colspan="4" align="center">
+                 
+                      <select name="projectset" id="projectset" style="width:31%;font-size:14px;margin-top:10px;">
+                        <?php if(!empty($array_location['project_name'])){
+                          ?>
+                          <option value="<?php echo $array_location['projectid'];?>"><?php echo $array_location['project_name'];?> <?php echo $array_location['project_date'];?></option>
+                          <?php
+                        }else{?>  <option value="">Load Project</option><?php }?>
+                     
+                      <?php
+                      if(count($projects)>0){
+  
+                        foreach($projects as $valpjt){
+  
+                          $vardate = date('d-m-Y',strtotime($valpjt['project_date']));
+  
+                          if(($valpjt['project_name']." " .$vardate) != ($array_location['project_name']." ".$array_location['project_date']))
+  
+                          echo '<option value="'.$valpjt['projectid'].'">'.$valpjt['project_name']." ".$vardate.'</option>';
+                        }
+  
+                      }
+                     ?>
+                        </select>
+                        <a class="plus-circle-blue btn btn-primary" data-toggle="modal" data-target="#addPjt" href="javascript:void(0)"><i class="fa fa-plus"></i></a>
+                   <a data-toggle="modal" data-target="#updatePjt" data-locationid="<?php echo $Locationid;?>" class="btn btn-primary">Update</a>
+                   <!--<input type="button" class="btn btn-primary" id="updatebtn" value="Update" onClick="update(<?php echo $Locationid;?>)"/>-->
+                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Recalculate" class="btn btn-primary" id="recalcualte"/>
+                    </td>
+                  <td>$<span id="total_price"><?php echo $total_amt;?></span></td>
+                  <td>$<span id="total_travel"><?php echo $travel_amt;?></span></td>
+                  <td>$<span id="total_extra_spn"><?php echo $total_extra;?></span></td>
+                  <td><span id="total_hrs"><?php echo $total_hrs;?></span></td>
+                  </tr>
+                 
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- ./measure -->
+        </div>
+        <!-- ./col-lg-12 -->
+      </div>
+    </div>
+  </section>
+  <span id="ajax-load-result" style="display:none"></span>
+  <span id="load-result">
+  <!--layer-->
+  <section>
+  <div class="container">
+  <div class="row">
+  <div class="col-lg-12">
+  <div class="glass-layers">
+  <div class="table-responsive">
+  <table class="table cust-table cust-two-table">
+  <thead>
+  <tr>
+  <th>Glass Specification</th>
+  <th></th>
+  <th>Composition</th>
+  <th>Outside</th>
+  <th class="text-center">mm</th>
+  <th>Spacer</th>
+  <th class="text-center">mm</th>
+  <th>Colour</th>
+  <th>Inside</th>
+  <th class="text-center">mm</th>
+  </tr>
+  </thead>
+  <tbody>
+  <?php foreach($Glass as $valglass){?>
+  <tr>
+  <td><?php echo $valglass['name'];?></td>
+   <td id="icon<?php echo $valglass['glasstypeid'];?>"><?php if($valglass['layerdetails']['icon']!=''){?><img src="<?php echo $gLayerURL;?><?php echo $valglass['layerdetails']['icon'];?>" width="100px">
+  <?php } ?></td>
+  <td>
+  <select class="form-control layer-composite" data-id= "<?php echo $valglass['glasstypeid'];?>" data-location="<?php echo $Locationid;?>" name="layercomposite[]">
+  <!-- <option>4/6bk/4 Standard</option>-->
+  <?php foreach($valglass['layercomposite'] as $valcomposite){
+    echo '<option value="'.$valcomposite['layer_id'].'@'.$valglass['glasstypeid'].'">'.$valcomposite['name'].'</option>';
+
+
+
+    } ?>
+  </select>
+
+  </td>
+
+  <td id="outsidetype<?php echo $valglass['glasstypeid'];?>"><?php echo $valglass['layerdetails']['outsideGlasstype'];?></td>
+  <td id="outsidethickness<?php echo $valglass['glasstypeid'];?>"><?php echo $valglass['layerdetails']['outsideThickness'];?></td>
+  <td id="spacer<?php echo $valglass['glasstypeid'];?>"><?php echo $valglass['layerdetails']['spacer'];?></td>
+  <td align="center" id="sapcerWidth<?php echo $valglass['glasstypeid'];?>"><?php echo $valglass['layerdetails']['sapcerWidth'];?></td>
+  <td><div class="colour-box"><span style="color:#FFF;background-color:#<?php echo $valglass['layerdetails']['colorcode'];?>" id="colorcode<?php echo $valglass['glasstypeid'];?>"><?php echo $valglass['layerdetails']['short_spacer'];?></span></div></td>
+  <td id="insidetype<?php echo $valglass['glasstypeid'];?>"><?php echo $valglass['layerdetails']['insideGlasstype'];?></td>
+  <td align="center" id="insidethickness<?php echo $valglass['glasstypeid'];?>"><?php echo $valglass['layerdetails']['insideThickness'];?></td>
+  </tr>
+  <?php  }?>
+  </tbody>
+  </table>
+
+  <table class="table cust-table cust-two-table nn-cust-table">
+  <thead>
+  <tr>
+  <th colspan="2">Paint Specification</th>
+  <th></th>
+  <th>Paint Name</th>
+  <th>#Pans</th>
+  <th width="120">Hours p/pan</th>
+  <th>Time</th>
+  <th width="120">$p/pan</th>
+  <th>Costs</th>
+  <th>Total Price</th>
+  </tr>
+  </thead>
+  <tbody>
+  <?php
+  if(!empty($paints[0])){
+   foreach($paints as $valpaint){
+
+   ?>
+
+     <tr>
+<td>Add as Extra </td><td><input type="checkbox" name="paintrad" class="radpaint" data-locationid="<?php echo $Locationid;?>" id="paintrad<?php echo $valpaint['colourid'];?>" data-colourid="<?php echo $valpaint['colourid'];?>" <?php if($valpaint['selected'] == 1){?> checked =="checked" <?php }?>></td><td><div class="colour-box"><span style="height:30px;background-color:#<?php echo $valpaint['colorcode'];?>"></span></div></td>
+ <td><?php echo $valpaint['colourname'];?></td>
+   <td id="cntpans<?php echo $valpaint['colourid'];?>" <?php if($valpaint['selected'] == 1){?> class="testcountpanels" <?php } ?>><?php echo $valpaint['countpanels'];?></td>
+   <td><input type="text" class="form-control hoursperpanel"  id="hoursperpanel<?php echo $valpaint['colourid'];?>" data-locationid="<?php echo $Locationid;?>" data-colourid="<?php echo $valpaint['colourid'];?>" data-labourrate="<?php echo $labourrate;?>" value="<?php echo $valpaint['hoursperpanel'];?>" data-crntuser="<?php echo $userid;?>"></td>
+   <td id="time<?php echo $valpaint['colourid'];?>" <?php if($valpaint['selected'] == 1){?> class="testtimes" <?php } ?>><?php echo $valpaint['times'];?></td>
+   <td>
+     <div style="display: flex; align-items: center;">
+       $<input type="text" class="form-control costperpanel" id="costperpanel<?php echo $valpaint['colourid'];?>" data-locationid="<?php echo $Locationid;?>" data-colourid="<?php echo $valpaint['colourid'];?>" data-labourrate="<?php echo $labourrate;?>" data-crntuser="<?php echo $userid;?>" value="<?php echo $valpaint['costperpanel'];?>" style="margin-left: 10px;">
+     </div>
+   </td>
+   <td>$<span id="costtd<?php echo $valpaint['colourid'];?>" <?php if($valpaint['selected'] == 1){?> class="testcost" <?php } ?>><?php echo $valpaint['cost'];?></span></td>
+   <td>$<span id="totaltd<?php echo $valpaint['colourid'];?>" <?php if($valpaint['selected'] == 1){?> class="testtotal" <?php } ?>><?php echo $valpaint['total'];?></span></td>
+  </tr>
+
+  <?php }
+  }
+  ?>
+<tr>
+<td></td><td></td><td></td><th>Totals</th>
+<td class="td_paint" id="total_panelscount"><?php echo $total_panelcount;?></td>
+<td class="td_paint"></td>
+<td class="td_paint" id="total_timecount"><?php echo $total_timecount;?></td>
+<td class="td_paint"></td>
+<td class="td_paint" id="total_costcount">$ <?php echo $total_costcount;?></td>
+<td class="td_paint" id="total_totalscount">$ <?php echo $total_totalcostcount;?></td>
+</tr>
+
+  </tbody>
+  </table>
+
+
+
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </section>
+  <!-- endlayer -->
+  <?php
+    if(!empty($array_windows[0])){
+    $i=64;
+    foreach($array_windows as $row_pann){
+    $i=$i+1;
+     if($row_pann['selected_product']!='HOLD'){
+     ?>
+  <section>
+  <div class="container">
+  <div class="row">
+  <div class="col-lg-12">
+  <div class="panel_info_main">
+  <div class="window_sets">
+  <h4 class="main_title">Window Set [<?php echo chr($i);?>]</h4>
+  <p><?php echo $row_pann['room_name'];?>  <span><?php echo $row_pann['name'];?></span></p>
+  <?php
+    if($row_pann['windowtypeid']!=0)
+    {
+      ?>
+  <a data-toggle="modal" data-target="#windowtypes" href="#" data-id="<?php echo $row_pann['windowid'];?>@<?php echo $row_pann['numpanels'];?>" class="window-images" id="windowtype<?php echo $row_pann['windowid'];?>"> <img src="<?php echo $gwindowURL.$row_pann['windowtypeid'];?>.png" class="img-responsive"></a>
+  <?php
+    }
+    ?>
+  </div>
+  <div class="window_info table_custom">
+  <div class="table-responsive">
+  <table class="table">
+  <thead>
+  <tr>
+  <th><h4 class="main_title">Panel Size</h4></th>
+  <!-- <th><h4 class="main_title">Profile</h4></th>-->
+  <th><h4 class="main_title">Style</h4></th>
+  <th><h4 class="main_title">Safety</h4></th>
+  <th><h4 class="main_title">Glass Type</h4></th>
+  <th><h4 class="main_title">Condition</h4></th>
+  <th><h4 class="main_title">Astrigals</h4></th>
+  </tr>
+  </thead>
+  <tbody>
+  <?php
+    if(!empty($row_pann['panelarray'][0]))
+    {
+
+        foreach($row_pann['panelarray'] as $row_panel)
+    				{
+
+    					  ?>
+  <tr>
+  <td class="flex-prop"><span>Panel <?php echo $row_panel['panelnum'];?></span> <span id="spn_width<?php echo $row_panel['panelid'];?>" style="display:initial"><?php echo $row_panel['height'];?> x <?php echo $row_panel['width'];?> x<?php echo $row_panel['center'];?></span></td>
+  <td class="cust_slct"><?php if($row_panel['styleid'] > 0 && file_exists($gPanelOptionsPhotoDir.$row_panel['styleid'].".png"))
+    {
+    		?>
+  <a data-toggle='modal' data-target='#styleModalprop' href='#' onClick="getVal(<?php echo $array_location['locationid'];?>,<?php echo $row_panel['panelid'];?>,<?php echo $row_panel['styleid'];?>,'<?php echo $gPanelOptionsPhotoURL.$row_panel['styleid'];?>.png','<?php echo $row_panel['stylename'];?>')"><span id='span<?php echo $row_panel['panelid'];?>'><img src="<?php echo $gPanelOptionsPhotoURL.$row_panel['styleid'];?>.png" class="img-responsive" style="width:50px; height:50px;"></span></a>
+  <?php
+    } ?></td>
+  <td class="cust_slct" id="td_safty<?php echo $row_panel['panelid'];?>"><?php echo $row_panel['safty_name'];?></td>
+  <td class="cust_slct" id="td_glass<?php echo $row_panel['panelid'];?>"><?php echo $row_panel['galsstype_name'];?></td>
+  <td class="cust_slct" id="td_condition<?php echo $row_panel['panelid'];?>"><a data-toggle="modal" data-target="#myModalpaint" data-colourid="<?php echo $row_panel['colourid'];?>" data-panelid="<?php echo $row_panel['panelid'];?>" data-windowid="<?php echo $row_panel['windowid'];?>" data-conditionid="<?php echo $row_panel['conditionid'];?>" class="paintanchor"><div class="colour-box"><span style="color:#FFF; background-color:#<?php echo $row_panel['colorcode'];?>" id="colorcode<?php echo $row_panel['panelid'];?>"><?php echo $row_panel['condition_name'];?></span></div></a></td>
+  <td class="cust_slct" id="td_astragal<?php echo $row_panel['panelid'];?>"><?php echo $row_panel['astragal_name'];?></td>
+  </tr>
+  <?php
+    }
+    }
+    ?>
+  </tbody>
+  </table>
+  </div>
+  </div>
+  </div>
+  </div><!-- ./col-lg-12 -->
+  <div class="col-lg-12">
+  <div class="table-responsive">
+  <table class="table table-bordered table-striped fontstyle">
+  <thead>
+  <tr style="color:#fff; background:#565759;">
+  <th>ID</th>
+  <th colspan="2">Cut List</th>
+  <th colspan="4">Measurements</th>
+  <th colspan="5">Glass</th>
+  <th colspan="3">Top</th>
+  <th colspan="3">Bottom</th>
+  <th colspan="3">Sides(Left)</th>
+  <th colspan="3">Sides(Right)</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <th><?php echo $id;?></th>
+  <th>Window[Panel]</th>
+  <th>Style</th>
+  <th>Safety</th>
+  <th>Height</th>
+  <th>Width</th>
+  <th>Center</th>
+  <th>(+h)</th>
+  <th>H</th>
+  <th>(+w)</th>
+  <th>W</th>
+  <th>m2</th>
+  <th>Profile</th>
+  <th>(+w)</th>
+  <th>(W)</th>
+  <th>Profile</th>
+  <th>(+w)</th>
+  <th>(W)</th>
+  <th>Profile</th>
+  <th>(+h)</th>
+  <th>(H)</th>
+  <th>Profile</th>
+  <th>(+h)</th>
+  <th>(H)</th>
+  </tr>
+  <?php
+    if(!empty($row_pann['panelarray'][0]))
+    				{
+    				   $j=0;
+            foreach($row_pann['panelarray'] as $row_panel)
+    								{
+              $j++;
+
+    			if($row_pann['selected_product']=="EVSx3" || $row_pann['selected_product']=="EVSx2"){
+    				$profiletop=$row_panel['evsProfileTop'];
+    				$profilebottom=$row_panel['evsProfileBottom'];
+    				$leftprofile=$row_panel['evsProfileLeft'];
+        $rightprofile=$row_panel['evsProfileRight'];
+    				$glassX=$row_panel['evsGlassX'];
+    				$glassY=$row_panel['evsGlassY'];
+    				$profileX=$row_panel['evsProfileX'];
+    				$profileY=$row_panel['evsProfileY'];
+
+    				}
+    				else{
+    			 $profiletop=$row_panel['retroProfileTop'];
+    				$profilebottom=$row_panel['retroProfileBottom'];
+    				$profilesides=$row_panel['retroProfileSides'];
+    				$leftprofile=$row_panel['retroProfileLeft'];
+        $rightprofile=$row_panel['retroProfileRight'];
+    				$glassX=$row_panel['retroGlassX'];
+    				$glassY=$row_panel['retroGlassY'];
+    				$profileX=$row_panel['retroProfileX'];
+    				$profileY=$row_panel['retroProfileY'];
+
+    				}
+    				 if($glassX == NULL)$glassX=0;
+    					if($glassY == NULL)$glassY=0;
+    					if($profileX == NULL)$profileX=0;
+    					if($profileY == NULL)$profileY=0;
+
+         if(($row_panel['center']) > ($row_panel['height'])){
+        // $glassSizey=($row_panel['center'])+($row_panel['height']);
+         //$profilesizey=($row_panel['center'])+($row_panel['height']);
+         $glassSizey=($row_panel['center'])+$glassY;
+         $profilesizey=($row_panel['center'])+$profileY;
+         $m2=round(((($row_panel['width'] + $glassX)*($row_panel['center']))*0.000001),2);
+         }
+         else{
+         if($row_panel['height']>0){
+         $glassSizey=($row_panel['height']) + ($glassY);
+         $profilesizey=($row_panel['height']) + ($profileY);
+         }else{
+           $glassSizey=0;
+           $profilesizey=0;
+         }
+
+         $m2=round(((($row_panel['width'] + $glassX)*($row_panel['height'] + $glassY))*0.000001),2);
+         }
+
+    				?>
+  <tr>
+  <td><?php echo chr($i).$j;?></td>
+  <td><?php echo $row_pann['name']."[".chr($i).$j."]";?></td>
+  <!--<td><?php echo $row_pann['name']."[".$row_panel['panelnum']."]";?></td>-->
+  <td><?php if($row_panel['styleid'] > 0 && file_exists($gPanelOptionsPhotoDir.$row_panel['styleid'].".png"))
+    {
+    				echo "<img src=\"". $gPanelOptionsPhotoURL.$row_panel['styleid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\">";
+    } ?></td>
+  <td><?php echo $row_panel['safty_name'];?></td>
+  <td <?php if($row_panel['measurement']=='estimate'){?> style="color:#F00"<?php }?>><?php echo $row_panel['height'];?> </td>
+  <td <?php if($row_panel['measurement']=='estimate'){?> style="color:#F00"<?php }?>><?php echo $row_panel['width'];?> </td>
+  <td <?php if($row_panel['measurement']=='estimate'){?> style="color:#F00"<?php }?>><?php echo $row_panel['center'];?> </td>
+  <!--
+    <td><?php echo $glassX;?></td>
+    <td><?php if($row_panel['width'] >0){echo ($row_panel['width'] + $glassX);}?></td>
+    <td><?php echo $glassY;?></td>
+    <td><?php echo $glassSizey;?></td>
+    <td><?php echo $m2;?></td>-->
+  <td><?php echo $glassY;?></td>
+  <td><?php echo $glassSizey;?></td>
+  <td><?php echo $glassX;?></td>
+  <td><?php if($row_panel['width'] >0){echo ($row_panel['width'] + $glassX);}?></td>
+  <td><?php echo $m2;?></td>
+  <td>
+  <?php
+    if(file_exists($gProfilePhotoDir.$profiletop.".png"))
+    {
+    	?>
+  <span><a class="fs-gal" data-url="<?php echo $gProfilePhotoURL.$profiletop;?>.png" style="color:blue;"><?php echo $profiletop;?></a></span>
+  <?php
+    }
+    else
+    {?><span><?php echo $profiletop;?></span><?php
+    }
+    ?>
+  </td>
+  <td><?php echo $profileX;?></td>
+  <td><?php if($row_panel['width'] >0){echo ($row_panel['width'] + $profileX);}?></td>
+  <td> <?php
+    if(file_exists($gProfilePhotoDir.$profilebottom.".png"))
+    {
+    	?>
+  <span><a class="fs-gal" data-url="<?php echo $gProfilePhotoURL.$profilebottom;?>.png" style="color:blue;"><?php echo $profilebottom;?></a></span>
+  <?php
+    }
+    else
+    {?><span><?php echo $profilebottom;?></span><?php
+    }
+    ?></td>
+  <td><?php echo $profileX;?></td>
+  <td><?php if($row_panel['width'] >0){echo ($row_panel['width'] + $profileX);}?></td>
+  <td> <?php
+    if(file_exists($gProfilePhotoDir.$leftprofile.".png"))
+    {
+    	?>
+  <span><a class="fs-gal" data-url="<?php echo $gProfilePhotoURL.$leftprofile;?>.png" style="color:blue;"><?php echo $leftprofile;?></a></span>
+  <?php
+    }
+    else
+    {?><span><?php echo $leftprofile;?></span><?php
+    }
+    ?></td>
+  <td><?php echo $profileY;?></td>
+  <td><?php echo $profilesizey;?></td>
+  <td> <?php
+    if(file_exists($gProfilePhotoDir.$rightprofile.".png"))
+    {
+    	?>
+  <span><a class="fs-gal" data-url="<?php echo $gProfilePhotoURL.$rightprofile;?>.png" style="color:blue;"><?php echo $rightprofile;?></a></span>
+  <?php
+    }
+    else
+    {?><span><?php echo $rightprofile;?></span><?php
+    }
+    ?></td>
+  <td><?php echo $profileY;?></td>
+  <td><?php echo $profilesizey;?></td>
+  </tr>
+  <?php
+    }
+    }
+
+    ?>
+  </tbody>
+  </table>
+  </div>
+  </div>
+  <div class="col-lg-12">
+  <div class="photos" id="div_befor_img<?php echo $row_pann['windowid'];?>">
+  <h4 class="main_title_2 main-title-flex">Before Photos <?php  if(!empty($row_pann['window_photos'][0])){?> <a  href="javascript:void(0)" onclick="getwindowList('<?php echo $row_pann[windowid];?>','before')"><i class="fa fa-arrow-right" aria-hidden="true"  style="color: #00adef;"></i></a><?php } ?><a class="plus-circle-blue" id="before-photo" data-id="<?php echo $row_pann['windowid'];?>" data-toggle="modal" data-target="#myModalBefore" href="javascript:void(0)"><i class="fa fa-plus"></i></a></h4>
+  <ul>
+  <?php
+    if(!empty($row_pann['window_photos'][0]))
+    foreach($row_pann['window_photos'] as $row_phot)
+    {?>
+  <li> <img src="<?php echo $gPhotos.$row_phot['photoid'];?>.jpg" class="fs-gal" data-url="<?php echo $gPhotos.$row_phot['photoid'];?>.jpg"> </li>
+  <?php
+    }
+    ?>
+  </ul>
+  </div><!-- ./photos -->
+  </div>
+  <div class="col-lg-12">
+  <div class="notes">
+  <h4 class="main_title_2">Notes <a data-toggle="modal" data-target="#myModal<?php echo $row_pann['windowid'];?>" href="#" data-id="<?php echo $row_pann['windowid'];?>" class="btn btn-primary" style="margin-left:100px;">EDIT</a></h4>
+  <p id="notes<?php echo $row_pann['windowid'];?>"><?php echo $row_pann['notes'];?></p>
+  </div>
+  </div>
+  <div class="col-lg-12">
+  <div class="notes">
+  <h4 class="main_title_2">Extras <a data-toggle="modal" data-target="#AddExtra" href="#" data-id="<?php echo $row_pann['windowid'];?>" class="btn btn-primary" style="margin-left:100px;" id="anchor_extra_view">ADD</a></h4>
+  <span id="view_<?php echo $row_pann['windowid'];?>">
+  <?php  if(!empty($row_pann['extras'][0])){?>
+  <table class="table">
+  <tr>
+  <td></td>
+  <td>Product</td>
+  <td>Cost</td>
+  <td>Quantity</td>
+  <td>Unit</td>
+  <td>Hour</td>
+  <td></td>
+  <td></td>
+  <td></td>
+  </tr>
+  <tr><td style="border:none">
+  <input type="hidden" name="page-status" value="0"/>
+  <input type="hidden" id="list-windowid">
+  <?php
+    foreach($row_pann['extras'] as $row_extras)
+    {
+      //$hours=round(($row_extras['hours']*$row_extras['sizevalue']),2);
+        $hours=$row_extras['hours'];
+         ?>
+  <tr>
+  <?php
+    if(file_exists($gSupplierProdcutsDir.$row_extras['imageid'].".png")){
+               echo '<td><img src="'.$gSupplierProdcutsURL.$row_extras['imageid'].'.png'.'" style="width:20px"></td>';
+               }
+               else{
+                echo '<td></td>';
+               }
+               ?>
+  <td><?php echo $row_extras['name'];?></td>
+  <td>$<?php echo $row_extras['cost'];?> </td>
+  <td><?php echo $row_extras['quantity'];?></td>
+  <td><?php echo $row_extras['unitname'];?></td>
+  <td><?php echo $hours;?>&nbsp;Hours</td>
+  <td><a href="<?php echo $row_extras['linkURL'];?>" target="_blank">More Info</a></td>
+  <td><a href="javascript:void(0)" id="delete-extra" onClick="delview(<?php echo $row_extras['extraid'];?>,<?php echo $row_extras['windowid'];?> )"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+  <td><a data-toggle="modal" data-target="#myModalExtraView" href="#" data-id="<?php echo $row_extras['extraid'];?>" id="edit-view-manager"><i class="fa fa-edit" aria-hidden="true"></i></a></td>
+  </tr>
+  <?php
+    }
+
+    ?>
+  </table>
+  <?php } ?>
+  </span>
+  </div>
+  </div>
+  <!--<div class="col-lg-12">
+    <div class="notes">
+           <h4 class="main_title">Hazards</h4>
+           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at sapien est. Nunc ligula nibh, dictum a malesuada quis, venenatis nec tellus. Integer eget venenatis ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec tellus neque, suscipit in augue quis, rhoncus tincidunt metus. Integer non hendrerit nisl.</p>
+       </div>
+    </div>-->
+  <div class="col-lg-12">
+  <div class="photos" id="div_after_img<?php echo $row_pann['windowid'];?>">
+  <h4 class="main_title_2 main-title-flex">After Photos <?php  if(!empty($row_pann['after_window_photos'][0])){?><a  href="javascript:void(0)" onclick="getwindowList('<?php echo $row_pann[windowid];?>','after')"><i class="fa fa-arrow-right" aria-hidden="true"  style="color: #00adef;"></i></a><?php } ?><a class="plus-circle-blue" id="after-photo" data-id="<?php echo $row_pann['windowid'];?>" data-toggle="modal" data-target="#myModalAfter" href="javascript:void(0)"><i class="fa fa-plus"></i></a></h4>
+  <ul>
+  <?php
+    if(!empty($row_pann['window_photos'][0])){
+    foreach($row_pann['after_window_photos'] as $row_phot_after)
+    {
+    	  if($row_phot_after['photoid'] > 0 && file_exists($gPhotoDir.$row_phot_after['photoid'].".png"))?>
+  <li> <img src="<?php echo $gPhotos.$row_phot_after['photoid'];?>.jpg" class="fs-gal" data-url="<?php echo $gPhotos.$row_phot_after['photoid'];?>.jpg"> </li>
+  <?php
+    }}
+    ?>
+  </ul>
+  </div>
+  </div>
+  </div>
+  </div>
+  </section>
+  <?php
+    }
+    ?>
+  <div id="myModal<?php echo $row_pann['windowid'];?>" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+  <!-- Modal content-->
+  <div class="modal-content">
+  <div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal">&times;</button>
+  <h4 class="modal-title">Add /Edit Window Notes</h4>
+  </div>
+  <div class="modal-body">
+  <p>
+  <table class="table">
+  <tr>
+  <td><textarea name="notes" id="windownotes<?php echo $row_pann['windowid'];?>" rows="10"  style="resize:none; width:100%"><?php echo $row_pann['notes'];?></textarea></td>
+  </tr>
+  <tr><td><input type="button" value="UPDATE" class="btn btn-primary" style="margin-left:50px;" onClick="updatenotes(<?php echo $row_pann['windowid'];?>,'notes')"/></td></tr>
+  </table>
+  </p>
+  </div>
+  <div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+  </div>
+  </div>
+  </div>
+
+  <?php
+    }
+    }
+    ?>
+  </span>
+  <?php
+    }
+    ?>
+  </span>
+  <!---- Modelpopup For Style--->
+  <div id="styleModalprop" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <input type="hidden" name="panelid" id="panelid" />
+      <input type="hidden" name="styleid" id="styleid" />
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Panel</h4>
+          <div id="div_material" class="text-center">
+          </div>
+        </div>
+        <div class="modal-body">
+          <div id="id_100" class="form-group"></div>
+          <div id="id_frame" class="form-group">
+            <select name="styleframe" id="styleframe" title="Select your frame" class="selectpicker form-control" >
+            </select>
+          </div>
+          <div id="id_style" class="form-group">
+            <select name="style_options" id="style_options" title="Select your style" class="selectpicker form-control" >
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="prd-add-btns">
+                <img src="" id="style-image">
+                <a class="pr-btn top-btn"><i class="fa fa-plus"></i></a>
+                <a class="pr-btn right-btn"><i class="fa fa-plus"></i></a>
+                <a class="pr-btn bottom-btn"><i class="fa fa-plus"></i></a>
+                <a class="pr-btn left-btn"><i class="fa fa-plus"></i></a>
+                <div class="prd-popup top-popup"></div>
+                <div class="prd-popup right-popup"></div>
+                <div class="prd-popup left-popup"></div>
+                <div class="prd-popup bottom-popup"></div>
+              </div>
+            </div>
+          </div>
+          <span id="top_spn">
+          </span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="myModalBefore" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Before Image</h4>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="windowid">
+          <p>
+            <img  class="img-responsive" style="width:100px;height:100px" id="userimage_before"> <input type="file" name="beforimag" id="beforimag" onChange="readURLBefore(this)" autocomplete="off"/>
+          </p>
+          <p>&nbsp;</p>
+          <p id="span_error" style="color:#F00"></p>
+          <p><input type="button" value="UPLOAD" id="before-upload" class="btn btn-primary"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="myModalAfter" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add After Image</h4>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="windowid_after">
+          <p>
+            <img  class="img-responsive" style="width:100px;height:100px" id="userimage_after"> <input type="file" name="afterimag" id="afterimag" onChange="readURLAfter(this)" autocomplete="off"/>
+          </p>
+          <p>&nbsp;</p>
+          <p id="span_error_after" style="color:#F00"></p>
+          <p><input type="button" value="UPLOAD" id="after-upload" class="btn btn-primary"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="myModalExtra" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Extras</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add extra-->
+  <div id="AddExtra" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Extras</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table borderless">
+            <tr>
+              <td>
+                <select name="extrapdt" id="extrapdt" title="Select your Product" class="selectpicker form-control" >
+                  <option value="select">Choose your product</option>
+                  <?php foreach($windowOption as $valop){
+                    echo '<option value='.$valop['productid'].' data-thumbnail='.$gWindowOptionProductsURL.$valop['imageid'].'.png'.'>'.$valop['name'].'</option>';
+
+                    }?>
+                </select>
+              </td>
+              <td><input type="hidden" id="extra-windowid"></td>
+            </tr>
+          </table>
+          <div id ="res_produt">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="myModalExtraView" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Extras</h4>
+        </div>
+        <div class="modal-body" >
+          <p id="extra-view-manager">
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="windowtypes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-body">
+          <div class="popup-retro" id="popup-retro">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Popup For colour-->
+  
+  <div id="myModalpaint" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Select Colour & Condition</h4>
+        </div>
+        <div class="modal-body" >
+        <p><select name="paint" title="Select color and condition" class="selectpicker form-control" id="paintcondition">
+        </select></p>
+       <p> <select name="conditionselect" title="Select color and condition" class="selectpicker form-control" id="selectcondition">
+        </select></p>
+        <p><input type="radio" name="radoptions" id="radproject" value="project">Apply to whole Project</p>
+        <p><input type="radio" name="radoptions" id="radwindow" value="window">Apply to whole Window</p>
+         <p><input type="radio" name="radoptions" id="radpanel" checked="checked" value="panel">Apply to selected Panel</p>
+         <p><input type="button" id="optbtn" value="Update" class="btn btn-primary"></p>
+         <input type="hidden"  id="locationid" value="<?php echo $Locationid;?>">
+         <input type="hidden"  id="optpanelid">
+         <input type="hidden"  id="optwindowid">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="EditRoom" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Room</h4>
+        </div>
+        <div class="modal-body" >
+        <input type="textbox" class="form-control" id="roomEdit">
+        <input type="hidden"  id="roomidtxt">
+        <input type="button"  value="Update" class="btn btn-primary" onclick="updateroom()">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="addPjt" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Project</h4>
+        </div>
+        <div class="modal-body" >
+       <table>
+         <tr>
+           <th>Name&nbsp;&nbsp;</th>
+           <td><input type="text" id="pjtname" class="form-control"></td>
+         </tr>
+         
+         <tr>
+          <th>Date&nbsp;&nbsp;</th>
+          <td><input type="date" id="pjtdate" class="form-control"></td>
+        </tr>
+
+       
+        <tr><td><input type="button" value="Save" onclick="update(<?php echo $Locationid;?>)" class="btn btn-primary"></td></tr>
+       </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div id="updatePjt" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Update Project</h4>
+        </div>
+        <div class="modal-body" >
+          <table>
+            <tr>
+              <th>Name&nbsp;&nbsp;</th>
+              <td><input type="text" id="edit-pjtname" class="form-control" <?php if(!empty($array_location['project_name'])){?>value="<?php echo $array_location['project_name'];?>" <?php } ?>></td>
+            </tr>
+            
+            <tr>
+             <th>Date&nbsp;&nbsp;</th>
+             <td><input type="date" id="edit-pjtdate" class="form-control" <?php if(!empty($array_location['project_date'])){?>value="<?php echo date('Y-m-d',strtotime($array_location['project_date']));?>" <?php } ?>></td>
+           </tr>
+   
+           <tr>
+             <th></th>
+             <td><input type="hidden" class="form-control" id="projectid" <?php if(!empty($array_location['projectid'])){?>value="<?php echo $array_location['projectid'];?>" <?php } else{?> value="0" <?php } ?>></td>
+           </tr>
+   
+          
+   
+           <tr><td><input type="button" value="Update" id="updatepjt" class="btn btn-primary"></td></tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="moveWindow" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Move Window</h4>
+        </div>
+        <div class="modal-body">
+          
+         
+           <select name="roomname" id="roomnamemove" class="form-control">
+                  <option value="">Choose Room</option>
+                  <?php
+                  foreach($RoomList as $ValRoom){?>
+   
+                  <option value="<?php echo $ValRoom['roomid'];?>"><?php echo $ValRoom['name'];?></option>
+   <?php
+                  }
+                  
+                  ?>
+                </select>
+                <input type="hidden" id="movewindowid">
+                </p>
+               <input type="button" value="UPDATE" class="btn btn-primary" onclick="updatewindow()">
+            
+              </p>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="movebefore" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Move Window</h4>
+        </div>
+        <div class="modal-body">
+          
+         <input type="hidden" id="oldwindowid">
+         <input type="hidden" id="movingtype">
+           <select name="movephoto" id="movephoto" class="form-control" onchange="selectwindow(this.value)">
+                  <option value="">Choose Room</option>
+                  <?php
+                  foreach($RoomList as $ValRoom){?>
+   
+                  <option value="<?php echo $ValRoom['roomid'];?>"><?php echo $ValRoom['name'];?></option>
+         <?php
+                  }
+                  
+                  ?>
+                </select>
+                <p id="list-window-select" style="margin-top: 10px;"></p>
+               
+                </p>
+               <input type="button" value="UPDATE" class="btn btn-primary" onclick="moveBeforephotos()">
+            
+              </p>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

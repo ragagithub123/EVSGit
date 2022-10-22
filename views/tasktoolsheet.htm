@@ -1,0 +1,177 @@
+
+<section style="width: 900px; margin: auto;">
+  <div class="">
+      <div class="row">
+          <div class="col-lg-12">
+
+      <div class="evs_head">
+          <div class="logo">
+              <img src="images/logo.png">
+          </div>
+          <div class="header-select">
+
+            <select class="form-control" id="select_worksheet">
+             <option value="task">Tools and Materials Sheet</option>
+                <option value="job">Job Sheet</option>
+
+                <option value="production">Production Sheet</option>
+
+            </select>
+            Date : <?php echo date('d-m-Y');
+            //include('templates/menu.php');?>
+          </div>
+      </div><!-- ./evs_head -->
+
+          </div>
+      </div>
+  </div>
+</section>
+
+
+<section class="evs-main-body" style="width: 900px; margin: auto;">
+  <div class="row">
+    <div class="col-lg-12">
+      <?php
+            $loc=$row_details['unitnum'].",".$row_details['street'];
+            if(!empty($row_details['suburb']))
+            {
+              $loc.=",".$row_details['suburb'];
+            }
+            ?>
+            <h3 class="title-h-one">Job: <span><?php echo $loc;?></span></h3>
+      <div class="house-details">
+        <div class="house-photo">
+          <?php
+                if($row_details['photoid'] !=0)
+                {
+                  ?>
+                <img src="<?php echo $gPhotoURL.$row_details['photoid'];?>.jpg" class="img-responsive">
+                <?php
+
+                }?>
+          <div class="house-info">
+                  <ul>
+
+                    <li><?php echo $row_details['city'];?></li>
+                    <li><?php echo $row_details['firstname']." ".$row_details['lastname'];?></li>
+                    <li><?php echo $row_details['phone'];?></li>
+                    <li><?php echo $row_details['email'];?></li>
+                  </ul>
+                </div>
+        </div>
+        <div class="house-task">
+          <ul class="ts-inp-list">
+            <li>
+              <span>Team Leader</span>
+              <input type="text" class="form-control maindata" id="leader" value="<?php echo $rowsettings['leader'];?>">
+            </li>
+            <li>
+              <span>Date</span>
+              <input type="date" class="form-control maindata" id="date" value="<?php echo $rowsettings['date'];?>">
+            </li>
+            <li>
+              <span>Team</span>
+              <input type="text" class="form-control maindata" id="team" value="<?php echo $rowsettings['team'];?>">
+            </li>
+           <!-- <li>
+              <input type="text" class="form-control">
+            </li>
+            <li>
+              <input type="text" class="form-control">
+            </li>
+            <li>
+              <input type="text" class="form-control">
+            </li>-->
+          </ul>
+          <table>
+            <tbody>
+              <tr>
+                <td>Total Install Hours <?php echo $totalinstallhrs;?></td>
+              </tr>
+              <tr>
+                <td>Total Extra's Hours &nbsp; <?php echo $total_extra_hrs;?></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h2 style="margin-top: -42px; font-weight: bold;">TOOLS AND MATERIALS SHEET</h2>
+      
+      <?php
+     if(count($postpanel)>0){
+      foreach($postpanel as $valpanel){?>
+
+      <div class="tools-materials-section">
+        <h3 class="title-h-one"><span><?php echo $valpanel['categoryType'];?></span></h3>
+        <div class="tools-materials-all">
+        <?php if(count($tools)>0){
+        foreach($tools as $valtool){?>
+          <div class="tools-materials-single">
+            <h5><?php echo $valtool['tools'];?></h5>
+            <ul>
+             <?php
+             if(count($valpanel['tasktool'])>0){
+              foreach($valpanel['tasktool'] as $tasktool){
+              
+              if($tasktool['toolid'] == $valtool['toolsid']){
+              
+              ?>
+              
+               <li>
+                <span><?php echo $tasktool['name'];?></span>
+                <label class="tool-checkbox">
+                  <input type="checkbox" data-tool ="<?php echo $tasktool['toolid'];?>" data-id="<?php echo $tasktool['tasktoolid'];?>" data-cat="<?php echo $tasktool['categoryid'];?>" data-type="<?php echo $tasktool['type'];?>" class="toolcheck" <?php if($tasktool['checkStatus'] == 1){?>checked="checked" <?php } ?>>
+                  <span class="checkmark-tools"></span>
+                </label>
+              </li>
+              
+             <?php } }
+             }
+             ?>
+             
+              
+            </ul>
+          </div>
+          
+          <?php  }
+          
+          }?>
+          
+          
+          
+          <div class="tools-materials-single">
+            <h5>Materials</h5>
+            <ul>
+            <?php if(count($valpanel['materials'])>0){
+            foreach($valpanel['materials'] as $taskmat){?>
+              <li>
+                <span><?php echo $taskmat['name'];?></span>
+                <label class="tool-checkbox">
+                  <input type="checkbox"  data-id="<?php echo $taskmat['taskmaterialid'];?>" data-cat="<?php echo $tasktool['categoryid'];?>" data-type="<?php echo $tasktool['type'];?>" class="matcheck" <?php if($taskmat['checkstatus'] == 1){?>checked="checked" <?php } ?>>
+
+                  <span class="checkmark-tools"></span>
+                </label>
+              </li>
+              
+              <?php } 
+              }?>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <?php } }?>
+      
+      
+      
+    </div>
+  </div>
+  <input type="hidden" id="locationid" value="<?php echo $Locationid;?>" />
+</section>
+ 
