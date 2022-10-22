@@ -1,0 +1,50 @@
+<h2>Suppliers</h2>
+
+<?= $message ?>
+
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+     <th colspan="2">Name</th>
+     <th>Brand</th>
+     <th>Address</th>
+     <th>City</th>
+     <th>Country</th>
+     <th>Phone</th>
+     <th>Email</th>
+     <th>Website</th>
+     <th>Contactperson</th>
+     <th>Industryid</th>
+    <th style="text-align: right; font-weight: normal;"><a href="<?= $_SERVER['PHP_SELF'] ?>?id=add">Add</a></th></tr>
+				</thead>
+				<tbody>
+					
+     <?php
+					foreach($options as $option) {
+						echo "<tr>
+      <td colspan='2'>". htmlspecialchars($option['supplier_name']). "</td>";
+      
+      echo "<td>".$option['brand']."</td>
+      <td>".$option['address']."</td>
+      <td>".$option['city']."</td>
+      <td>".$option['country']."</td>
+      <td>".$option['phone']."</td>
+      <td>".$option['email']."</td>
+      <td>".$option['website']."</td>
+       <td>".$option['contactperson']."</td>
+       <td>".$option['industryid']."</td>
+      <td style=\"text-align: right;\"><a href=\"productoptions.php?type=suppliers&id=". $option['supplierid']. "\">Edit</a></td></tr>\n";
+					}
+					?>
+				</tbody>
+			</table>
+
+		</div>		
+  </div> <!-- /row -->
+		
+</form>

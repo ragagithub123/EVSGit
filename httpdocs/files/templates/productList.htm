@@ -1,0 +1,58 @@
+<h2>Products</h2>
+
+<?= $message ?>
+
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+     <th colspan="2">Name</th>
+     <th>Image</th>
+     <th>Shortname</th>
+     <th>Suppiername</th>
+     <th>Code</th>
+    
+     <th>Hours</th>
+     <th>Unitname</th>
+     <th>Unittag</th>
+     <th>WSvalue</th>
+   
+    <th style="text-align: right; font-weight: normal;"><a href="<?= $_SERVER['PHP_SELF'] ?>?id=add&type=products">Add</a></th></tr>
+				</thead>
+				<tbody>
+					
+     <?php
+					foreach($options as $option) {
+						echo "<tr><td colspan='2'>". htmlspecialchars($option['name']). "</td>";
+        if($option['productid'] > 0 && file_exists($gWindowOptionProductsDir.$option['productid'].".png"))
+          {
+              echo "<td><img src=\"". $gWindowOptionProductsURL.$option['productid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\"></td>";
+          }
+          else
+          {
+              echo "<td></td>";
+          }
+      echo " <td>".$option['shortname']."</td>
+      <td>".$option['supplier_name']."</td>
+      <td>".$option['code']."</td>
+    
+   
+      <td>".$option['hours']."</td>
+      <td>".$option['unitname']."</td>
+       <td>".$option['unittag']."</td>
+       <td>".$option['wsvalue']."</td>
+      
+      <td style=\"text-align: right;\"><a href=\"productoptions.php?type=products&id=". $option['productid']."\">Edit</a></td></tr>\n";
+					}
+					?>
+				</tbody>
+			</table>
+
+		</div>		
+  </div> <!-- /row -->
+		
+</form>

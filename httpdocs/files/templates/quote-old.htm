@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EVS Retro Glazing</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/quote.css" rel="stylesheet">
+     <link href="../css/fs-gal.css" rel="stylesheet">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+     <script type="text/javascript" src="../js/fs-gal.js"></script>
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+<!-- Full screen gallery. -->
+    <div class="fs-gal-view">
+        <h1></h1>
+        <img class="fs-gal-close" src="../assets/images/close.svg" alt="Close gallery" title="Close gallery" />
+        <img class="fs-gal-main" src="" alt="" />
+    </div>
+    <!--end gallery-->
+		<div class="container">
+			
+			<div class="row" style="margin-bottom: 30px;">
+				<div class="col-xs-12 col-sm-9">
+					<img src="/assets/app/agents/logos/<?php echo $location['agentid'];?>.png" class="img-responsive" style="margin-bottom: 10px; max-width: 300px;">
+				</div>
+				<div class="col-xs-12 col-sm-3 agent-address">
+    <?php for($i=0;$i<count($agentAddress);$i++)
+    {
+      if($i==4)
+      {
+       
+        ?>
+         Email:<a href="mailto:<?php echo  $agentAddress[4];?>"><?php echo $agentAddress[4];?></a><br>
+        <?php
+      }
+      else
+      {
+        echo $agentAddress[$i]."<br>";
+      }
+    }
+    ?>
+				</div>
+			</div>
+
+			<div class="row" style="margin-top: 40px; margin-bottom: 40px;">
+				<div class="col-xs-12 col-sm-9 col-md-10"> 
+					<div class="location-address">
+						<p><?php if($location['quotedatestamp'] > 0) echo FormatDateStamp($location['quotedatestamp']) ?></p>
+      <?php for($i=0;$i<count($customerAddress);$i++)
+    {
+      if($i==4)
+      {
+        
+        ?>
+        Email: <a href="mailto:<?php echo $customerAddress[4];?>"><?php echo $customerAddress[4];?></a><br>
+        <?php
+      }
+      else
+      {
+        echo $customerAddress[$i]."<br>";
+      }
+    }
+    ?>
+						
+					</div>
+				</div>
+    
+    
+
+				<!--<div class="col-xs-12 col-sm-3 col-md-2"> 
+					<img src="/assets/app/guarantee.png" class="img-responsive hidden-xs">
+				</div>-->
+			</div>
+
+
+			<?php
+				
+			if($location['photoid'] > 0) {
+				echo "<div style=\"margin-bottom: 40px;\">\n";
+				echo "  <img src=\"". $gPhotoURL. $location['photoid']. ".jpg\" class=\"img-responsive center-block\">\n";
+				echo "</div>\n";
+			}
+			echo nl2br($greetings);
+			?>
+  <div style="width:100%; display:inline-block;">
+  <?php
+				
+				if(file_exists($gSignaturePhotoDir.$location['agentid'].".png"))
+					echo "<p><img src=\"". $gSignaturePhotoURL. $location['agentid'].".png\" style=\"width: 160px; height: 160px;\"></p>";
+		
+				echo "<p><b>". htmlspecialchars($location['afirstname'].' '.$location['alastname']). "</b></p>";		
+				echo "<p>". $location['aphone']. "<br>". $location['aemail']. "</p>";
+				
+			?>
+  	
+  </div>
+
+		<div class="table-responsive" style="padding:20px 0px;">
+  	<table class="table">
+   	<thead>
+    	<tr style="background:#ccc;">
+     	<th>Code</th>
+      <th>Product &nbsp;&nbsp;<img src="https://evsapp.nz/assets/images/exclamation_small.png" style="width:25px; height:25px;">&nbsp;<?php echo $totals['panelcount'];?> Panels</th>
+      <th>Product Info</th>
+      <th>Total Price(inc GST)</th>
+      <th>Average Unit Price</th>
+     </tr>
+    </thead>
+    <tbody>
+    <?php
+      $retro_url="https://evsapp.nz/pdf/retroglazing.pdf";
+      $evs_url=" https://evsapp.nz/pdf/evsglazing.pdf";
+					foreach($locationProducts as $product) {
+      echo "<tr>
+     	<td>". $productNames[$product]. "</td>
+						<td><img src='/assets/app/agents/products/".$prodcutimages[$product]."' style='width:200px'></td>
+    <td>";
+      if($productNames[$product] == "EVSx2" || $productNames[$product] =="EVSx3")
+      {
+        echo "<a href=".$evs_url." target='_blank'>More Info</a>";
+      }
+      else
+      {
+         echo "<a href=".$prodcuturl[$product]." target='_blank'>More Info</a>";
+      }
+     echo "</td>
+
+     <td><h4>$". number_format(intval($totals["cost$product"]), 0). "</h4></td>
+      <td>$". number_format(intval($totals["cost$product"] / $totals['panelcount']), 0). "</td>
+
+     </tr>";
+						}
+					?>
+    	
+     
+    </tbody>
+   </table>
+  </div><!-- ./table-responsive -->
+  
+  
+  <section>
+           <div class="container">
+        	<div class="row">
+            	<div class="col-lg-12">
+                
+                 <?php
+                  foreach($rooms as $room)
+                  {
+                    foreach($room['windows'] as $window) {
+                    ?>
+                    	<h4 class="main_title_2"><?php echo htmlspecialchars($room['name']);?></h4>
+                      <div class="rpt_tbl">
+                 		<div class="rpt_image">
+                   	<?php echo "<img src=\"". $gWindowTypePhotoURL. $window['windowtypeid']. ".png\" class=\"img-responsive\">";?>
+                   </div>
+                   <div class="rpt_title">
+                   	<h4><?php echo htmlspecialchars($room['name']);?></h4>
+                    <h6><?php echo htmlspecialchars($window['name']);?></h6>
+                    <div class="table-responsive">
+                    	<table class="table">
+                     	<thead>
+                      	<tr>
+                        <?php foreach($locationProducts as $product) {
+                     
+                       	echo "<th>$productNames[$product]</th>";
+                        
+                     
+                      
+                      
+                      }
+                      ?>
+                       	
+                       </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                      <?php foreach($locationProducts as $product) {
+                     
+                       	echo "<td>$".number_format($window["cost$product"])."</td>";
+                        
+                     
+                      
+                      
+                      }
+                      ?>
+                      
+                       
+                       </tr>
+                      </tbody>
+                     </table>
+                    </div>
+                   </div>
+                 </div>
+                 
+                	<div class="photos">
+                    	<h4 ><!--Before Photos--></h4>
+                        <ul>
+                        <?php
+                        foreach($window['photos'] as $wind_photo) {
+                        ?>
+                       
+                           <li> <img src="http://evsapp.nz/photos/<?php echo $wind_photo['photoid'];?>.jpg" class="fs-gal" data-url="http://evsapp.nz/photos/<?php echo $wind_photo['photoid'];?>.jpg"> </li>
+                           <?php } ?>
+                         
+                        
+                        </ul>
+                    </div><!-- ./photos -->
+
+                    <?php
+                    
+                    
+                    }
+                    ?>
+                    
+                    <?php
+                  }
+                 ?>
+                 
+                 
+             </div><!-- ./col-lg-12 -->
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <!-- ./col-lg-12 -->
+                
+                
+                
+                
+                
+               
+                
+                
+            </div>
+        </div>
+        </section>
+  
+  
+  
+  <div style="width:100%; display:inline-block;">
+  <?php
+				echo "<div style=\"font-size: 0.9em; margin-top: 30px; margin-bottom: 30px;\">". str_replace("\n", "<br>", htmlspecialchars($quote_details)). "</div>\n";
+				
+				
+				
+			?>
+  	
+  </div>
+						
+		</div>
+
+  </body>
+</html>

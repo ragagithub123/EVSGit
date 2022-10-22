@@ -1,0 +1,48 @@
+<h2>Extra Options</h2>
+
+<?= $message ?>
+
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+     <th colspan="2">Option</th>
+     <th>Image</th>
+     <th>Hours</th>
+     <th>Price</th>
+     <th></th>
+     <th>DisplayOrder</th>
+    <th style="text-align: right; font-weight: normal;"><a href="<?= $_SERVER['PHP_SELF'] ?>?id=add">Add</a></th></tr>
+				</thead>
+				<tbody>
+					
+     <?php
+					foreach($options as $option) {
+						$default = $option['isdefault'] == 1 ? 'Default' : '';
+						echo "<tr><td colspan='2'>". htmlspecialchars($option['name']). "</td>";
+        if($option['windowoptionid'] > 0 && file_exists($gWindowOptionPhotoDir.$option['windowoptionid'].".png"))
+          {
+              echo "<td><img src=\"". $gWindowOptionPhotoURL.$option['windowoptionid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\"></td>";
+          }
+          else
+          {
+              echo "<td></td>";
+          }
+      echo "<td>".$option['hours']."</td>
+      <td>".$option['value']."</td>
+      <td>$default</td>
+      <td>".$option['displayorder']."</td>
+      <td style=\"text-align: right;\"><a href=\"windowoptions.php?id=". $option['windowoptionid']."\">Edit</a></td></tr>\n";
+					}
+					?>
+				</tbody>
+			</table>
+
+		</div>		
+  </div> <!-- /row -->
+		
+</form>

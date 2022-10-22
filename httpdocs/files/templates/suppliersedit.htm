@@ -1,0 +1,97 @@
+<h2>Edit Suppliers</h2>
+<?= $message ?>
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="<?= $id ?>">
+ <input type="hidden" name="type" value="suppliers" />
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+
+			<div class="form-group <?= isset($errors['supplier_name']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Name</label>
+				<input type="text" name="supplier_name" value="<?= $form->SetValue('supplier_name', $option['supplier_name']) ?>" class="form-control">
+				<span class="help-block"><?= isset($errors['supplier_name']) ? $errors['supplier_name'] : '' ?></span>
+			</div>
+   
+   	<div class="form-group <?= isset($errors['brand']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Brand</label>
+				<input type="text" name="brand" value="<?= $form->SetValue('brand', $option['brand']) ?>" class="form-control">
+				<span class="help-block"><?= isset($errors['brand']) ? $errors['brand'] : '' ?></span>
+			</div>
+   
+     <div class="form-group <?= isset($errors['address']) ? 'has-error' : '' ?>">
+				<label> <span class="required">*</span>Address</label>
+				<textarea name="address" class="form-control" style="resize:none;" rows="5"><?= $form->SetValue('address', $option['address']) ?> </textarea>
+				<span class="help-block"><?= isset($errors['address']) ? $errors['address'] : '' ?></span>
+			</div>
+   
+   
+   <div class="form-group <?= isset($errors['city']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> City</label>
+				<input type="text" name="city" value="<?= $form->SetValue('address', $option['city']) ?>" class="form-control">
+				<span class="help-block"><?= isset($errors['city']) ? $errors['city'] : '' ?></span>
+			</div>
+   
+ 
+
+			<div class="form-group <?= isset($errors['country']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Country</label>
+				<input type="text" name="country" value="<?= $form->SetValue('country', $option['country']) ?>" class="form-control" >
+				<span class="help-block"><?= isset($errors['country']) ? $errors['country'] : '' ?></span>
+			</div>
+   
+   	<div class="form-group <?= isset($errors['phone']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Phone</label>
+				<input type="text" name="phone" value="<?= $form->SetValue('phone', $option['phone']) ?>" class="form-control" >
+				<span class="help-block"><?= isset($errors['phone']) ? $errors['phone'] : '' ?></span>
+			</div>
+   
+   
+   
+   
+   	<div class="form-group <?= isset($errors['email']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Email</label>
+				<input type="text" name="email" value="<?= $form->SetValue('email', $option['email']) ?>" class="form-control" >
+				<span class="help-block"><?= isset($errors['email']) ? $errors['email'] : '' ?></span>
+			</div>
+   
+   
+   <div class="form-group <?= isset($errors['website']) ? 'has-error' : '' ?>">
+				<label><span class="required"></span> Website</label>
+				<input type="text" name="website" value="<?= $form->SetValue('website', $option['website']) ?>" class="form-control" >
+				<span class="help-block"><?= isset($errors['website']) ? $errors['website'] : '' ?></span>
+			</div>
+   
+   
+    <div class="form-group <?= isset($errors['contactperson']) ? 'has-error' : '' ?>">
+				<label><span class="required"></span> Contactperson</label>
+				<input type="text" name="contactperson" value="<?= $form->SetValue('contactperson', $option['contactperson']) ?>" class="form-control" >
+				<span class="help-block"><?= isset($errors['contactperson']) ? $errors['contactperson'] : '' ?></span>
+			</div>
+  <div class="form-group <?= isset($errors['industryid']) ? 'has-error' : '' ?>">
+				<label><span class="required"></span> Industryid</label>
+     <select name="industryid" class="form-control" id ="supplierid">
+    <?php foreach($industry as $valin){?>
+    <option value="<?php echo $valin['industryid'];?>" <?php if($form->SetValue("industryid", $option['industryid'], true, 255)==  $valin['industryid']){?> selected="selected" <?php } ?>><?php echo $valin['name'];?></option>
+    <?php
+    }
+    ?>
+    </select>
+    
+    
+			</div>
+			
+			<p>
+				<input type=submit name="save" value="Save" class="btn btn-primary">
+				<input type=submit name="cancel" value="Cancel" class="btn btn-default" style="margin-left: 10px;">
+			</p>
+
+		</div>	
+  
+  
+  
+  
+  	
+  </div> <!-- /row -->
+		
+</form>

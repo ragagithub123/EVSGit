@@ -1,0 +1,130 @@
+<h2>Edit Products</h2>
+<?= $message ?>
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="<?= $id ?>">
+ <input type="hidden" name="type" value="products" />
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+
+			<div class="form-group <?= isset($errors['name']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Name</label>
+				<input type="text" name="name" value="<?= $form->SetValue('name', $option['name']) ?>" class="form-control">
+				<span class="help-block"><?= isset($errors['name']) ? $errors['name'] : '' ?></span>
+			</div>
+   
+   	<div class="form-group <?= isset($errors['shortname']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Short Name</label>
+				<input type="text" name="shortname" value="<?= $form->SetValue('shortname', $option['shortname']) ?>" class="form-control">
+				<span class="help-block"><?= isset($errors['shortname']) ? $errors['shortname'] : '' ?></span>
+			</div>
+   <div class="form-group <?= isset($errors['code']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Product Code</label>
+				<input type="text" name="code" value="<?= $form->SetValue('code', $option['code']) ?>" class="form-control">
+				<span class="help-block"><?= isset($errors['code']) ? $errors['code'] : '' ?></span>
+			</div>
+   
+   <div class="form-group <?= isset($errors['description']) ? 'has-error' : '' ?>">
+				<label> Product Description</label>
+				<textarea name="description" class="form-control" style="resize:none;" rows="5"><?= $form->SetValue('description', $option['description']) ?> </textarea>
+				<span class="help-block"><?= isset($errors['description']) ? $errors['description'] : '' ?></span>
+			</div>
+
+			<div class="form-group <?= isset($errors['supplier_name']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Supplier Name</label>
+    <select name="supplierid" class="form-control" id ="supplierid">
+    <?php foreach($suppliers as $valsupple){?>
+    <option value="<?php echo $valsupple['supplierid'];?>" <?php if($form->SetValue("supplierid", $option['supplierid'], true, 255)==  $valsupple['supplierid']){?> selected="selected" <?php } ?>><?php echo $valsupple['supplier_name'];?></option>
+    <?php
+    }
+    ?>
+    </select>
+			</div>
+   
+   	<div class="form-group <?= isset($errors['linkURL']) ? 'has-error' : '' ?>">
+				<label> Product Link(URL)</label>
+				<input type="text" name="linkURL" value="<?= $form->SetValue('linkURL', $option['linkURL']) ?>" class="form-control" >
+				<span class="help-block"><?= isset($errors['linkURL']) ? $errors['linkURL'] : '' ?></span>
+			</div>
+   
+   
+   	<div class="form-group <?= isset($errors['unitname']) ? 'has-error' : '' ?>">
+    		<div style="display:flex;">
+        <div style="flex: 1 1; margin-right:15px;">
+          <label><span class="required">*</span> Unit Type</label>
+           <select name="unitname" class="form-control" id ="unitname">
+          <?php foreach($units as $valunit){?>
+          <option value="<?php echo $valunit['unitName'];?>" <?php if($form->SetValue("unitname", $option['unitname'], true, 255)==  $valunit['unitName']){?> selected="selected" <?php } ?>><?php echo $valunit['unitName'];?></option>
+          <?php
+          }
+          ?>
+          </select>
+        </div>
+        
+        <div style="width:120px;">
+          <label> Unit Tag</label>
+          <input type="text" name="unittag" value="<?= $form->SetValue('unittag', $option['unittag']) ?>" class="form-control" style="width: 120px; text-align: right;" readonly="readonly" id="unittag">
+          <span class="help-block"><?= isset($errors['unittag']) ? $errors['unittag'] : '' ?></span>
+        </div>
+      </div>
+			</div>
+   
+   	<div class="form-group <?= isset($errors['rrpvalue']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> RRP price per unit</label>
+				<input type="text" name="rrpvalue" value="<?= $form->SetValue('rrpvalue', $option['rrpvalue']) ?>" class="form-control" style="width: 120px; text-align: right;">
+				<span class="help-block"><?= isset($errors['rrpvalue']) ? $errors['rrpvalue'] : '' ?></span>
+			</div>
+   
+   
+   <div class="form-group <?= isset($errors['wsvalue']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> WS price per unit</label>
+				<input type="text" name="wsvalue" value="<?= $form->SetValue('wsvalue', $option['wsvalue']) ?>" class="form-control" style="width: 120px; text-align: right;">
+				<span class="help-block"><?= isset($errors['wsvalue']) ? $errors['wsvalue'] : '' ?></span>
+			</div>
+   
+   
+    <div class="form-group <?= isset($errors['costvalue']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Cost price per unit</label>
+				<input type="text" name="costvalue" value="<?= $form->SetValue('costvalue', $option['costvalue']) ?>" class="form-control" style="width: 120px; text-align: right;">
+				<span class="help-block"><?= isset($errors['costvalue']) ? $errors['costvalue'] : '' ?></span>
+			</div>
+   
+   <div class="form-group <?= isset($errors['hours']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Hours per install</label>
+				<input type="text" name="hours" value="<?= $form->SetValue('hours', $option['hours']) ?>" class="form-control" style="width: 120px; text-align: right;">
+				<span class="help-block"><?= isset($errors['hours']) ? $errors['hours'] : '' ?></span>
+			</div>
+   
+   
+   
+   
+   
+			
+			
+			
+			<p>
+				<input type=submit name="save" value="Save" class="btn btn-primary">
+				<input type=submit name="cancel" value="Cancel" class="btn btn-default" style="margin-left: 10px;">
+			</p>
+
+		</div>	
+  
+  <div class="col-xs-12 col-sm-6">
+			
+			<?php
+			if($option['productid'] > 0 && file_exists($gWindowOptionProductsDir.$option['productid'].".png"))
+				echo "<img src=\"". $gWindowOptionProductsURL.$option['productid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 200px; height; 200px;\">";
+			else
+				echo "<div style=\"width: 200px; height: 200px; border: dashed 1px #ccc; line-height: 200px; text-align: center;\">No Picture</div>";
+			?>
+			<p style="margin-top: 5px; font-size: 0.8em;">(PNG; 400px x 400px)</p>
+
+			<div style="margin-top: 15px;"><input type="file" name="image"></div>
+
+		</div>
+  
+  
+  	
+  </div> <!-- /row -->
+		
+</form>

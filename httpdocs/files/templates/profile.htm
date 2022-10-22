@@ -1,0 +1,79 @@
+<h2>Edit Profile Option</h2>
+
+<?= $errorMessage ?>
+
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+	<input type=hidden name="id" value="<?= $form->SetValue("profileid", $windowTypeId, true, 255) ?>">
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+  
+  <div>
+			  <div class="form-group <?= ($errors['profilename']) ? 'has-error' : '' ?>">
+			    <label><span class="required">*</span> Profile name</label>
+			    <input type="text" class="form-control" name="profilename" id="profilename" value="<?= $form->SetValue("profilename", $profile['profilename'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['profilename'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['profilecode']) ? 'has-error' : '' ?>">
+			    <label><span class="required">*</span> Profile code</label>
+			    <input type="text" class="form-control" name="profilecode" id="profilecode" value="<?= $form->SetValue("profilecode", $profile['profilecode'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['profilecode'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['pricelm']) ? 'has-error' : '' ?>">
+			    <label><span class="required">*</span> Pricelm</label>
+			    <input type="text" class="form-control" name="pricelm" id="pricelm" value="<?= $form->SetValue("lastname", $profile['pricelm'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['pricelm'] ?></span>
+			  </div>
+			</div>
+
+			
+
+		
+
+			
+   
+  
+			</div>
+   
+   
+			
+			
+
+
+		<div class="col-xs-12 col-sm-6">
+  
+  
+  
+  	<?php
+			if($profileId > 0 && file_exists($gProfilePhotoDir.$profile['profilecode'].".png"))
+				echo "<img src=\"". $gProfilePhotoURL.$profile['profilecode'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 200px; height; 200px;\">";
+			else
+				echo "<div style=\"width: 200px; height: 200px; border: dashed 1px #ccc; line-height: 200px; text-align: center;\">Image</div>";
+			?>
+			<p style="margin-top: 5px; font-size: 0.8em;">(PNG; 400px x 400px)</p>
+
+			<div style="margin-bottom: 35px;"><input type="file" name="image"></div>
+  
+  
+  
+		
+			
+
+
+
+		</div>
+		
+  </div> <!-- /row -->
+
+	<div style="margin-top: 10px;">
+		<input type="submit" name="save" value="Save" class="btn btn-primary">
+		<input type="submit" name="cancel" value="Cancel" class="btn btn-default" style="margin-left: 10px;">
+	</div>
+		
+</form>

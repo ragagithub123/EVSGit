@@ -1,0 +1,30 @@
+<h2><?= $optionTypes[$type]['typename'] ?> Option Costs</h2>
+
+<?= $message ?>
+
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+
+			<?php
+			
+			foreach($options as $optionId => $option) {
+				$hasErrorClass = ($errors[$optionId]) ? 'has-error' : '';
+				echo "<div class=\"form-group $hasErrorClass\">\n";
+				echo "  <label><span class=\"required\">*</span> ". $option['name']. "</label>\n";
+		    echo "  <input type=\"text\" class=\"form-control\" style=\"width: 120px; text-align: right;\" name=\"option_$optionId\" id=\"$optionId\" value=\"". $form->SetValue("option_$optionId", $option['value'], true, 10). "\" maxlength=\"10\">\n";
+				echo "  <span class=\"help-block\">". $errors[$optionId]. "</span>\n";
+				echo "</div>\n";
+			}
+			?>
+
+		</div>
+		
+  </div> <!-- /row -->
+
+	<div style="margin-top: 10px;">
+		<input type="submit" name="save" value="Save" class="btn btn-primary">
+	</div>
+		
+</form>

@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+#Options +FollowSymLinks
+Options +Indexes
+RewriteEngine On
+RewriteBase /
+  
+#RewriteCond %{SERVER_PORT} 80
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^quote/(.*)$ quote.php?id=$1 [PT,L,QSA] 
+
+ 
+</IfModule>

@@ -1,0 +1,23 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+  <th>Colour Name</th>
+  <th>Image</th>
+  <th>Colour Code</th>
+   <th class="text-right" style="text-align: right; font-weight: normal;">
+   <a href="colour.php">Add</a></th>
+   </tr>
+	</thead>
+	
+	<tbody>
+		<?= $colourList ?>
+	</tbody>
+</table>
+
+<?php
+
+if($colourList == '')
+	echo "<p style=\"margin-top: 80px; text-align: center;\">No colours added yet</p>";
+
+?>
+

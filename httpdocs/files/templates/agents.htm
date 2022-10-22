@@ -1,0 +1,25 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+  <th>Business Name</th>
+  <th>Name</th>
+  <th>Status</th>
+  <th>City</th>
+  <th>Enabled</th>
+   <th class="text-right" style="text-align: right; font-weight: normal;">
+   <a href="agent.php">Add</a></th>
+   </tr>
+	</thead>
+	
+	<tbody>
+		<?= $agentList ?>
+	</tbody>
+</table>
+
+<?php
+
+if($agentList == '')
+	echo "<p style=\"margin-top: 80px; text-align: center;\">No agents added yet</p>";
+
+?>
+

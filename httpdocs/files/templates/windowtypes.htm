@@ -1,0 +1,20 @@
+<table class="table table-striped">
+	<thead>
+		<tr><th>Name</th> <th>Thumbnail</th> <th>Panels</th><th class="text-right" style="text-align: right; font-weight: normal;"><a href="windowtype.php">Add</a></th></tr>
+	</thead>
+	
+	<tbody>
+		<?= $windowList ?>
+	</tbody>
+</table>
+
+<?php
+
+if($windowList == '')
+	echo "<p style=\"margin-top: 80px; text-align: center;\">No windows added yet</p>";
+
+?>
+
+<style>
+img.window-thumbnail { width: 45px; height: 45px; }
+</style>

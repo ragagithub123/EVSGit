@@ -1,0 +1,24 @@
+<table class="table table-striped">
+	<thead>
+		<tr>
+  <th>Profile Name</th>
+  <th>Image</th>
+  <th>Profile Code</th>
+  <th>Pricelm</th>
+   <th class="text-right" style="text-align: right; font-weight: normal;">
+   <a href="profile.php">Add</a></th>
+   </tr>
+	</thead>
+	
+	<tbody>
+		<?= $profileList ?>
+	</tbody>
+</table>
+
+<?php
+
+if($profileList == '')
+	echo "<p style=\"margin-top: 80px; text-align: center;\">No agents added yet</p>";
+
+?>
+

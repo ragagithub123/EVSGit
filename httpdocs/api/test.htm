@@ -1,0 +1,677 @@
+<html>
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+
+	<script>
+	
+	var baseURL = "http://www.evsretroglazingdev.co.nz";
+//	var baseURL = "http://evsglazing.gumboot.com";
+
+	var gAccessToken = "1-e6ed08acab91ec535742a5f8b1a973c861a27143d9dedd355dd3c8b420d7c474";
+	
+	function SessionCreate() {
+		var data = {
+			data: {
+				'username': 'phil@gumboot.com',
+				'password': 'letmein',
+			}
+		};
+				
+		$.ajax({
+			url: baseURL + '/api/v1/session/create.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}
+		
+	function LocationsGet() {
+		var data = {
+			accesstoken: gAccessToken,
+			data: {
+			}
+		};
+				
+		$.ajax({
+			url: baseURL + '/api/v1/locations/get.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}
+	
+
+		
+
+	function LocationCreate() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				customerid: 1,
+				fields: {
+					unitnum: '43',
+					street: 'Low St',
+					suburb: 'Suburb',
+					city: 'Dunedin',
+					postcode: '4321',
+					housetype: 'Flat',
+				}
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/location/create.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}
+
+		
+	function LocationGet() {
+		var data = {
+			accesstoken: gAccessToken,
+			data: {
+				locationid: 1,
+				recalc: true,
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/location/get.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}
+			
+
+	function LocationSet() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				locationid: 1,
+				fields: {
+					housetype: 'Not Town House',
+					notes: 'New notes',
+				}
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/location/set.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}
+	
+	
+	function LocationCalculate() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				locationid: 1,
+				panelid: 3,
+				windowid: 1,
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/location/calculate.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}
+	
+	
+			
+	function PhotoCreate() {
+		var data = {
+			accesstoken: gAccessToken,
+			data: {
+				// windowid: 2,
+				locationid: 1,
+				hazardfield: 'overheadpower',
+				photos: [
+					{ width: 100, height: 75, jpegbase64: 'image data here' },
+					{ width: 100, height: 75, jpegbase64: 'image data here' },
+				],
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/photo/create.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}
+
+
+	function PhotoDelete() {
+		var data = {
+			accesstoken: gAccessToken,
+			data: {
+//				windowid: 9,
+				locationid: 1,
+				hazardfield: 'overheadpower',
+				photoid: 11,
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/photo/delete.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}
+
+
+	
+	
+	/* ROOM */
+	
+	function RoomCreate() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				locationid: 1,
+				fields: {
+					name: 'New room',
+					hazards: 'Room hazards',
+					notes: 'Room notes',
+				}
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/room/create.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}	
+		
+	function RoomSet() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				roomid: 4,
+				fields: {
+					name: 'Newer name'
+				}
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/room/set.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}	
+
+	function RoomDelete() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				roomid: 5,
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/room/delete.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}	
+			
+	
+	function CustomerCreate() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				fields: {
+					firstname: 'Joe',
+					lastname: 'Bloggs',
+					email: 'joebloggs@foo.com',
+					phone: '12345678',
+				}
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/customer/create.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}	
+	
+	
+	function CustomerSet() {
+		var data = {
+			accesstoken: gAccessToken,
+			data: {
+				customerid: '2',
+				fields: {
+					firstname: 'Not Joe',
+					lastname: 'Bloggs',
+					email: 'joebloggs@foo.com',
+					phone: '12345678',
+				}
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/customer/set.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}	
+	
+		
+	/* WINDOW */
+	function WindowCreate() {
+		var data = {
+			accesstoken: gAccessToken,
+			data: {
+				roomid: 1,
+				fields: {
+					windowtypeid: 1,
+					notes: 'new window',
+				}
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/window/create.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}		
+		
+	function WindowSet() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				windowid: 2,
+				fields: {
+					notes: 'a newer note',
+				}
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/window/set.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}
+	
+	function WindowDelete() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				windowid: 3
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/window/delete.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}		
+				
+	/* PANEL */
+	function PanelCreate() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				windowid: 1,
+				fields: {
+					width: 1000,
+					height: 800,
+				}
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/panel/create.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}		
+		
+	function PanelSet() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				panelid: 4,
+				fields: {
+					width: 1200,
+					height: 900,
+				}
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/panel/set.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}		
+			
+	function PanelDelete() {
+		var data = {
+			accesstoken: 'foobar',
+			data: {
+				panelid: 1,
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/panel/delete.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}	
+	
+	function WindowTypesGet() {
+		var data = {
+			accesstoken: gAccessToken,
+			data: {
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/windowtypes/get.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}	
+	
+	function WindowOptionsSet() {
+		var data = {
+			accesstoken: gAccessToken,
+			data: {
+				windowid: 2,
+				options: [
+					{ windowoptionid: 2, quantity: 1 },
+					{ windowoptionid: 3, quantity: 3 },
+				]
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/windowoptions/set.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}	
+	
+	function QuoteSend() {
+		var data = {
+			accesstoken: gAccessToken,
+			data: {
+				locationid: 1,
+				email: 'phil@gumboot.com',
+				letter: 'some letter some letter some letter some letter some letter some letter some letter some letter some letter ',
+				products: {
+					quotesdg: 1,
+					quotemaxe: 1,
+					quotexcle: 1,
+					quoteevsx2: 0,
+					quoteevsx3: 0
+				}
+			}
+		};
+		
+		$.ajax({
+			url: baseURL + '/api/v1/quote/send.json',
+	    type: 'post',
+	    dataType: 'json',
+			contentType: 'application/json; charset=UTF-8',
+	    success: function(data) {
+				console.log(data);
+	    },
+	    error: function(data) {
+				console.log('error');
+				console.log(data);
+	    },
+	    data: JSON.stringify(data)
+	  });		
+	}
+		
+	</script>
+
+	SESSION
+	<p><a href="javascript:SessionCreate()">Create</a></p>
+
+	LOCATIONS
+	<p><a href="javascript:LocationsGet()">Get</a></p>
+
+	
+	LOCATION
+	<p><a href="javascript:LocationCreate()">Create</a></p>
+	<p><a href="javascript:LocationGet()">Get</a></p>
+	<p><a href="javascript:LocationSet()">Set</a></p>
+	<p><a href="javascript:LocationCalculate()">Calculate</a></p>
+
+	ROOM
+	<p><a href="javascript:RoomCreate()">Create</a></p>
+	<p><a href="javascript:RoomSet()">Set</a></p>
+	<p><a href="javascript:RoomDelete()">Delete</a></p>
+
+	WINDOW
+	<p><a href="javascript:WindowCreate()">Create</a></p>
+	<p><a href="javascript:WindowSet()">Set</a></p>
+	<p><a href="javascript:WindowDelete()">Delete</a></p>
+
+	CUSTOMER
+	<p><a href="javascript:CustomerCreate()">Create</a></p>
+	<p><a href="javascript:CustomerSet()">Set</a></p>
+
+	PANEL 
+	<p><a href="javascript:PanelCreate()">Create</a></p>
+	<p><a href="javascript:PanelSet()">Set</a></p>
+	<p><a href="javascript:PanelDelete()">Delete</a></p>
+
+	WINDOW OPTIONS
+	<p><a href="javascript:WindowOptionsSet()">Set</a></p>
+
+	WINDOW TYPES 
+	<p><a href="javascript:WindowTypesGet()">Get</a></p>
+	
+
+	PHOTO
+	<p><a href="javascript:PhotoCreate()">Create</a></p>
+	<p><a href="javascript:PhotoDelete()">Delete</a></p>
+
+	QUOTE
+	<p><a href="javascript:QuoteSend()">Send</a></p>
+
+	
+</html>

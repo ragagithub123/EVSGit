@@ -1,0 +1,65 @@
+<h2>Edit Window Option</h2>
+
+<?= $message ?>
+
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="id" value="<?= $id ?>">
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+
+			<div class="form-group <?= isset($errors['name']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Name</label>
+				<input type="text" name="name" value="<?= $form->SetValue('name', $option['name']) ?>" class="form-control">
+				<span class="help-block"><?= isset($errors['name']) ? $errors['name'] : '' ?></span>
+			</div>
+
+			<div class="form-group <?= isset($errors['value']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Value</label>
+				<input type="text" name="value" value="<?= $form->SetValue('value', $option['value']) ?>" class="form-control" style="width: 120px; text-align: right;">
+				<span class="help-block"><?= isset($errors['value']) ? $errors['value'] : '' ?></span>
+			</div>
+   <div class="form-group <?= isset($errors['hours']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Hours</label>
+				<input type="text" name="hours" value="<?= $form->SetValue('hours', $option['hours']) ?>" class="form-control" style="width: 120px; text-align: right;">
+				<span class="help-block"><?= isset($errors['hours']) ? $errors['hours'] : '' ?></span>
+			</div>
+   <div class="form-group <?= isset($errors['displayorder']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Display Order</label>
+				<input type="text" name="displayorder" value="<?= $form->SetValue('displayorder', $option['displayorder']) ?>" class="form-control" style="width: 120px; text-align: right;">
+				<span class="help-block"><?= isset($errors['displayorder']) ? $errors['displayorder'] : '' ?></span>
+			</div>
+			
+			<div class="checkbox">
+			  <label>
+			    <input type="checkbox" name="default" value="1" <?= $form->SetChecked("default", $option['isdefault'], $option['isdefault']==1) ?>>
+			    Default
+			  </label>
+			</div>
+			
+			<p>
+				<input type=submit name="save" value="Save" class="btn btn-primary">
+				<input type=submit name="cancel" value="Cancel" class="btn btn-default" style="margin-left: 10px;">
+			</p>
+
+		</div>	
+  
+  <div class="col-xs-12 col-sm-6">
+			
+			<?php
+			if($option['windowoptionid'] > 0 && file_exists($gWindowOptionPhotoDir.$option['windowoptionid'].".png"))
+				echo "<img src=\"". $gWindowOptionPhotoURL.$option['windowoptionid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 200px; height; 200px;\">";
+			else
+				echo "<div style=\"width: 200px; height: 200px; border: dashed 1px #ccc; line-height: 200px; text-align: center;\">No Picture</div>";
+			?>
+			<p style="margin-top: 5px; font-size: 0.8em;">(PNG; 400px x 400px)</p>
+
+			<div style="margin-top: 15px;"><input type="file" name="image"></div>
+
+		</div>
+  
+  
+  	
+  </div> <!-- /row -->
+		
+</form>

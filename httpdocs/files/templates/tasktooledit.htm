@@ -1,0 +1,527 @@
+<style>
+.top-modal-menu {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.top-modal-menu ul {
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.top-modal-menu ul li {
+  display: block;
+  margin-right: 25px;
+}
+
+.top-modal-menu ul li a {
+  color: #000;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.top-modal-menu ul li a i {
+  color: #158cff;
+  font-size: 20px;
+}
+
+.radio-listing li {
+  display: block;
+}
+
+.save-button {
+  color: #fff;
+  font-size: 16px;
+  margin-top: 20px;
+  padding: 7px 25px;
+  border-radius: 6px;
+  background: #158cff;
+  border: 1px solid #0b79e4;
+}
+
+.delete-button {
+  color: #fff;
+  background: red;
+  border: 1px solid red;
+}
+
+.upload-photo {
+  width: 100%;
+  text-align: center;
+}
+
+.upload-photo img {
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  display: block;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 1px solid #ececec;
+}
+
+.upload-photo a {
+  color: #158cff;
+  font-size: 16px;
+}
+
+.added-tools {
+  width: 100%;
+  display: flex;
+  overflow-y: auto;
+  margin: 20px 0px;
+}
+
+.added-tools-list {
+  width: 250px;
+  display: flex;
+  margin-right: 5px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.added-tools-list h5 {
+  display: flex;
+  font-weight: bold;
+  margin-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  justify-content: space-between;
+}
+
+.added-tools-list h5 a {
+  color: #158cff;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: -4px;
+}
+
+.added-tools-list ul {
+  height: 300px;
+  padding: 0;
+  overflow: auto;
+}
+
+.added-tools-list ul li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 10px 3px 10px;
+  border: 1px solid #000;
+  border-bottom: none;
+}
+
+.added-tools-list ul li:last-child {
+  border-bottom: 1px solid #000;
+}
+
+.added-tools-list ul li a {
+  color: #158cff;
+  cursor: pointer;
+}
+
+.photo-list {
+  width: 100%;
+  height: 135px;
+  padding: 0;
+  display: block;
+  overflow: auto;
+}
+
+.photo-list li {
+  display: block;
+  padding: 5px 10px;
+  border: 1px solid #000;
+  border-bottom: none;
+}
+
+.photo-list li:last-child {
+  border-bottom: 1px solid #000;
+}
+
+/* .top-modal-menu ul.radio-listing {
+  align-items: flex-end;
+  flex-direction: column;
+} */
+
+.top-modal-menu ul.radio-listing li {
+  width: 100px;
+  position: relative;
+  margin-right: 0px;
+}
+
+.add-task-step {
+  color: #000;
+  float: right;
+  font-weight: bold;
+}
+
+.add-task-step i {
+  color: #158cff;
+  font-size: 18px;
+}
+
+.modal-title {
+  font-weight: bold;
+}
+
+.save-btn {
+  width: 90px;
+  height: 38px;
+  color: #fff !important;
+  padding: 8px 15px;
+  background: #158cff;
+}
+
+
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+[type="radio"]:checked + label,
+[type="radio"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    line-height: 20px;
+    display: inline-block;
+    color: #666;
+}
+[type="radio"]:checked + label:before,
+[type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background: #fff;
+}
+[type="radio"]:checked + label:after,
+[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #158cff;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+[type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+.tools-titles {
+  display: flex;
+  align-items: center;
+}
+
+.tools-titles h3 {
+  color: #000;
+  font-weight: bold;
+}
+
+.tools-titles h3.title-bg {
+  flex: 1;
+  color: #fff;
+  font-weight: normal;
+  padding: 8px 10px;
+  margin-left: 10px;
+  background: #808080;
+}
+</style>
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <h3><strong>Tools and Materials</strong></h3>
+     <!-- <label><?php echo strtoupper($type);?> <?php echo $row_frame['category'];?></label> -->
+  </div>
+
+  <div class="col-lg-12">
+    <div class="top-modal-menu">
+      <ul>
+        <li><a data-toggle="modal" data-target="#copy-materials">Copy Tools and Materials <i class="fa fa-plus-circle"></i></a></li>
+        <li><a href="tasktool.php" class="btn btn-primary">Menu</a></li>
+      </ul>
+
+      <!--<button class="btn save-btn">Save</button>-->
+    </div>
+
+    <div class="tools-titles">
+      <h3><?php echo strtoupper($_REQUEST['type']);?></h3>
+      <h3 class="title-bg"><?php echo strtoupper($row_frame['category']);?></h3>
+    </div>
+
+    <div class="row">
+     <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <h5><strong>Task Description</strong></h4>
+        <textarea class="form-control" rows="6" style="resize: none;"></textarea>
+      </div>-->
+      <!--<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <h5><strong>Task Steps</strong></h5>
+        <ul class="photo-list">
+          <li><div class="photo-icon"><i class="fa fa-camera"></i></div></li>
+          <li><div class="photo-icon"><i class="fa fa-camera"></i></div></li>
+          <li><div class="photo-icon"><i class="fa fa-camera"></i></div></li>
+          <li><div class="photo-icon"><i class="fa fa-camera"></i></div></li>
+          <li><div class="photo-icon"><i class="fa fa-camera"></i></div></li>
+          <li><div class="photo-icon"><i class="fa fa-camera"></i></div></li>
+          <li><div class="photo-icon"><i class="fa fa-camera"></i></div></li>
+        </ul>
+        <a href="#" class="add-task-step">Task Step <i class="fa fa-plus-circle"></i></a>
+      </div>-->
+    </div>
+
+    <div class="added-tools">
+
+    <?php foreach($tools as $valtool){?>
+
+    <div class="added-tools-list">
+        <h5><?php echo $valtool['tools'];?> <a data-toggle="modal" data-target="#tools" data-id="<?php echo $valtool['toolsid'];?>" class="addtoll"><i class="fa fa-plus-circle"></i></a></h5>
+        <ul>
+         <?php foreach($tasktool as $valtask){
+
+          if($valtask['toolid'] == $valtool['toolsid']){
+
+         ?>
+
+          <li><?php echo $valtask['name'];?> <a data-toggle="modal" data-target="#edit-tools" data-id="<?php echo $valtask['tasktoolid'];?>" class="tasktool"><i class="fa fa-caret-down"></i></a></li>
+
+
+        <?php }}
+
+         ?>
+
+        </ul>
+      </div>
+
+    <?php }
+
+    ?>
+
+     <div class="added-tools-list">
+        <h5>Materials <a data-toggle="modal" data-target="#materials"><i class="fa fa-plus-circle"></i></a></h5>
+        <ul>
+       <?php
+       foreach($taskmat as $valmat){?>
+
+       <li><?php echo $valmat['name'];?> <a data-toggle="modal" data-target="#edit-materials" data-id="<?php echo $valmat['taskmaterialid'];?>" class="materiallink"><i class="fa fa-caret-down"></i></a></li>
+
+       <?php }
+       ?>
+       </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Tools Modal -->
+<div class="modal fade" id="tools" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Tools</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <h4>Name</h4>
+              <input type="hidden" id="tool-id" />
+              <input type="text" class="form-control" id="text-tool">
+
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <button class="save-button" id="btntool">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Tools Modal -->
+<div class="modal fade" id="edit-tools" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Tools</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <h4>Name</h4>
+               <input type="hidden" class="form-control" id="tasktoolid">
+              <input type="text" class="form-control" id="texttool">
+
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <button class="save-button" id="updatetool">Save</button>
+            <button class="save-button delete-button" id="deletetool">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add Materials Modal -->
+<div class="modal fade" id="materials" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Materials</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <h4>Name</h4>
+              <input type="text" class="form-control" id="text-material">
+
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <button class="save-button" id="btnmaterial">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Materials Modal -->
+<div class="modal fade" id="edit-materials" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Materials</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <h4>Name</h4>
+              <input type="hidden" class="form-control" id="materialid">
+              <input type="text" class="form-control" id="textmaterial">
+
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <button class="save-button" id="updatemat">Update</button>
+            <button class="save-button delete-button" id="deletemat">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Copy Tool and Materials Modal -->
+<div class="modal fade" id="copy-materials" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Copy Tool and Materials</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="top-modal-menu">
+            <ul class="radio-listing">
+        <li>
+          <input type="radio" id="evs-main" name="chooseradio" value="evs"  <?php if($type == 'evs'){?> checked="checked"<?php }?>>
+          <label for="evs-main">EVS</label>
+        </li>
+        <li>
+          <input type="radio" id="retro-main" name="chooseradio" value="retro" <?php if($type == 'retro'){?> checked="checked"<?php }?>>
+          <label for="retro-main">Retro</label>
+        </li>
+      </ul>
+            </div>
+            <div class="form-group">
+              <select class="form-control" id="categorycopy">
+    <?php foreach($category as $valcat){?>
+
+    <option value="<?php echo $valcat['famecategoryid'];?>"><?php echo $valcat['category'];?></option>
+
+    <?php } ?>
+
+
+    </select>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <button class="save-button" id="copybtn">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ <input type="hidden" class="form-control" id="category" value="<?php echo $_REQUEST['catid'];?>">
+ <input type="hidden" class="form-control" id="type" value="<?php echo $_REQUEST['type'];?>">
+
+<!-- Add Step Modal -->
+<!--<div class="modal fade" id="step" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Step</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group">
+              <h4>Description</h4>
+              <textarea class="form-control" rows="7" style="resize: none;"></textarea>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+            <div class="upload-photo">
+              <img src="https://login.isqua.org/assets/images/display-pic-default.png">
+              <a href="#"><i class="fa fa-camera"></i> Upload Thumb</a>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <button class="save-button">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->

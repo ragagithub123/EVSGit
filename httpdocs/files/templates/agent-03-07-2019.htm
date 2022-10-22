@@ -1,0 +1,125 @@
+<h2>Edit Agent</h2>
+
+<?= $errorMessage ?>
+
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+	<input type=hidden name="id" value="<?= $form->SetValue("windowTypeId", $windowTypeId, true, 255) ?>">
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+
+			<div>
+			  <div class="form-group <?= ($errors['firstname']) ? 'has-error' : '' ?>">
+			    <label><span class="required">*</span> First name</label>
+			    <input type="text" class="form-control" name="firstname" id="firstname" value="<?= $form->SetValue("firstname", $agent['firstname'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['firstname'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['lastname']) ? 'has-error' : '' ?>">
+			    <label><span class="required">*</span> Last name</label>
+			    <input type="text" class="form-control" name="lastname" id="lastname" value="<?= $form->SetValue("lastname", $agent['lastname'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['lastname'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['email']) ? 'has-error' : '' ?>">
+			    <label><span class="required">*</span> Email</label>
+			    <input type="text" class="form-control" name="email" id="email" value="<?= $form->SetValue("email", $agent['email'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['email'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['unitnum']) ? 'has-error' : '' ?>">
+			    <label>Unit number</label>
+			    <input type="text" class="form-control" name="unitnum" id="unitnum" value="<?= $form->SetValue("unitnum", $agent['unitnum'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['unitnum'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['street']) ? 'has-error' : '' ?>">
+			    <label>Street</label>
+			    <input type="text" class="form-control" name="street" id="street" value="<?= $form->SetValue("street", $agent['street'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['street'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['suburb']) ? 'has-error' : '' ?>">
+			    <label>Suburb</label>
+			    <input type="text" class="form-control" name="suburb" id="suburb" value="<?= $form->SetValue("suburb", $agent['suburb'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['suburb'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['city']) ? 'has-error' : '' ?>">
+			    <label>City</label>
+			    <input type="text" class="form-control" name="city" id="city" value="<?= $form->SetValue("city", $agent['city'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['city'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['postcode']) ? 'has-error' : '' ?>">
+			    <label>Post code</label>
+			    <input type="text" class="form-control" name="postcode" id="postcode" value="<?= $form->SetValue("postcode", $agent['postcode'], true, 4) ?>" maxlength="4">
+					<span class="help-block"><?= $errors['postcode'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['phone']) ? 'has-error' : '' ?>">
+			    <label>Phone</label>
+			    <input type="text" class="form-control" name="phone" id="phone" value="<?= $form->SetValue("phone", $agent['phone'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['phone'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['password']) ? 'has-error' : '' ?>">
+			    <label for="name"><?php if($agentId == 0) echo "<span class=\"required\">*</span>" ?> New password</label>
+			    <input type="text" class="form-control" name="password" id="password" value="<?= $form->SetValue("password", $agent['password'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['password'] ?></span>
+			  </div>
+			</div>
+			
+			<div>
+			  <div class="form-group <?= ($errors['enabled']) ? 'has-error' : '' ?>">
+					<div class="checkbox">
+				    <label>
+				      <input type="checkbox" name="enabled" value="1" <?= $form->SetChecked("enabled", 1, ($agent['enabled'] == 1)) ?>> Enabled
+				    </label>
+				  </div>
+			  </div>
+			</div>
+
+		</div>
+
+		<div class="col-xs-12 col-sm-6">
+		
+			<?php
+			if($agentId > 0 && file_exists($gSignaturePhotoDir.$agentId.".png"))
+				echo "<img src=\"". $gSignaturePhotoURL.$agentId.".png?". time(). "\" class=\"img-responsive\" style=\"width: 200px; height; 200px;\">";
+			else
+				echo "<div style=\"width: 200px; height: 200px; border: dashed 1px #ccc; line-height: 200px; text-align: center;\">No Signature</div>";
+			?>
+			<p style="margin-top: 5px; font-size: 0.8em;">(PNG; 400px x 400px)</p>
+
+			<div style="margin-top: 15px;"><input type="file" name="image"></div>
+
+
+		</div>
+		
+  </div> <!-- /row -->
+
+	<div style="margin-top: 10px;">
+		<input type="submit" name="save" value="Save" class="btn btn-primary">
+		<input type="submit" name="cancel" value="Cancel" class="btn btn-default" style="margin-left: 10px;">
+	</div>
+		
+</form>

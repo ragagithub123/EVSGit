@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>EVS Retro Glazing</title>
+    
+     <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/quote.css" rel="stylesheet">
+     <link href="../css/fs-gal.css" rel="stylesheet">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+     <script type="text/javascript" src="../js/fs-gal.js"></script>
+
+  
+  </head>
+  <body>
+
+
+    <div class="main-container">
+      <div class="main-head">
+        <div class="logo-main">
+          <img src="/assets/app/agents/logos/<?php echo $location['agentid'];?>.png">
+        </div>
+
+        <div class="address-head">
+        <?php for($i=0;$i<count($agentAddress);$i++){
+          if($i == 4){?>
+          <span> Email:<a href="mailto:<?php echo  $agentAddress[4];?>"><?php echo $agentAddress[4];?></a><span>
+          <?php
+          }
+          else{
+           echo '<span> '.$agentAddress[$i].'</span>';
+          }
+        }
+        ?>
+         
+        </div>
+      </div>
+
+
+      <div class="content-one">
+        <div class="content-para">
+        <p><?php echo $quotedate;?></p>
+         <?php for($i=0;$i<count($customerAddress);$i++)
+    {
+      if($i==4)
+      {
+        
+        ?>
+        <p>Email: <a href="mailto:<?php echo $customerAddress[4];?>"><?php echo $customerAddress[4];?></a></p>
+        <?php
+      }
+      else
+      {
+        echo '<p>'.$customerAddress[$i].'</p>';
+      }
+    }
+    ?>
+						
+         
+        </div>
+        <div class="content-image">
+        <?php
+        	if($location['photoid'] > 0) {
+		
+				echo "  <img src=\"". $gPhotoURL. $location['photoid']. ".jpg\" >";
+			
+			}?>
+         
+        </div>
+      </div>
+
+     <!-- <div class="content-two">-->
+        <p>
+        	<?php echo nl2br($greetings);?>
+        </p>
+        
+         <?php
+				
+				if(file_exists($gSignaturePhotoDir.$location['agentid'].".png")){
+					
+							echo "<img src=\"". $gSignaturePhotoURL. $location['agentid'].".png\" width='150'>";
+				}
+			
+		
+				echo "<h4 style='margin: 0; margin-bottom: 12px; box-sizing: border-box;'>". htmlspecialchars($location['afirstname'].' '.$location['alastname']). "</h4>";		
+				echo "<p class='evs-p'>". $location['aphone']."</p>";
+    echo "<p class='evs-p'>".$location['aemail']. "</p>";
+				
+			?>
+       
+     <!-- </div>-->
+
+      <div class="dummy-gap-one"></div>
+    </div><!-- ./main-container -->
+
+
+    <div class="main-container main-container-two">
+    
+    <div class="headings trapezoid">
+    <h6>Supply and Fit Glazing Panels Options</h6>
+   </div>
+    
+      <div class="content-table">
+        <table class="table">
+         	<thead>
+          	<tr style="background:#ccc;">
+           	  <th width="100">Code</th>
+              <th width="275">
+                <span style="float: left; margin-right: 5px;">Product</span>
+                <img style="width:25px; height:25px; float: left; margin-right: 10px;" src="https://evsapp.nz/assets/images/exclamation_small.png">
+                <span style="float: left; margin-right: 5px;"><?php echo $totals['panelcount'];?> Panels</span>
+              </th>
+              <th align="center">Product info</th>
+              <th align="center">Total Price(Inc GST)</th>
+              <th align="center">Average Unit Price</th>
+            </tr>
+          </thead>
+          <tbody>
+          <?php
+          $retro_url="https://evsapp.nz/pdf/retroglazing.pdf";
+      $evs_url=" https://evsapp.nz/pdf/evsglazing.pdf";
+      foreach($locationProducts as $product){
+      
+        echo ' <tr>
+             	<td>'.$product_Names[$product].'</td>
+        			<td><img src="/assets/app/agents/products/'.$prodcutimages[$product].'"  style="width:200px"></td>
+           <td align="center"><a href="'.$prodcuturl[$product].'" target="_blank">More Info</a></td>
+              <td align="center"><h4>$'. number_format(intval($totals["cost$product"]), 0). '</h4></h4></td>
+              <td align="center">$'. number_format(intval($totals["cost$product"] / $totals['panelcount']), 0). '</td>
+            </tr>';
+      
+      }
+      ?>
+           
+          </tbody>
+         </table>
+      </div>
+
+   </div><!-- ./main-container -->
+   
+   
+          <?php if(!empty($paints[0])){?>
+    <div class="main-container main-container-two">
+      <div class="headings trapezoid">
+    <h6>Preparation and Painting Options</h6>
+   </div>
+    
+      <div class="content-table">
+        <table class="table">
+         	<thead>
+          	<tr style="background:#ccc;">
+           	  <th>Paint Specification</th>
+              
+              <th align="center">Paint Names</th>
+              <th align="center">#Pans</th>
+              <th align="center">Total Prices</th>
+            </tr>
+          </thead>
+          <tbody>
+         <?php
+          foreach($paints as $valpaint){?>
+          
+         <tr> 
+         <td><div class="colour-box" style="background-color:#<?php echo $valpaint['colorcode'];?>""><span style="height:30px;background-color:#<?php echo $valpaint['colorcode'];?>"></span></div></td>
+         <td><?php echo $valpaint['colourname'];?></td>
+         <td><?php echo $valpaint['panelcount'];?></td>
+         <td>$ <?php echo $valpaint['totalcost'];?></td>
+         <?php }
+         
+         ?>
+           </tr>
+           <tr>
+           <td></td>
+           <th>Totals</th>
+           <td class="td_paint"><?php echo $totalpanelPaint;?></td>
+           <td class="td_paint">$ <?php echo $totalpaint_price;?></td>
+           </tr>
+          </tbody>
+         </table>
+      </div>
+
+   </div>
+   <?php } ?> 
+
+   
+   
+   
+   
+   
+    <div class="main-container main-container-two">
+    
+     <?php 
+    foreach($rooms as $room)
+      {
+           foreach($room['windows'] as $window) {
+           ?>
+           
+          <div class="panel-window-all">
+        <div class="panel-window panel-window-one">
+          <div class="panel-title">
+            <span><?php echo htmlspecialchars($room['name']);?></span>
+          </div>
+           <?php echo "<img src=\"". $gWindowTypePhotoURL. $window['windowtypeid']. ".png\" width='233'>";?>
+         
+        </div>
+
+        <div class="panel-window panel-window-two">
+          <div class="panel-title">
+            <span style="padding-left: 15px;"><?php echo htmlspecialchars($window['name']);?></span>
+          </div>
+          <div class="panel-table">
+            <table class="table">
+             	<thead>
+              	<tr>
+                 <th></th>
+                  
+                        <?php foreach($locationProducts as $product) {
+                     
+                       	echo "<th>$product_Names[$product]</th>";
+                        
+                     
+                      
+                      
+                      }
+                      ?>
+                       	
+                       </tr>
+              </thead>
+             
+
+              <tbody>
+                <?php if(($paintlock ==0)&&($steplock==0)){ ?>
+
+                  <tr> <td>Supply and Install</td>
+                    <?php foreach($locationProducts as $product) {
+                   
+                       echo "<td>$".number_format($window["cost$product"])."</td>";
+                      
+                   
+                    
+                    
+                    }
+                    ?>
+                    
+                     
+                     </tr>
+
+                 <?php    
+
+
+                }
+                else if(($paintlock ==1)&&($steplock ==0)){?>
+
+                  <tr> <td>Supply and Install</td>
+                    <?php foreach($locationProducts as $product) {
+                   
+                       echo "<td>$".number_format($window["cost$product"])."</td>";
+                      
+                   
+                    }
+                    ?>
+                    
+                     
+                     </tr>
+                     <tr><td><?php if($painting_price ==1) echo '*';?> Prepare</td>
+                      <?php if(!empty($PrepareCost)){
+  
+                        foreach($locationProducts as $product){
+                          if(!empty($PrepareCost[$window['windowid']])){?>
+  
+                          <td>$<?php echo $PrepareCost[$window['windowid']];?></td>
+                          <?php
+  
+                          }else{?>
+
+                            <td></td>
+                       <?php
+                          }
+  
+                        }
+  
+                      }
+                      ?>
+                    </tr>
+                  
+
+                  <?php
+                  
+
+                }
+                else if(($paintlock ==0)&&($steplock ==1)){?>
+
+                  <tr> <td>Supply and Install</td>
+                    <?php foreach($locationProducts as $product) {
+                   
+                       echo "<td>$".number_format($window["cost$product"])."</td>";
+                      
+                   
+                    
+                    
+                    }
+                    ?>
+                    
+                     
+                     </tr>
+                     
+                  <tr>
+                    <td><?php if($installation_price ==1) echo'*';?>Install</td>
+                    <?php
+
+                    if(!empty($window['labourhours'])){
+
+                      foreach($locationProducts as $product){
+
+                        if(($productNames[$product]=='EVSx2') || ($productNames[$product]=='EVSx3')){
+
+                          $installPrice_Evs = $window['labourhours']['evslabour'] * $margins['labourrate']; ?>
+
+                          <td><?php echo "$".round($installPrice_Evs,2);?></td>
+
+                          <?php
+
+                        }
+
+                        else{
+
+                          $installPrice_DG = $window['labourhours']['dglabour'] * $margins['labourrate']; ?>
+
+                          <td><?php echo "$".round($installPrice_DG,2);?></td>
+
+                          <?php
+
+                        }
+
+
+                      }
+
+                     
+                    }
+                   
+                    ?>
+                  </tr>
+
+
+               <?php
+                }
+                else{?> 
+                  
+                  <tr>
+                    <td>Manufacture</td>
+                    <?php
+                    if(!empty($window['labourhours'])){
+
+                      foreach($locationProducts as $product){
+
+                        if(($productNames[$product]=='EVSx2') || ($productNames[$product]=='EVSx3')){
+
+                          $installPriceEvs = $window['labourhours']['evslabour'] * $margins['labourrate'];
+
+                          $manfactureEvs = $window["cost$product"] - $installPriceEvs;
+                          
+                          ?>
+
+                          <td>$<?php echo round($manfactureEvs,2);?></td>
+                       
+                      
+                       
+                       <?php
+                        }
+                        else{
+
+                          $installPriceDG = $window['labourhours']['dglabour'] * $margins['labourrate'];
+
+                          $manfactureDG = $window["cost$product"] - $installPriceDG;
+
+                          ?>
+                          <td> $<?php echo round($manfactureDG,2);?></td>
+                          <?php
+
+
+                        }
+                      
+
+                      }
+                      
+
+                    }
+
+                    ?>
+                  </tr>
+
+                  <tr>
+                    <td><?php if($installation_price == 1)echo '<b>*</b>';?> Install</td>
+                    <?php
+
+                    if(!empty($window['labourhours'])){
+
+                      foreach($locationProducts as $product){
+
+                        if(($productNames[$product]=='EVSx2') || ($productNames[$product]=='EVSx3')){
+
+                          $installPrice_Evs = $window['labourhours']['evslabour'] * $margins['labourrate']; ?>
+
+                          <td><?php echo "$".round($installPrice_Evs,2);?></td>
+
+                          <?php
+
+                        }
+
+                        else{
+
+                          $installPrice_DG = $window['labourhours']['dglabour'] * $margins['labourrate']; ?>
+
+                          <td><?php echo "$".round($installPrice_DG,2);?></td>
+
+                          <?php
+
+                        }
+
+
+                      }
+
+                     
+                    }
+                   
+                    ?>
+                  </tr>
+                
+                </tr>
+               
+                  <tr><td> <?php if($painting_price == 1)echo '*';?>Prepare</td>
+                    <?php if(!empty($PrepareCost)){
+
+                      foreach($locationProducts as $product){
+                        if(!empty($PrepareCost[$window['windowid']])){?>
+
+                        <td>$<?php echo $PrepareCost[$window['windowid']];?></td>
+                        <?php
+
+                        }else{?>
+
+                          <td></td>
+                     <?php
+                        }
+
+                      }
+
+                    }
+                    ?>
+                  </tr>
+                 <?php
+
+                  if(($painting_price ==1) && ($installation_price == 1)){?> <tr><td colspan="4"><b>*</b> Price estimate to be confirmed by painting and installation contractors</td></tr> <?php }
+                 else if(($installation_price ==0) && ($painting_price == 1)){?> <tr><td colspan="4"><b>*</b> Price estimate to be confirmed by painting contractors</td></tr> <?php }
+                 else if(($installation_price ==1) &&($painting_price == 0)){?> <tr><td colspan="4"><b>*</b> Price estimate to be confirmed by installation price contractors</td></tr> <?php } ?>
+                
+
+                
+                <?php }?>
+                  
+                 
+
+                  
+              </tbody>
+
+            </table>
+          </div>
+          <?php if(!empty($window['notes'])){?>
+          <div class="notes">
+            <h4 style="padding-left: 35px;">Notes</h4>
+            <p><?php echo htmlspecialchars($window['notes']);?> </p>
+          </div>
+          <?php } ?>
+        </div>
+      </div> 
+      
+      <div class="panel-image">
+   <?php  foreach($window['photos'] as $wind_photo) { ?>
+   
+   <div class="panel-image-single panel-image-gap">
+   <img src="http://evsapp.nz/photos/<?php echo $wind_photo['photoid'];?>.jpg">
+        
+        </div>
+        
+        <?php
+   }
+   ?>
+        
+       
+      </div>
+           
+       <?php
+											}
+						}
+						
+					?>	
+    
+    </div>
+   
+   
+
+    <div class="main-container main-container-two" >
+      
+
+      
+
+      <div class="terms-p">
+        <div class="dummy-gap2" style="padding-left:20px;padding-top:11px;font-weight:bold;font-size:16px">Terms</div>
+        
+        <p> <?php echo nl2br($quote_details);?></p>
+       
+      </div>
+    </div><!-- ./main-container -->
+    
+    <?php if($paintlock == 1 && $paint_details!=''){?>
+     <div class="main-container main-container-two" >
+      
+
+      
+
+      <div class="terms-p">
+        <div class="dummy-gap2" style="padding-left:20px;padding-top:11px;font-weight:bold;font-size:16px">Preparation and Painting</div>
+        
+        <p> <?php echo nl2br($paint_details);?></p>
+       
+      </div>
+    </div><!-- ./main-container -->
+    <?php } ?>
+
+   <?php if($steplock == 1 && $step_details!=''){?>
+   <div class="main-container main-container-two" >
+    
+     <div class="terms-p">
+        <div class="dummy-gap2" style="padding-left:20px;padding-top:11px;font-weight:bold;font-size:16px">Steps</div>
+        
+        <p> <?php echo nl2br($step_details);?></p>
+        
+       
+       
+      </div>
+    </div><!-- ./main-container -->
+    
+    <?php } ?>
+    <?php if(!empty($images)){?>
+             
+             
+              
+               <?php
+               foreach($images as $valimage){
+               
+               echo ' <div class="main-container main-container-two">';
+
+                if(!empty($valimage['images']))
+                
+                
+                  echo '<img src="'.$gquotepagePhotoURL.$valimage['images'].'" width="100%"></div>'; 
+               }
+               ?>
+               
+                
+           
+                     
+               <?php      
+              }
+              
+              ?>
+    
+    
+
+  </body>
+</html>

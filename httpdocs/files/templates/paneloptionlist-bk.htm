@@ -1,0 +1,165 @@
+<h2>Panel Options - <?= $optionTypes[$type]['typename']; ?></h2>
+ <?php if($optionTypes[$type]['typename'] == 'Frame Type'){
+echo '<select class="form-control" style="width:50%" id="select_cat"><option value="All">All</option>
+<option value="NALU">New Aluminium</option>
+<option value="RALU">Retro Aluminium</option>
+<option value="NTIM">New Timber</option>
+<option value="RTIM">Retro Timber</option>
+<option value="RMET">Retro Metal</option>
+</select>';
+}?>
+<?= $message ?>
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+<span id="result">
+
+			<table class="table table-striped">
+				<thead>
+    <?php
+    if($type == 'style' || $type == 'profile')
+    {
+    ?>
+				<tr><th colspan=2>Option</th><th>Icons</th><th>Category</th><th></th> <?php if($type == 'style'){?><th>Frametypeid</th><th>IGU Assemble</th><!--<th>EVS Labour</th>--><th>EVS Assemble</th><th>DG Value</th><?php }else{?><th>IGU Value</th> <?php } ?><th>EVS Value</th> <th style="text-align: right; font-weight: normal;"><a href="<?= $_SERVER['PHP_SELF'] ?>?type=<?= $type ?>&id=add">Add</a></th></tr>
+    <?php }
+     else if($type == 'layers'){?><tr><th colspan=2>Layersetname</th><th>Category</th><th>Profile</th><th>Layergroup</th><th>Layer1mm</th><th>Layer1glasstype</th>
+    <th>Spacermm</th><th>Spacercolour</th><th>Spacermaterial</th><th>Spacerdesiccate</th><th>Layer2mm</th><th>Layer2glasstype</th><th style="text-align: right; font-weight: normal;"><a href="<?= $_SERVER['PHP_SELF'] ?>?type=<?= $type ?>&id=add">Add</a></th></tr> <?php } 
+    else if($type == 'frametype'){?> 
+     <tr><th colspan=2>Name</th><th>Icon</th><th>Category</th><th></th><th style="text-align: right; font-weight: normal;"><a href="panel-copy.php">Add</a></th></tr>
+    <?php } else {?><tr><th colspan=2>Option</th><?php if($type =='glasstype' || $type =='safety'){?><th>Icons</th><?php } if($type == 'safety'){?><th>URL Link</th> <?php }?> <th></th> <th style="text-align: right; font-weight: normal;"><a href="<?= $_SERVER['PHP_SELF'] ?>?type=<?= $type ?>&id=add">Add</a></th><?php }?>
+				</thead>
+				<tbody>
+					<?php
+					foreach($options as $option) {
+						$default = $option['isdefault'] == 1 ? 'Default' : '';
+						echo "<tr><td>". htmlspecialchars($option['name']). "</td><td></td>";
+     
+      if($type == 'layers')
+      {
+        echo " <td>". $option['famecategory']. "</td>
+        <td>". $option['profilecode']. "</td>
+          <td>". $option['layergroup']. "</td>
+           <td>". $option['layer1mm']. "</td>
+           <td>". $option['layer1glasstype']. "</td>
+            <td>". $option['spacermm']. "</td>
+            <td><div style='width:76px; height:15px;border:solid;background-color:#".$option['colorcode']."; border-color:#".$option['colorcode']."'></div></td>
+             <td>". $option['spacermaterial']. "</td>
+              <td>". $option['spacerdesiccate']. "</td>
+               
+                <td>". $option['layer2mm']. "</td>
+                 <td>". $option['layer2glasstype']. "</td>";
+        
+      
+      }
+      if($type == 'style' ||  $type =='profile')
+      {
+         if($option[$optionTypes[$type]['idfield']] > 0)
+          {
+             if(file_exists($gPanelOptionsPhotoDir.$option[$optionTypes[$type]['idfield']].".png")){
+              echo "<td><img src=\"". $gPanelOptionsPhotoURL.$option[$optionTypes[$type]['idfield']].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\"></td>";
+              }
+              else if(file_exists($gPanelOptionsPhotoDir.$option['imageid'].".png")){
+              
+              echo "<td><img src=\"". $gPanelOptionsPhotoURL.$option['imageid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\"></td>";
+              }
+          }
+          else
+          {
+              echo "<td></td>";
+          }
+      }
+      if($type == 'frametype'){
+      
+       if($option['imageid'] > 0 && file_exists($gPanelOptionsPhotoDir.$option['imageid'].".png"))
+          {
+              echo "<td><img src=\"". $gPanelOptionsPhotoURL.$option['imageid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\"></td>";
+          }
+          else
+          {
+              echo "<td></td>";
+          }
+      
+         /*if($option[$optionTypes[$type]['idfield']] > 0 && file_exists($gPanelOptionsFrameDir.$option[$optionTypes[$type]['idfield']].".png"))
+            {
+                echo "<td><img src=\"". $gPanelOptionsFrameURL.$option[$optionTypes[$type]['idfield']].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\"></td>";
+            }
+            else
+            {
+                echo "<td></td>";
+            }*/
+      }
+      if($type == 'glasstype')
+      {
+         if($option[$optionTypes[$type]['idfield']] > 0 && file_exists($gPanelOptionsGlassDir.$option[$optionTypes[$type]['idfield']].".png"))
+          {
+              echo "<td><img src=\"". $gPanelOptionsGlassURL.$option[$optionTypes[$type]['idfield']].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\"></td>";
+          }
+          else
+          {
+              echo "<td></td>";
+          }
+      }
+       if($type == 'safety')
+      {
+         if($option[$optionTypes[$type]['idfield']] > 0 && file_exists($gPanelOptionsSaftyDir.$option[$optionTypes[$type]['idfield']].".png"))
+          {
+              echo "<td><img src=\"". $gPanelOptionsSaftyURL.$option[$optionTypes[$type]['idfield']].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\"></td>";
+          }
+          else
+          {
+              echo "<td></td>";
+          }
+          if($option['urlLink']==NULL)
+          {
+            echo "<td></td>";
+          }
+          else
+          {
+            echo "<td>".$option['urlLink']."</td>";
+          }
+      }
+      
+		  if($type == 'style')
+    {
+      echo "<td>".$option['famecategory']."</td><td>$default</td> <td>".$option['frametypeid']."</td> <td>".$option['IGUassemble']."</td> <!--<td>".$option['EVSlabour']."</td>--><td>".$option['EVSassemble']."</td><td>".$option['styledgvalue']."</td> <td>".$option['styleevsvalue']."</td><td style=\"text-align: right;\"><a href=\"paneloptions.php?type=$type&id=". $option[$optionTypes[$type]['idfield']]. "\">Edit</a></td></tr>\n";
+     }
+     else if($type == 'profile'){
+     
+     echo "<td>".$option['famecategory']."</td><td>$default</td> <td>".$option['IGUlabour']."</td> <td>".$option['styleevsvalue']."</td><td style=\"text-align: right;\"><a href=\"paneloptions.php?type=$type&id=". $option[$optionTypes[$type]['idfield']]. "\">Edit</a></td></tr>\n";
+     
+     }
+     
+    else if($type == 'frametype'){
+     echo "<td>".$option['famecategory']."</td><td>$default</td>  <td style=\"text-align: right;\"><a href=\"paneloptions.php?type=$type&id=". $option[$optionTypes[$type]['idfield']]. "\">Edit</a></td></tr>\n";
+     }
+     else
+     {
+       echo "<td>$default</td> <td style=\"text-align: right;\"><a href=\"paneloptions.php?type=$type&id=". $option[$optionTypes[$type]['idfield']]. "\">Edit</a></td></tr>\n";
+     }
+     
+     
+   
+     
+     
+     
+					}
+					?>
+     
+				</tbody>
+			</table>
+</span>
+		</div>		
+  
+  
+  
+     	
+	
+  
+  
+  
+  
+  
+  </div> <!-- /row -->
+		
+</form>

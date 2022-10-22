@@ -1,0 +1,56 @@
+
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+
+			<table class="table table-striped">
+				<thead>
+     <tr>
+       <th>Option</th>
+       <th>Icon</th>
+       <th>Category</th>
+       <th>Frametypeid</th>
+       
+      </tr>
+    </thead>
+				<tbody>
+   <?php
+   foreach($styles as $valstyle){
+    echo '<tr>
+				<td>'.$valstyle['name'].'</td>';
+    if($valstyle['styleid'] > 0 && file_exists($gPanelOptionsPhotoDir.$valstyle['styleid'].".png"))
+      {
+              echo "<td><img src=\"". $gPanelOptionsPhotoURL.$valstyle['styleid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 50px; height; 50px;\"></td>";
+       }
+          else
+          {
+              echo "<td></td>";
+          }
+    
+    
+   
+			
+					echo '<td>'.$valstyle['category'].'</td>
+						<td>'.$valstyle['frametypeid'].'</td>
+      	<td><a href="panel-copy.php?styleid='.$valstyle['styleid'].'">Copy</a></td>
+				</tr>';
+    }
+					?>
+				</tbody>
+			</table>
+
+		</div>		
+  
+  
+  
+     	
+	
+  
+  
+  
+  
+  
+  </div> <!-- /row -->
+		
+</form>

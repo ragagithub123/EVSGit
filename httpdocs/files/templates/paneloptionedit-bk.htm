@@ -1,0 +1,578 @@
+<h2>Edit <?php echo ucfirst($type);?> Options</h2>
+<?= $message ?>
+
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="type" value="<?= $type ?>">
+	<input type="hidden" name="id" value="<?= $id ?>">
+ 
+ <div class="row">
+ 		<div class="col-xs-12 col-sm-6">
+   		<div class="form-group <?= isset($errors['name']) ? 'has-error' : '' ?>">
+      <label><span class="required">*</span> <?php if($type == 'layers'):?> Layer name <?php else:?> Name <?php endif;?></label>
+      <input type="text" name="name" value="<?= $form->SetValue('name', $option['name']) ?>" class="form-control">
+      <span class="help-block"><?= isset($errors['name']) ? $errors['name'] : '' ?></span>
+     </div>
+   </div>
+ </div>
+ 
+ 
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+  
+ 
+
+			<?php if($type == 'style' || $type =='frametype'): ?>
+   
+   <div class="form-group <?= isset($errors['styleCategory']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span>Category</label>
+    
+               <select name="category" id="category" class="form-control">
+               <?php
+               
+                foreach($fcatgories as $valcat)
+                 {
+                 ?>
+                <option value="<?php echo $valcat['famecategoryid'];?>" <?php if($form->SetValue("category", $option['category'], true, 255)== $valcat['famecategoryid']){?> selected="selected" <?php } ?>><?php echo $valcat['category'];?></option>
+               
+                 <?php
+                 }
+               ?> </select>
+              
+      
+     </div>
+      <?php if($type =='frametype'){?>
+    
+     <div class="form-group">
+					<label><span class="required"></span>Notes</label>
+     	<textarea name="notes" id="notes" rows="5" cols="15" style="resize:none; width:100%"><?= $form->SetValue('notes', $option['notes']) ?></textarea>
+     </div>
+     <?php } ?>
+     
+      <?php if($type =='style' ){?>
+       <div class="form-group">
+					<label><span class="required"></span>Notes</label>
+     	<textarea name="styleNotes" id="styleNotes" rows="5" cols="15" style="resize:none; width:100%"><?= $form->SetValue('styleNotes', $option['styleNotes']) ?></textarea>
+     </div>
+    
+   
+    
+    <?php if($type == 'style'){
+    ?>
+    <div class="form-group <?= isset($errors['styledgvalue']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span> DG Value</label>
+					<input type="text" name="styledgvalue" value="<?= $form->SetValue('styledgvalue', $option['styledgvalue']) ?>" class="form-control" style="width: 120px; text-align: right;">
+					<span class="help-block"><?= isset($errors['styledgvalue']) ? $errors['styledgvalue'] : '' ?></span>
+				</div>
+<div class="form-group <?= isset($errors['styleevsvalue']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span> EVS Value</label>
+					<input type="text" name="styleevsvalue" value="<?= $form->SetValue('styleevsvalue', $option['styleevsvalue']) ?>" class="form-control" style="width: 120px; text-align: right;">
+					<span class="help-block"><?= isset($errors['styleevsvalue']) ? $errors['styleevsvalue'] : '' ?></span>
+				</div>
+
+    
+       <div class="form-group <?= isset($errors['IGUassemble']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span> IGU Assemble Hours</label>
+					<input type="text" name="IGUassemble" value="<?= $form->SetValue('IGUassemble', $option['IGUassemble']) ?>" class="form-control" style="width: 120px; text-align: right;">
+					<span class="help-block"><?= isset($errors['IGUassemble']) ? $errors['IGUassemble'] : '' ?></span>
+				</div>
+    <div class="form-group <?= isset($errors['EVSassemble']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span> EVS Assemble Hours</label>
+					<input type="text" name="EVSassemble" value="<?= $form->SetValue('EVSassemble', $option['EVSassemble']) ?>" class="form-control" style="width: 120px; text-align: right;">
+					<span class="help-block"><?= isset($errors['EVSassemble']) ? $errors['EVSassemble'] : '' ?></span>
+				</div>
+    <?php
+    }
+    
+   }?>
+    
+    
+   
+  
+    
+   		<?php if($type == 'style'){
+			if($id > 0 && file_exists($gPanelOptionsPhotoDir.$id.".png"))
+				echo "<img src=\"". $gPanelOptionsPhotoURL.$id.".png?". time(). "\" class=\"img-responsive\" style=\"width: 200px; height; 200px;\">";
+    else if($type == 'style' && file_exists($gPanelOptionsPhotoDir.$option['imageid'].".png"))
+    				echo "<img src=\"". $gPanelOptionsPhotoURL.$option['imageid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 200px; height; 200px;\">";
+
+			else
+				echo "<div style=\"width: 200px; height: 200px; border: dashed 1px #ccc; line-height: 200px; text-align: center;\">Icon</div>";
+    }else{
+    	if($option['imageid'] > 0 && file_exists($gPanelOptionsPhotoDir.$option['imageid'].".png"))
+    	echo "<img src=\"". $gPanelOptionsPhotoURL.$option['imageid'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 200px; height; 200px;\">";
+			else
+				echo "<div style=\"width: 200px; height: 200px; border: dashed 1px #ccc; line-height: 200px; text-align: center;\">Icon</div>";
+    
+    }
+			?>
+			<p style="margin-top: 5px; font-size: 0.8em;">(PNG; 400px x 400px)</p>
+
+			<div style="margin-bottom: 30px;"><input type="file" name="icon"></div>
+    
+    
+    
+				
+			<?php else: 
+   if($type!='layers'):
+   ?>
+  
+   
+			<div class="form-group <?= isset($errors['value']) ? 'has-error' : '' ?>">
+				<label><span class="required">*</span> Value</label>
+				<input type="text" name="value" value="<?= $form->SetValue('value', $option[$optionTypes[$type]['valuefield']]) ?>" class="form-control" style="width: 120px; text-align: right;">
+				<span class="help-block"><?= isset($errors['value']) ? $errors['value'] : '' ?></span>
+			</div><?php endif;?>
+   
+    <?php if($type == 'glasstype'):
+   	if($id > 0 && file_exists($gPanelOptionsGlassDir.$id.".png"))
+				echo "<img src=\"". $gPanelOptionsGlassURL.$id.".png?". time(). "\" class=\"img-responsive\" style=\"width: 200px; height; 200px;\">";
+			else
+				echo "<div style=\"width: 200px; height: 200px; border: dashed 1px #ccc; line-height: 200px; text-align: center;\">Icon</div>";
+			?>
+			<p style="margin-top: 5px; font-size: 0.8em;">(PNG; 400px x 400px)</p>
+
+			<div style="margin-bottom: 30px;"><input type="file" name="icon"></div>
+				
+			<?php endif; ?>
+   
+   
+    <?php if($type == 'layers'):?>
+  
+  <div class="form-group">
+					<label><span class="required">*</span>Profile</label>
+     	<select name="profileid" id="profileid" class="form-control">
+                 <?php
+                 foreach($option['profiles'] as $valprof)
+                 {
+                 ?>
+                <option value="<?php echo $valprof['profileid'];?>" <?php if($form->SetValue("profileid", $option['profileid'], true, 255)==$valprof['profileid']){?> selected="selected" <?php } ?>><?php echo $valprof['profilecode'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+     </div>
+      <div class="form-group">
+     		<label><span class="required">*</span> Category</label>
+      <select name="category" id="category" class="form-control">
+               <?php
+               
+                foreach($fcatgories as $valcat)
+                 {
+                 ?>
+                <option value="<?php echo $valcat['famecategoryid'];?>" <?php if($form->SetValue("category", $option['category'], true, 255)== $valcat['famecategoryid']){?> selected="selected" <?php } ?>><?php echo $valcat['category'];?></option>
+               
+                 <?php
+                 }
+               ?> </select>
+               
+         </div>      
+     
+     <div class="form-group <?= isset($errors['layergroup']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span> Layer Group</label>
+					<input type="text" name="layergroup" value="<?= $form->SetValue('layergroup', $option['layergroup']) ?>" class="form-control" >
+					<span class="help-block"><?= isset($errors['layergroup']) ? $errors['layergroup'] : '' ?></span>
+				</div>
+    
+   
+    
+    <div class="form-group <?= isset($errors['layer1mm']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span> Layer 1 mm</label>
+					<input type="text" name="layer1mm" value="<?= $form->SetValue('layer1mm', $option['layer1mm']) ?>" class="form-control" style="width: 120px; text-align: right;">
+					<span class="help-block"><?= isset($errors['layer1mm']) ? $errors['layer1mm'] : '' ?></span>
+				</div>
+    
+    <div class="form-group <?= isset($errors['layer1glasstype']) ? 'has-error' : '' ?>">
+    	<label><span class="required">*</span> Layer 1 glasstype</label>
+    <select name="layer1glasstype" id="layer1glasstype" class="form-control">
+                 <?php
+                 foreach($option['paneltypes'] as $valglass)
+                 {
+                 ?>
+                <option value="<?php echo $valglass['glasstypeid'];?>" <?php if($form->SetValue("layer1glasstype", $option['layer1glasstype'], true, 255)==$valglass['glasstypeid']){?> selected="selected" <?php } ?>><?php echo $valglass['name'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+    
+    
+			
+				</div>
+    
+    <div class="form-group <?= isset($errors['spacermm']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span>Spacer mm</label>
+					<input type="text" name="spacermm" value="<?= $form->SetValue('spacermm', $option['spacermm']) ?>" class="form-control" style="width: 120px; text-align: right;">
+					<span class="help-block"><?= isset($errors['spacermm']) ? $errors['spacermm'] : '' ?></span>
+				</div>
+    
+    <div class="form-group <?= isset($errors['spacercolour']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span>Spacer colour</label>
+     <select name="spacercolour"  class="form-control" id="color_me" style="background-color:#<?php echo $option['color_code'];?>">
+                 <?php
+                 foreach($option['colors'] as $valcolor)
+                 {
+                 ?>
+                <option value="<?php echo $valcolor['colourid'];?>" <?php if($form->SetValue("spacercolour", $option['spacercolour'], true, 255)==$valcolor['colourid']){?> selected="selected" <?php } ?> style="background-color:#<?php echo $valcolor['colorcode'];?>"><?php echo $valcolor['colorcode'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+     
+     
+     
+			</div>
+    
+    <div class="form-group <?= isset($errors['spacermaterial']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span>Spacer material</label>
+					<input type="text" name="spacermaterial" value="<?= $form->SetValue('spacermaterial', $option['spacermaterial']) ?>" class="form-control" >
+					<span class="help-block"><?= isset($errors['spacermaterial']) ? $errors['spacermaterial'] : '' ?></span>
+				</div>
+    
+    <div class="form-group <?= isset($errors['spacerdesiccate']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span>Spacer desiccate</label>
+					<input type="text" name="spacerdesiccate" value="<?= $form->SetValue('spacerdesiccate', $option['spacerdesiccate']) ?>" class="form-control" >
+					<span class="help-block"><?= isset($errors['spacerdesiccate']) ? $errors['spacerdesiccate'] : '' ?></span>
+				</div>
+    
+    <div class="form-group <?= isset($errors['layer2mm']) ? 'has-error' : '' ?>">
+					<label><span class="required">*</span>layer2 mm</label>
+					<input type="text" name="layer2mm" value="<?= $form->SetValue('layer2mm', $option['layer2mm']) ?>" class="form-control" style="width: 120px; text-align: right;">
+					<span class="help-block"><?= isset($errors['layer2mm']) ? $errors['layer2mm'] : '' ?></span>
+				</div>
+    
+     <div class="form-group <?= isset($errors['layer2glasstype']) ? 'has-error' : '' ?>">
+    	<label><span class="required">*</span> Layer 2 glasstype</label>
+    <select name="layer2glasstype" id="layer2glasstype" class="form-control">
+                 <?php
+                 foreach($option['paneltypes'] as $valglass)
+                 {
+                 ?>
+                <option value="<?php echo $valglass['glasstypeid'];?>" <?php if($form->SetValue("layer2glasstype", $option['layer2glasstype'], true, 255)==$valglass['glasstypeid']){?> selected="selected" <?php } ?>><?php echo $valglass['name'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+    
+    
+			
+				</div>
+    
+   
+  
+  <?php endif; ?>
+  
+   
+   
+   
+   
+   
+   
+    <?php if($type == 'safety'):?>
+    
+    	<div class="form-group ">
+					<label>URL Link</label>
+					<input type="text" name="urlLink"  class="form-control" value="<?= $form->SetValue('urlLink', $option['urlLink']) ?>" >
+					<span class="help-block"></span>
+				</div>
+    
+    
+    
+   	<?php if($id > 0 && file_exists($gPanelOptionsSaftyDir.$id.".png"))
+				echo "<img src=\"". $gPanelOptionsSaftyURL.$id.".png?". time(). "\" class=\"img-responsive\" style=\"width: 200px; height; 200px;\">";
+			else
+				echo "<div style=\"width: 200px; height: 200px; border: dashed 1px #ccc; line-height: 200px; text-align: center;\">Icon</div>";
+			?>
+			<p style="margin-top: 5px; font-size: 0.8em;">(PNG; 400px x 400px)</p>
+
+			<div style="margin-bottom: 30px;"><input type="file" name="icon"></div>
+   
+				
+			<?php endif; ?>
+				
+			<?php endif; ?>
+
+				
+   
+
+		</div>	
+  <?php if($type == 'style' || $type == 'profile'): ?>
+  
+  <div class="col-xs-12 col-sm-6">
+  		<h4>Profile Settings</h4>
+    <div class="table-responsive">
+    		<table class="table">
+      		<thead>
+        		<tr style="background-color:#999">
+          		<th>EVS</th>
+          <th>IGU</th>
+          </tr>
+        </thead>
+        <tbody>
+        		<tr>
+          		<td>
+            		<div style="display:flex; align-items:center;">
+              		<span style="width:50%;">Top profile</span>
+                <select name="evsProfileTop" id="evsProfileTop" class="form-control" style="width:50%;">
+                <?php
+                 foreach($option['profiles'] as $valprof)
+                 {
+                 ?>
+                <option value="<?php echo $valprof['profilecode'];?>" <?php if($form->SetValue("evsProfileTop", $option['evsProfileTop'], true, 255)==$valprof['profilecode']){?> selected="selected" <?php } ?>><?php echo $valprof['profilecode'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+              </div>
+            </td>
+            <td>
+            	<select name="retroProfileTop" id="retroProfileTop" class="form-control">
+                <?php
+                 foreach($option['profiles'] as $valprof)
+                 {
+                 ?>
+                <option value="<?php echo $valprof['profilecode'];?>" <?php if($form->SetValue("retroProfileTop", $option['retroProfileTop'], true, 255)==$valprof['profilecode']){?> selected="selected" <?php } ?>><?php echo $valprof['profilecode'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+            </td>
+          </tr>
+          
+          <tr>
+          		<td>
+            		<div style="display:flex; align-items:center;">
+              		<span style="width:50%;">Bottom profile</span>
+                <select name="evsProfileBottom" id="evsProfileBottom" class="form-control" style="width:50%;">
+                <?php
+                 foreach($option['profiles'] as $valprof)
+                 {
+                 ?>
+                <option value="<?php echo $valprof['profilecode'];?>" <?php if($form->SetValue("evsProfileBottom", $option['evsProfileBottom'], true, 255)==$valprof['profilecode']){?> selected="selected" <?php } ?>><?php echo $valprof['profilecode'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+              </div>
+            </td>
+            <td>
+            		<select name="retroProfileBottom" id="retroProfileBottom" class="form-control" >
+                <?php
+                 foreach($option['profiles'] as $valprof)
+                 {
+                 ?>
+                <option value="<?php echo $valprof['profilecode'];?>" <?php if($form->SetValue("retroProfileBottom", $option['retroProfileBottom'], true, 255)==$valprof['profilecode']){?> selected="selected" <?php } ?>><?php echo $valprof['profilecode'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+            </td>
+          </tr>
+           <tr>
+          		<td>
+            		<div style="display:flex; align-items:center;">
+              		<span style="width:50%;">Left Profile</span>
+               <select name="evsProfileLeft" id="evsProfileLeft" class="form-control" style="width:50%;">
+                <?php
+                 foreach($option['profiles'] as $valprof)
+                 {
+                 ?>
+                <option value="<?php echo $valprof['profilecode'];?>" <?php if($form->SetValue("evsProfileLeft", $option['evsProfileRight'], true, 255)==$valprof['profilecode']){?> selected="selected" <?php } ?>><?php echo $valprof['profilecode'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+              </div>
+            </td>
+            <td>
+             <select name="retroProfileLeft" id="retroProfileLeft" class="form-control" >
+                <?php
+               
+                 foreach($option['profiles'] as $valprof)
+                 {
+                 ?>
+                <option value="<?php echo $valprof['profilecode'];?>" <?php if($form->SetValue("retroProfileLeft", $option['retroProfileLeft'], true, 255)==$valprof['profilecode']){?> selected="selected" <?php } ?>><?php echo $valprof['profilecode'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+            
+            </td>
+          </tr>
+          
+          
+          <tr>
+          		<td>
+            		<div style="display:flex; align-items:center;">
+              		<span style="width:50%;">Right Profile</span>
+               <select name="evsProfileRight" id="evsProfileRight" class="form-control" style="width:50%;">
+                <?php
+                 foreach($option['profiles'] as $valprof)
+                 {
+                 ?>
+                <option value="<?php echo $valprof['profilecode'];?>" <?php if($form->SetValue("evsProfileRight", $option['evsProfileRight'], true, 255)==$valprof['profilecode']){?> selected="selected" <?php } ?>><?php echo $valprof['profilecode'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+              </div>
+            </td>
+            <td>
+            		<select name="retroProfileRight" id="retroProfileRight" class="form-control" >
+                <?php
+                 foreach($option['profiles'] as $valprof)
+                 {
+                 ?>
+                <option value="<?php echo $valprof['profilecode'];?>" <?php if($form->SetValue("retroProfileRight", $option['retroProfileRight'], true, 255)==$valprof['profilecode']){?> selected="selected" <?php } ?>><?php echo $valprof['profilecode'];?></option>
+
+                 <?php
+                 }
+                ?>
+      
+     </select>
+            </td>
+          </tr>
+          
+          <tr>
+          		<td>
+            		<div style="display:flex; align-items:center;">
+              		<span style="width:50%;">Glass(+X)</span>
+              <input type="text" name="evsGlassX" value="<?= $form->SetValue('evsGlassX', $option['evsGlassX']) ?>" class="form-control" style="width:50%">
+
+              </div>
+            </td>
+            <td>
+            <input type="text" name="retroGlassX" value="<?= $form->SetValue('retroGlassX', $option['retroGlassX']) ?>" class="form-control" >
+
+            </td>
+          </tr>
+           <tr>
+          		<td>
+            		<div style="display:flex; align-items:center;">
+              		<span style="width:50%;">Glass(+Y)</span>
+              <input type="text" name="evsGlassY" value="<?= $form->SetValue('evsGlassY', $option['evsGlassY']) ?>" class="form-control" style="width:50%">
+
+              </div>
+            </td>
+            <td>
+            <input type="text" name="retroGlassY" value="<?= $form->SetValue('retroGlassY', $option['retroGlassY']) ?>" class="form-control" >
+
+            </td>
+          </tr>
+          
+           <tr>
+          		<td>
+            		<div style="display:flex; align-items:center;">
+              		<span style="width:50%;">Profile(+X)</span>
+              <input type="text" name="evsProfileX" value="<?= $form->SetValue('evsProfileX', $option['evsProfileX']) ?>" class="form-control" style="width:50%">
+
+              </div>
+            </td>
+            <td>
+            <input type="text" name="retroProfileX" value="<?= $form->SetValue('retroProfileX', $option['retroProfileX']) ?>" class="form-control" >
+
+            </td>
+          </tr>
+           <tr>
+          		<td>
+            		<div style="display:flex; align-items:center;">
+              		<span style="width:50%;">Profile(+Y)</span>
+              <input type="text" name="evsProfileY" value="<?= $form->SetValue('evsProfileY', $option['evsProfileY']) ?>" class="form-control" style="width:50%">
+
+              </div>
+            </td>
+            <td>
+            <input type="text" name="retroProfileY" value="<?= $form->SetValue('retroProfileY', $option['retroProfileY']) ?>" class="form-control" >
+
+            </td>
+          </tr>
+        
+          
+        </tbody>
+      </table>
+    </div>
+  </div>	
+  <?php endif; ?>
+  
+  <?php if($type =='frametype'):?>
+  
+  <div class="col-xs-12 col-sm-6">
+  		<h4>Material Categories</h4>
+    <div class="table-responsive">
+    		<table class="table">
+      	<thead></thead>
+       <tbody>
+         <tr><td> New Aluminium(NALU)</td><td><label class="switch"><input type="checkbox" name="NALU" value="1" <?= $form->SetChecked("NALU", $option['NALU'], $option['NALU']==1) ?>/><span class="slider round"></span></label></td></tr>
+          <tr><td> New Timber(NTIM)</td><td><label class="switch"><input type="checkbox" name="NTIM" value="1" <?= $form->SetChecked("NTIM", $option['NTIM'], $option['NTIM']==1) ?>/><span class="slider round"></span></label></td></tr>
+           <tr><td> Retro Aluminium(RALU)</td><td><label class="switch"><input type="checkbox" name="RALU" value="1" <?= $form->SetChecked("RALU", $option['RALU'], $option['RALU']==1) ?>/><span class="slider round"></span></label></td></tr>
+            <tr><td> Retro Timber(RTIM)</td><td><label class="switch"><input type="checkbox" name="RTIM" value="1" <?= $form->SetChecked("RTIM", $option['RTIM'], $option['RTIM']==1) ?>><span class="slider round"></span></label></td></tr>
+             <tr><td> Retro Metal(RMET)</td><td><label class="switch"><input type="checkbox" name="RMET" value="1" <?= $form->SetChecked("RMET", $option['RMET'], $option['RMET']==1) ?>/><span class="slider round"></span></label></td></tr>
+             <tr>
+             <td colspan="2">
+             	<div class="ttle-tbl-two">
+              	<h4>Frame Type List</h4>
+               <a href="javaScript:Void(0)" id="copy-frame" data-id="<?php echo $option['imageid'];?>" onclick="get()">Add</a>
+              </div>
+              <div class="v-box">
+              <?php
+               foreach($frametype as $valtype){
+                	echo '<h5><a href="paneloptions.php?type=style&id='.$valtype['styleid'].'" target="_blank">'.$valtype['name'].'</h5></a>';
+               }
+              ?>
+              
+              </div>
+              </td>
+              <td><input type="hidden" name="frametypeid" id="frametypeid" value="<?php echo $option['frametypeid'];?>"</td>
+             </tr>
+       </tbody>
+        
+      </table>
+    </div>
+  </div>
+  
+  
+  <?php endif; ?>
+  
+  
+  
+  </div> <!-- /row -->
+  
+  <div class="row">
+  		<div class="col-xs-12 col-sm-6">
+    		<div class="checkbox">
+        <label>
+          <input type="checkbox" name="default" value="1" <?= $form->SetChecked("default", $option['isdefault'], $option['isdefault']==1) ?>>
+          Default
+        </label>
+      </div>
+      
+      
+      
+      <p>
+       <input type=submit name="save" value="Save" class="btn btn-primary">
+       <input type=submit name="cancel" value="Cancel" class="btn btn-default" style="margin-left: 10px;">
+      </p>
+    </div>
+  </div>
+		
+</form>

@@ -1,0 +1,92 @@
+<style>
+  .taskTool-materials h4 {
+    font-weight: bold;
+  }
+
+  .taskTool-materials table thead tr {
+    background: #ccc;
+  }
+
+  .taskTool-materials table thead th {
+    border: none;
+  }
+
+  .taskTool-materials table thead th:nth-child(2), .taskTool-materials table thead th:nth-child(3), .taskTool-materials table tbody tr td:nth-child(2), .taskTool-materials table tbody tr td:nth-child(3), .taskTool-materials table tbody tr td:nth-child(4) {
+    text-align: center;
+  }
+
+  .taskTool-materials table tbody tr td {
+    border: none;
+    vertical-align: middle;
+  }
+
+  .taskTool-materials table tbody tr td:nth-child(2), .taskTool-materials table tbody tr td:nth-child(3) {
+    color: #c5c5c5;
+  }
+</style>
+
+<div class="row">
+  <div class="col-lg-12">
+    <h3>Tools and Materials</h3>
+  </div>
+
+  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <div class="taskTool-materials">
+      <h4>Retro</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Tools</th>
+            <th>Materials</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        <?php foreach($category as $valcat){?>
+        
+           <tr>
+            <td><?php echo $valcat['category'];?></td>
+            <td><?php echo $valcat['retrocount'];?></td>
+            <td><?php echo $valcat['retromatcount'];?></td>
+            <td><a class="btn btn-primary" href="tasktool.php?catid=<?php echo $valcat['famecategoryid'];?>&&type=retro">EDIT</a></td>
+          </tr>
+        
+        <?php }
+        ?>
+         
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <div class="taskTool-materials">
+      <h4>EVS</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Tools</th>
+            <th>Materials</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($category as $valcat){?>
+        
+           <tr>
+            <td><?php echo $valcat['category'];?></td>
+            <td><?php echo $valcat['evscount'];?></td>
+            <td><?php echo $valcat['evsmatcount'];?></td>
+            <td><a class="btn btn-primary" href="tasktool.php?catid=<?php echo $valcat['famecategoryid'];?>&&type=evs">EDIT</a></td>
+          </tr>
+        
+        <?php }
+        ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

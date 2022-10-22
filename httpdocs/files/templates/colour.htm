@@ -1,0 +1,88 @@
+<h2>Add/Edit Colour </h2>
+
+<?= $errorMessage ?>
+
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+  
+  <div>
+			  <div class="form-group <?= ($errors['colourname']) ? 'has-error' : '' ?>">
+			    <label><span class="required">*</span> Colour name</label>
+			    <input type="text" class="form-control" name="colourname" id="colourname" value="<?= $form->SetValue("colourname", $colr['colourname'], true, 255) ?>" maxlength="255">
+					<span class="help-block"><?= $errors['colorcode'] ?></span>
+			  </div>
+			</div>
+
+			<div>
+			  <div class="form-group <?= ($errors['colorcode']) ? 'has-error' : '' ?>">
+			    <label><span class="required">*</span> Color code&nbsp;(Click to choose colour)</label>
+			    <input type="text" class="form-control color" name="colorcode" id="colorcode" value="<?= $form->SetValue("colorcode", $colr['colorcode'], true, 255) ?>" maxlength="255" readonly="readonly">
+					<span class="help-block"><?= $errors['colorcode'] ?></span>
+			  </div>
+     
+     <div class="form-group <?= ($errors['colorcode']) ? 'has-error' : '' ?>">
+			    <label><span class="required">*</span> Swatch</label>
+       <select name="swatchid" id="swatchid" class="form-control">
+       <?php
+       foreach($swatch as $valswatch){
+       ?>
+        <option value="<?php echo $valswatch['swatchid'];?>" <?php if($form->SetValue("swatchid", $colr['swatchid'], true, 255)== $valswatch['swatchid']){?> selected="selected" <?php } ?>><?php echo $valswatch['swatchname'];?></option>
+       <?php
+       }
+       ?>
+       </select>
+					<span class="help-block"><?= $errors['colorcode'] ?></span>
+			  </div>
+     
+     
+			</div>
+
+			
+
+			
+
+		
+
+			
+   
+  
+			</div>
+   
+   
+			
+			
+
+
+		<!--<div class="col-xs-12 col-sm-6">
+  
+  
+  
+  	<?php
+			if($profileId > 0 && file_exists($gProfilePhotoDir.$profile['profilecode'].".png"))
+				echo "<img src=\"". $gProfilePhotoURL.$profile['profilecode'].".png?". time(). "\" class=\"img-responsive\" style=\"width: 200px; height; 200px;\">";
+			else
+				echo "<div style=\"width: 200px; height: 200px; border: dashed 1px #ccc; line-height: 200px; text-align: center;\">Image</div>";
+			?>
+			<p style="margin-top: 5px; font-size: 0.8em;">(PNG; 400px x 400px)</p>
+
+			<div style="margin-bottom: 35px;"><input type="file" name="image"></div>
+  
+  
+  
+		
+			
+
+
+
+		</div>-->
+		
+  </div> <!-- /row -->
+
+	<div style="margin-top: 10px;">
+		<input type="submit" name="save" value="Save" class="btn btn-primary">
+		<input type="submit" name="cancel" value="Cancel" class="btn btn-default" style="margin-left: 10px;">
+	</div>
+		
+</form>

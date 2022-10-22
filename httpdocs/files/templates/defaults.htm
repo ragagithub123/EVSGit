@@ -1,0 +1,42 @@
+<h2>Defaults</h2>
+
+<?= $message ?>
+
+<form action="<?= $_SERVER['php_self'] ?>" method="post" enctype="multipart/form-data">
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+
+			<?php
+			foreach($fieldNames as $field => $label) {
+				if($field)
+				$hasErrorClass = ($errors[$field]) ? 'has-error' : '';
+				echo "<div class=\"form-group $hasErrorClass\">\n";
+				echo "  <label><span class=\"required\">*</span> $label</label>\n";
+		    echo "  <input type=\"text\" class=\"form-control\" style=\"width: 120px; text-align: right;\" name=\"$field\" id=\"$field\" value=\"". $form->SetValue($field, $params[$field], true, 10). "\" maxlength=\"10\">\n";
+				echo "  <span class=\"help-block\">". $errors[$field]. "</span>\n";
+				echo "</div>\n";
+			}
+			?>
+
+		</div>
+		
+		<div class="col-xs-12 col-sm-6">
+			<div class="form-group">
+				<label>Quote Greeting</label>
+				<textarea name="quotegreeting" rows=6 class="form-control"><?= $form->SetValue("quotegreeting", $params['quotegreeting']) ?></textarea>
+			</div>
+
+			<div class="form-group">
+				<label>Quote Details</label>
+				<textarea name="quotedetails" rows=20 class="form-control"><?= $form->SetValue("quotedetails", $params['quotedetails'])  ?></textarea>
+			</div>
+
+		</div>
+  </div> <!-- /row -->
+
+	<div style="margin-top: 10px;">
+		<input type="submit" name="save" value="Save" class="btn btn-primary">
+	</div>
+		
+</form>
